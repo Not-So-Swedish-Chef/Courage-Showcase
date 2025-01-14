@@ -1,9 +1,0 @@
-.header-toolbar {
-  display: flex;
-  justify-content: space-between; /* Space between items */
-  align-items: center; /* Center items vertically */
-}
-
-.popover-content {
-  padding: 10px; /* Add padding for better spacing */
-}
