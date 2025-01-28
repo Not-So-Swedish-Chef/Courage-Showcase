@@ -1,0 +1,7 @@
+{
+  "name": "xxfront-end",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
