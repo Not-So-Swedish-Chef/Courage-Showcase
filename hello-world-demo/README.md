@@ -8,8 +8,6 @@ Welcome to the HelloWorld project! This project demonstrates a full-stack applic
 - [Back-End](#back-end)
 - [Server](#server)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
 
 ## Project Overview
 This application serves as a simple demonstration of a full-stack web application, showcasing how to integrate various technologies to create a seamless user experience.
@@ -51,5 +49,5 @@ The server is built using:
 
 ## Technologies Used
 - **Front-End**: Angular Ionic, TypeScript, HTML, SCSS
-- **Back-End**: ASP.NET Core MVC, C#, Razor, Lombok.NET, MongoDB.Driver, Google Maps .NET Client Library
+- **Back-End**: ASP.NET Core MVC, C#, Razor, Lombok.NET, MongoDB.Driver, Google Maps .NET Client Library, ESP (TBA)
 - **Server**: MongoDB, Node.js, Express, Mongoose
