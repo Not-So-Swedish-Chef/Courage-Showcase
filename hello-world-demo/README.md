@@ -33,6 +33,9 @@ The back-end is developed using a **C# Project** with the following components:
 - **MongoDB.Driver**: Enables connection to a MongoDB database for production use
 - **Google Maps .NET Client Library**: Used to track the distance between two postal codes, allowing users to filter by distance.
   - Not Show-Cased
+- **ESP with included Email API** Used to automate outgoing emails to inform families of event updates
+  - Not selected at this time
+  - Not Show-Cased
 - **Primary Language**: 
   - **C# (.cs)**
 
@@ -50,11 +53,3 @@ The server is built using:
 - **Front-End**: Angular Ionic, TypeScript, HTML, SCSS
 - **Back-End**: ASP.NET Core MVC, C#, Razor, Lombok.NET, MongoDB.Driver, Google Maps .NET Client Library
 - **Server**: MongoDB, Node.js, Express, Mongoose
-
-## Installation
-To set up the project locally, follow these steps:
-
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd HelloWorld
