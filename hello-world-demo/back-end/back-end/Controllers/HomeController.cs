@@ -13,8 +13,16 @@ namespace back_end.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult Index(string username)
+        {
+            ViewBag.Username = username;
             return View();
         }
 
