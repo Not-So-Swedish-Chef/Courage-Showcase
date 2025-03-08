@@ -1,40 +1,47 @@
-import type { Metadata } from 'next'
-import { Inter, Poppins } from 'next/font/google'
-import './globals.css'
-import { ClerkProvider, SignedIn, SignedOut, SignIn, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import type { Metadata } from "next";
+import { Inter, Poppins } from "next/font/google";
+import "./globals.css";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignIn,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
-})
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
-  title: 'Evently',
-  description: 'Evently is a platform for event management.',
+  title: "Evently",
+  description: "Evently is a platform for event management.",
   icons: {
-    icon: '/assets/images/logo.svg'
-  }
-}
+    icon: "/assets/images/logo.svg",
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-  <ClerkProvider>
+    // <ClerkProvider>
     <html lang="en">
-        <body className={poppins.variable}>
-          {/* <SignedOut>
+      <body className={poppins.variable}>
+        {/* <SignedOut>
             <SignIn routing='hash'></SignIn>
           </SignedOut>
           <SignedIn> */}
-            {children}
-          {/* </SignedIn> */}
-        
-        </body>
-      </html>
-  </ClerkProvider>
-  )
+        {children}
+        {/* </SignedIn> */}
+      </body>
+    </html>
+    // </ClerkProvider>
+  );
 }

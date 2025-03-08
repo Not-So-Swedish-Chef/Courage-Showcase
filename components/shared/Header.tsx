@@ -16,27 +16,29 @@ const Header = () => {
   return (
     <header className="w-full border-b">
       <div className="wrapper flex items-center justify-between">
-        <Link href="/" className="w-36">
-          <Image
-            src={"/assets/images/logo.svg"}
-            alt={"logo"}
-            width={128}
-            height={38}
-          ></Image>
-        </Link>
+        <div className="flex items-center w-full max-w-xs">
+          <Link href="/" className="flex items-center">
+            <Image
+              src={"/assets/images/logosvg2.svg"}
+              alt={"logo"}
+              width={70}
+              height={20}
+            />
+            <span className="text-lg font-semibold ml-1">Event Hub</span>
+          </Link>
+        </div>
 
         {/* for desktop navbar*/}
         <SignedIn>
-          <nav className="md:flex-between hidden w-full max-w-xs" >
+          <nav className="md:flex-between hidden w-full max-w-xs">
             <NavItems></NavItems>
           </nav>
         </SignedIn>
 
         <div className="flex w-32 justify-end gap-3">
-
+          <MobileNav />
           <SignedIn>
             <UserButton />
-            <MobileNav />
           </SignedIn>
 
           <SignedOut>

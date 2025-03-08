@@ -9,8 +9,7 @@ export default function Home() {
       <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
         <div className="flex flex-col justify-center gap-8">
           <h1 className="h1-bold">
-            Empowering every child to shine: Explore events, resources, and
-            joyful experiences!
+            Empowering every child to shine!
           </h1>
           <p className="p-regular-20 md:p-regular-24">
             Create, book, and attend events designed with love and care for
