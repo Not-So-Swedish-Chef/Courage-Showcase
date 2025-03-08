@@ -1,5 +1,8 @@
+﻿using System.Text;
 using back_end.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace back_end
 {
@@ -9,33 +12,72 @@ namespace back_end
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            // 1️⃣ Add Services to the Container
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
+            // Database Context (Entity Framework Core - SQL Server)
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Dependency Injection for Repositories & Services
+           // builder.Services.AddScoped<IProductRepository, ProductRepository>();
+           // builder.Services.AddScoped<IProductService, ProductService>();
+
+            // Enable CORS for frontend communication
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
+            });
+
+            // JWT Authentication (If using authentication)
+            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidateIssuerSigningKey = true,
+            //            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            //            ValidAudience = builder.Configuration["Jwt:Audience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
+            //        };
+            //    });
+
+            // Build the Application
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            // 2️⃣ Configure Middleware Pipeline
+
+            // Enable Swagger (For API Documentation)
+            if (app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-            app.UseRouting();
+            // Use CORS
+            app.UseCors("AllowAllOrigins");
 
+            // Global Exception Handling Middleware
+            //app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            // Enable Authentication & Authorization (If JWT is used)
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapStaticAssets();
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+            // Map Controllers (API Endpoints)
+            app.MapControllers();
 
+            // Run the application
             app.Run();
+
         }
     }
 }

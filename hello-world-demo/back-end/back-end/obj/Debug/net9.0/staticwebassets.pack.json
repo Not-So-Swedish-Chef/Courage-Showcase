@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\orazu\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\back-end.bundle.scp.css",
-      "PackagePath": "staticwebassets\\back-end.uzrgpq0usc.bundle.scp.css"
-    },
-    {
       "Id": "C:\\Users\\orazu\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

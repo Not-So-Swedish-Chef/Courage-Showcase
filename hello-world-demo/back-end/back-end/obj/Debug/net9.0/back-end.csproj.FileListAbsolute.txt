@@ -12,12 +12,8 @@ C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.AssemblyInfo.cs
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.csproj.CoreCompileInputs.cache
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.RazorAssemblyInfo.cache
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.RazorAssemblyInfo.cs
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.sourcelink.json
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\scopedcss\bundle\back-end.styles.css
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\scopedcss\projectbundle\back-end.bundle.scp.css
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\w2mg9h05eg-b9sayid5wm.gz
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\yrrt5yorxk-61n19gt1b8.gz
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\gig2nzjh3w-xtxxf3hu2r.gz
@@ -80,8 +76,6 @@ C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\cv0q7babsn-9vr69e8ynj.gz
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\qz9ryatk7x-87fc7y1x7t.gz
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\5m1vtruunp-mlv21k5csn.gz
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\g3unugd8f0-uzrgpq0usc.gz
-C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\compressed\4ynn7mh876-uzrgpq0usc.gz
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -328,3 +322,9 @@ C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.MvcApplicationPartsAssemblyInfo.cs
