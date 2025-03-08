@@ -29,11 +29,11 @@ const Header = () => {
         </div>
 
         {/* for desktop navbar*/}
-        <SignedIn>
-          <nav className="md:flex-between hidden w-full max-w-xs">
-            <NavItems></NavItems>
-          </nav>
-        </SignedIn>
+        {/* <SignedIn> */}
+        <nav className="md:flex-between hidden w-full max-w-xs">
+          <NavItems></NavItems>
+        </nav>
+        {/* </SignedIn> */}
 
         <div className="flex w-32 justify-end gap-3">
           <MobileNav />
