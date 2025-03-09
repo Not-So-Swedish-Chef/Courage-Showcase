@@ -31,17 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // <ClerkProvider>
-    <html lang="en">
-      <body className={poppins.variable}>
-        {/* <SignedOut>
-            <SignIn routing='hash'></SignIn>
-          </SignedOut>
-          <SignedIn> */}
-        {children}
-        {/* </SignedIn> */}
-      </body>
-    </html>
-    // </ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={poppins.variable}>
+          {/* <SignedOut>
+            <SignIn routing="hash"></SignIn>
+          </SignedOut> */}
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
