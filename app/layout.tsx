@@ -18,8 +18,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Evently",
-  description: "Evently is a platform for event management.",
+  title: "Event Hub",
+  description: "Event Hub is a platform for event management.",
   icons: {
     icon: "/assets/images/logo.svg",
   },
@@ -34,9 +34,6 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={poppins.variable}>
-          {/* <SignedOut>
-            <SignIn routing="hash"></SignIn>
-          </SignedOut> */}
           {children}
         </body>
       </html>

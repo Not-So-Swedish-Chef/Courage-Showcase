@@ -24,7 +24,7 @@ const Header = () => {
               width={70}
               height={20}
             />
-            <span className="text-lg font-semibold ml-1">Event Hub</span>
+            <span className="text-lg font-semibold ml-1">Events Hub</span>
           </Link>
         </div>
 
