@@ -11,12 +11,12 @@ export const eventFormSchema = z.object({
     .min(3, "Location must be at least 3 characters")
     .max(400, "Location must be less than 400 characters"),
   imageUrl: z.string(),
-  startDateTime: z.string(), //z.date()
-  endDateTime: z.string(), //z.date()
+  startDateTime: z.date(), //z.date()z.string()
+  endDateTime: z.date(), //z.date()
   categoryId: z.string(), //
   price: z.string(),
   isFree: z.boolean(),
-  url: z.string().url(),
+  url: z.string(),
 });
 
 export const signUpSchema = z.object({

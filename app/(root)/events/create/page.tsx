@@ -1,11 +1,10 @@
 import EventForm from "@/components/shared/EventForm";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 import React from "react";
 
-const CreateEvent = () => {
-  // const { sessionClaims } = auth();
-  // const usrId = sessionClaims.userId as string;
+const CreateEvent = async () => {
+  const { userId } = (await auth()) as { userId: string };
 
   return (
     <>
@@ -15,8 +14,7 @@ const CreateEvent = () => {
         </h3>
       </section>
       <div className="wrapper my-8">
-        {/* Need to get userId*/}
-        <EventForm userId="001" type="Create" />
+        <EventForm userId={userId} type="Create" />
       </div>
     </>
   );

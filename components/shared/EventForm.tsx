@@ -20,6 +20,9 @@ import { useState } from "react";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import { Checkbox } from "../ui/checkbox";
+import "react-datepicker/dist/react-datepicker.css";
+import { UploadButton } from "@/lib/uploadthing";
+import { useRouter } from "next/navigation";
 
 type EventFormProps = {
   userId: string;
@@ -28,17 +31,52 @@ type EventFormProps = {
 
 const EventForm = ({ userId, type }: EventFormProps) => {
   const initialValues = eventDefaultValues;
+  const router = useRouter();
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues,
   });
 
+  const isFree = form.watch("isFree");
+
   const [Files, setFiles] = useState<File[]>([]);
 
-  function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof eventFormSchema>) {
+    if (type === "Create") {
+      try {
+        // const newEvent = await CreateEvent({
+        //   event: { ...values },
+        //   userId,
+        //   path: "/profile",
+        // });
+        // if (newEvent) {
+        //   form.reset()
+        //   router.push(`/events/${newEvent._id}`)
+        // }
+        console.log(
+          "JSON:",
+          JSON.stringify(
+            {
+              ...values,
+              userId, // 将 userId 添加到请求体中
+            },
+            null,
+            2
+          )
+        );
+        console.log(userId);
+        const response = await fetch("/api/events/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...values,
+            userId, // 将 userId 添加到请求体中
+          }),
+        });
+      } catch (error) {}
+    }
   }
 
   return (
@@ -138,10 +176,24 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl className="h-72">
-                  <FileUploader
+                  {/* <FileUploader
                     onFieldChange={field.onChange}
                     imageUrl={field.value}
                     setFiles={setFiles}
+                  /> */}
+                  <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res) => {
+                      if (res && res[0]) {
+                        const uploadedUrl = res[0].url;
+                        field.onChange(uploadedUrl); // 更新表单的imageUrl值
+                        alert("Upload Completed");
+                      }
+                      alert("Upload Completed");
+                    }}
+                    onUploadError={(error: Error) => {
+                      alert(`ERROR! ${error.message}`);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -156,13 +208,27 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input
-                    placeholder="Start Date"
-                    {...field}
-                    className="input-field"
-                  />
+                  <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                    <Image
+                      src="/assets/icons/calendar.svg"
+                      alt="calendar"
+                      width={24}
+                      height={24}
+                      className="filter-grey"
+                    />
+                    <p className="ml-3 whitespace-nowrap text-grey-600">
+                      Start Date:
+                    </p>
+                    <DatePicker
+                      selected={field.value}
+                      onChange={(date: Date | null) => field.onChange(date)}
+                      showTimeSelect
+                      timeInputLabel="Time:"
+                      dateFormat="MM/dd/yyyy h:mm aa"
+                      wrapperClassName="datePicker"
+                    />
+                  </div>
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -173,13 +239,27 @@ const EventForm = ({ userId, type }: EventFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input
-                    placeholder="End Date"
-                    {...field}
-                    className="input-field"
-                  />
+                  <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                    <Image
+                      src="/assets/icons/calendar.svg"
+                      alt="calendar"
+                      width={24}
+                      height={24}
+                      className="filter-grey"
+                    />
+                    <p className="ml-3 whitespace-nowrap text-grey-600">
+                      End Date:
+                    </p>
+                    <DatePicker
+                      selected={field.value}
+                      onChange={(date: Date | null) => field.onChange(date)}
+                      showTimeSelect
+                      timeInputLabel="Time:"
+                      dateFormat="MM/dd/yyyy h:mm aa"
+                      wrapperClassName="datePicker"
+                    />
+                  </div>
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -205,6 +285,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
                       placeholder="Price"
                       {...field}
                       className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                      disabled={isFree}
                     />
                     <FormField
                       control={form.control}
@@ -270,7 +351,7 @@ const EventForm = ({ userId, type }: EventFormProps) => {
           disabled={form.formState.isSubmitting}
           className="button col-span-2 w-full"
         >
-          Submit
+          {form.formState.isSubmitting ? "Submitting" : `${type} Event`}
         </Button>
       </form>
     </Form>

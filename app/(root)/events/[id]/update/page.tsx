@@ -3,18 +3,19 @@ import { auth } from "@clerk/nextjs/server";
 
 import React from "react";
 
-const UpdateEvent = () => {
-  // const { sessionClaims } = auth();
-  // const usrId = sessionClaims.userId as string;
+const UpdateEvent = async () => {
+  const { sessionClaims } = await auth();
+  const userId = sessionClaims?.userId as string;
 
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-1">
-        <h3 className="wrapper h3-bold text-center sm:text-left">Event</h3>
+        <h3 className="wrapper h3-bold text-center sm:text-left">
+          Update Event
+        </h3>
       </section>
       <div className="wrapper my-8">
-        {/* Need to get userId*/}
-        <EventForm userId="001" type="Create" />
+        <EventForm userId={userId} type="Update" />
       </div>
     </>
   );
