@@ -9,6 +9,8 @@ namespace back_end.Data
         {
         }
 
-        public DbSet<DemoUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Event> Events { get; set; }
+
     }
 }

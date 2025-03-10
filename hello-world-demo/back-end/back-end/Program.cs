@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using back_end.Data;
+using back_end.Repositories;
+using back_end.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,8 +24,13 @@ namespace back_end
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Dependency Injection for Repositories & Services
-           // builder.Services.AddScoped<IProductRepository, ProductRepository>();
-           // builder.Services.AddScoped<IProductService, ProductService>();
+            //Users
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
+
+            //Events
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             // Enable CORS for frontend communication
             builder.Services.AddCors(options =>

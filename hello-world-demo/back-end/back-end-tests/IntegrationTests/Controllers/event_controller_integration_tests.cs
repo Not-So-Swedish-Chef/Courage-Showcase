@@ -22,7 +22,7 @@ namespace back_end_tests.IntegrationTests.Controllers
         public async Task create_event_returns_ok_for_valid_data()
         {
             // Arrange
-            var event_data = new EventFormData
+            var event_data = new Event
             {
                 Title = "Test Event",
                 Description = "Test Description",
