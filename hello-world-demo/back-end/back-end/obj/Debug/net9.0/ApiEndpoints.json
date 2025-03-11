@@ -226,21 +226,5 @@
       }
     ],
     "ReturnTypes": []
-  },
-  {
-    "ContainingType": "back_end.Controllers.AuthController",
-    "Method": "signUp",
-    "RelativePath": "signup",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "signUpData",
-        "Type": "back_end.Models.User",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   }
 ]

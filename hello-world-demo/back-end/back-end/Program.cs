@@ -63,11 +63,13 @@ namespace back_end
             // 2️⃣ Configure Middleware Pipeline
 
             // Enable Swagger (For API Documentation)
-            if (app.Environment.IsDevelopment())
+            // 🔹 Ensure Swagger is available in production
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;  // 👈 This makes Swagger available at root URL
+            });
 
             // Use CORS
             app.UseCors("AllowAllOrigins");

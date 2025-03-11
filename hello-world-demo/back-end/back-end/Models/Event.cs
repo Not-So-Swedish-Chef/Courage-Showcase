@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace back_end.Models
 {
     public class Event
     {
+        [Key]
+        public int Id { get; set; }
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -19,6 +22,7 @@ namespace back_end.Models
 
         public string CategoryId { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         public decimal? Price { get; set; } // Nullable to allow skipping when IsFree is true
 
         public bool IsFree { get; set; }
