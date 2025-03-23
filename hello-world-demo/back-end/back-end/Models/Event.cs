@@ -23,7 +23,7 @@ namespace back_end.Models
         public string CategoryId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? Price { get; set; } // Nullable to allow skipping when IsFree is true
+        public decimal? Price { get; set; } // Used for optional pricing when the event isn't free
 
         public bool IsFree { get; set; }
  
@@ -33,13 +33,13 @@ namespace back_end.Models
         {
             var results = new List<ValidationResult>();
 
-            // Ensure StartDateTime is before EndDateTime
+            // Prevent invalid scheduling by ensuring start comes before end
             if (StartDateTime >= EndDateTime)
             {
                 results.Add(new ValidationResult("Start date and time must be before end date and time.", new[] { nameof(StartDateTime), nameof(EndDateTime) }));
             }
 
-            // Ensure Price is required only if IsFree is false
+            // Enforce pricing only when the event is marked as paid
             if (!IsFree && (!Price.HasValue || Price <= 0))
             {
                 results.Add(new ValidationResult("Price must be a positive number when the event is not free.", new[] { nameof(Price) }));

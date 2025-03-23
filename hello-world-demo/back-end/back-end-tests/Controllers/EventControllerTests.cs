@@ -23,6 +23,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task GetEvents_ReturnsOkResult_WithListOfEvents()
         {
+            // Verifies that a successful GET returns the expected number of events
+
             // Arrange
             var mockEvents = new List<Event>
             {
@@ -43,6 +45,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task GetEventById_ReturnsNotFound_WhenEventDoesNotExist()
         {
+            // Ensures the controller returns 404 when an event isn't found
+
             // Arrange
             _mockEventService.Setup(service => service.GetEventByIdAsync(It.IsAny<int>())).ReturnsAsync((Event)null);
 
@@ -56,6 +60,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task CreateEvent_ReturnsCreatedAtAction_WhenEventIsValid()
         {
+            // Confirms that a valid event triggers the correct response with action info
+
             // Arrange
             var newEvent = new Event { Title = "New Event" };
             _mockEventService.Setup(service => service.AddEventAsync(newEvent)).Returns(Task.CompletedTask);

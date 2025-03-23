@@ -23,6 +23,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task GetUsers_ReturnsOkResult_WithListOfUsers()
         {
+            // Verifies that fetching all users returns a correct OK result with user list
+
             // Arrange
             var mockUsers = new List<User>
             {
@@ -43,6 +45,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task GetUserById_ReturnsNotFound_WhenUserDoesNotExist()
         {
+            // Confirms the controller returns 404 when the user is not found by ID
+
             // Arrange
             _mockUserService.Setup(service => service.GetUserByIdAsync(It.IsAny<int>())).ReturnsAsync((User)null);
 
@@ -56,6 +60,8 @@ namespace back_end_tests.Controllers
         [Fact]
         public async Task CreateUser_ReturnsCreatedAtAction_WhenUserIsValid()
         {
+            // Ensures a successful user creation returns CreatedAtAction with expected action name
+
             // Arrange
             var newUser = new User { Email = "newuser@example.com" };
             _mockUserService.Setup(service => service.AddUserAsync(newUser)).Returns(Task.CompletedTask);

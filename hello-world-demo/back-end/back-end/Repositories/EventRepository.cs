@@ -22,6 +22,7 @@ namespace back_end.Repositories
 
         public async Task<Event> GetEventByIdAsync(int id)
         {
+            // Fetch a specific event by ID, useful for detail views or edits
             return await _context.Events.FindAsync(id);
         }
 
@@ -39,6 +40,7 @@ namespace back_end.Repositories
 
         public async Task DeleteEventAsync(int id)
         {
+            // Only remove the event if it exists in the database
             var eventItem = await _context.Events.FindAsync(id);
             if (eventItem != null)
             {

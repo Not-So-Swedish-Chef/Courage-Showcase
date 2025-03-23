@@ -23,11 +23,13 @@ namespace back_end.Repositories
 
         public async Task<User> GetUserByIdAsync(int id)
         {
+            // Retrieve a user by ID, used for profile access or admin lookups
             return await _context.Users.FindAsync(id);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
+            // Find user by email, often used during login or email verification
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
@@ -45,6 +47,7 @@ namespace back_end.Repositories
 
         public async Task DeleteUserAsync(int id)
         {
+            // Only delete if user exists to prevent null reference errors
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
