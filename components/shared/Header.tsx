@@ -29,22 +29,16 @@ const Header = () => {
         </div>
 
         {/* for desktop navbar*/}
-        <SignedIn>
           <nav className="md:flex-between hidden w-full max-w-xs">
             <NavItems></NavItems>
           </nav>
-        </SignedIn>
 
         <div className="flex w-32 justify-end gap-3">
-          <SignedIn>
             <UserButton />
-          </SignedIn>
 
-          <SignedOut>
             <Button asChild className="rounded-full" size={"lg"}>
-              <Link href={"/sign-in"}>Login</Link>
+              <Link href={"/login"}>Login</Link>
             </Button>
-          </SignedOut>
           <MobileNav />
         </div>
       </div>

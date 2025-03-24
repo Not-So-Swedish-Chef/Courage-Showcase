@@ -1,10 +1,30 @@
 import EventForm from "@/components/shared/EventForm";
-import { auth, currentUser } from "@clerk/nextjs/server";
-
+// import { auth, currentUser } from "@clerk/nextjs/server";
+import { cookies } from 'next/headers'
+import { redirect } from "next/navigation";
 import React from "react";
 
 const CreateEvent = async () => {
-  const { userId } = (await auth()) as { userId: string };
+  // const { userId } = (await auth()) as { userId: string };
+  const token = cookies().get('authToken')?.value
+  const verifyResponse = await fetch(
+    `${process.env.API_BASE_URL}/auth/verify`, 
+    {
+      headers: {
+        Cookie: `authToken=${token}`
+      }
+    }
+  )
+
+  if (!verifyResponse.ok) {
+    redirect('/login')
+  }
+  
+  const user = await verifyResponse.json()
+  
+  if (user.role !== 'Host') {
+    redirect('/events')
+  }
 
   return (
     <>
@@ -14,7 +34,7 @@ const CreateEvent = async () => {
         </h3>
       </section>
       <div className="wrapper my-8">
-        <EventForm userId={userId} type="Create" />
+        <EventForm userId={user.id} type="Create" />
       </div>
     </>
   );
