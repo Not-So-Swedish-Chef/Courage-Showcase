@@ -1,8 +1,9 @@
 ﻿using System.Text;
-using back_end.Data;
+using back_end.Models;
 using back_end.Repositories;
 using back_end.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,6 +15,7 @@ namespace back_end
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory());
             // 1️⃣ Add Services to the Container
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -23,12 +25,15 @@ namespace back_end
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Dependency Injection for Repositories & Services
-            //Users
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddAuthorization();
 
-            //Events
+            //builder.Services.AddIdentityApiEndpoints<User>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // Dependency Injection for Repositories & Services
+            //builder.Services.AddScoped<IUserRepository, UserRepository>();
+            //builder.Services.AddScoped<IUserService, UserService>();
+
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
 
@@ -41,26 +46,28 @@ namespace back_end
                            .AllowAnyHeader());
             });
 
-            // JWT Authentication (If using authentication)
-            //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true,
-            //            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            //            ValidAudience = builder.Configuration["Jwt:Audience"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
-            //        };
-            //    });
+            builder.Services.AddIdentity<User, IdentityRole<int>>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
+                    };
+                });
 
             // Build the Application
             var app = builder.Build();
+            app.MapDefaultControllerRoute();
 
-            // 2️⃣ Configure Middleware Pipeline
 
             // Enable Swagger (For API Documentation)
             // 🔹 Ensure Swagger is available in production
@@ -74,8 +81,7 @@ namespace back_end
             // Use CORS
             app.UseCors("AllowAllOrigins");
 
-            // Global Exception Handling Middleware
-            //app.UseMiddleware<ExceptionHandlingMiddleware>();
+            
 
             // Enable Authentication & Authorization (If JWT is used)
             app.UseAuthentication();
@@ -90,3 +96,8 @@ namespace back_end
         }
     }
 }
+
+//TODO: Add Roles
+//TODO: Add Seed Data and Roles (Admin)
+//TODO: Make sure JWT works
+//TODO: Move validation to appropriate class (EventValidator)

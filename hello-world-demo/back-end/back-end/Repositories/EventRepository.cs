@@ -1,5 +1,4 @@
-﻿using back_end.Data;
-using back_end.Models;
+﻿using back_end.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;

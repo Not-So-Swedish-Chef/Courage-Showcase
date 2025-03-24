@@ -1,5 +1,4 @@
-﻿using back_end.Data;
-using back_end.Models;
+﻿using back_end.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,20 +17,16 @@ namespace back_end.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(u => u.SavedEvents).ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(u => u.SavedEvents)
+                                       .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-        public async Task AddUserAsync(User user)
+        public async Task CreateUserAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();

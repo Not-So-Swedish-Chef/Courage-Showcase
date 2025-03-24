@@ -17,7 +17,6 @@ namespace back_end_tests.Models
                 Title = "Valid Event",
                 StartDateTime = DateTime.Now.AddHours(1),
                 EndDateTime = DateTime.Now.AddHours(3),
-                IsFree = true
             };
 
             var validationResults = new List<ValidationResult>();
@@ -39,7 +38,6 @@ namespace back_end_tests.Models
                 Title = "Invalid Event",
                 StartDateTime = DateTime.Now.AddHours(3),
                 EndDateTime = DateTime.Now.AddHours(1),
-                IsFree = true
             };
 
             var validationResults = new List<ValidationResult>();
@@ -61,8 +59,6 @@ namespace back_end_tests.Models
                 Title = "Invalid Event",
                 StartDateTime = DateTime.Now.AddHours(1),
                 EndDateTime = DateTime.Now.AddHours(3),
-                IsFree = false, // Event is not free, so Price is required
-                Price = null // Price is missing
             };
 
             var validationResults = new List<ValidationResult>();
@@ -84,8 +80,6 @@ namespace back_end_tests.Models
                 Title = "Invalid Event",
                 StartDateTime = DateTime.Now.AddHours(1),
                 EndDateTime = DateTime.Now.AddHours(3),
-                IsFree = false, // Event is not free, so Price is required
-                Price = 0 // Price is zero (invalid)
             };
 
             var validationResults = new List<ValidationResult>();
@@ -107,7 +101,6 @@ namespace back_end_tests.Models
                 Title = "Valid Event",
                 StartDateTime = DateTime.Now.AddHours(1),
                 EndDateTime = DateTime.Now.AddHours(3),
-                IsFree = false, // Event is not free, so Price is required
                 Price = 10.50m // Price is valid
             };
 

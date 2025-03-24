@@ -119,16 +119,32 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "back_end.Controllers.UserController",
-    "Method": "GetUsers",
-    "RelativePath": "api/User",
+    "ContainingType": "back_end.Controllers.HostController",
+    "Method": "UpdateHostInfo",
+    "RelativePath": "api/Host",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "back_end.Controllers.UpdateHostModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "back_end.Controllers.HostController",
+    "Method": "GetMyEvents",
+    "RelativePath": "api/Host/events",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[back_end.Models.User, back-end, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[back_end.Models.Event, back-end, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -140,72 +156,15 @@
   },
   {
     "ContainingType": "back_end.Controllers.UserController",
-    "Method": "CreateUser",
-    "RelativePath": "api/User",
+    "Method": "Login",
+    "RelativePath": "api/User/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "user",
-        "Type": "back_end.Models.User",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "back_end.Models.User",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "back_end.Controllers.UserController",
-    "Method": "GetUserById",
-    "RelativePath": "api/User/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "back_end.Models.User",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "back_end.Controllers.UserController",
-    "Method": "UpdateUser",
-    "RelativePath": "api/User/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "user",
-        "Type": "back_end.Models.User",
+        "Name": "model",
+        "Type": "back_end.Controllers.LoginModel",
         "IsRequired": true
       }
     ],
@@ -213,18 +172,70 @@
   },
   {
     "ContainingType": "back_end.Controllers.UserController",
-    "Method": "DeleteUser",
-    "RelativePath": "api/User/{id}",
+    "Method": "Register",
+    "RelativePath": "api/User/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "back_end.Controllers.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "back_end.Controllers.UserController",
+    "Method": "SaveEvent",
+    "RelativePath": "api/User/save/{eventId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "eventId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "back_end.Controllers.UserController",
+    "Method": "RemoveSavedEvent",
+    "RelativePath": "api/User/save/{eventId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "eventId",
         "Type": "System.Int32",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "back_end.Controllers.UserController",
+    "Method": "GetSavedEvents",
+    "RelativePath": "api/User/saved",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[back_end.Models.Event, back-end, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

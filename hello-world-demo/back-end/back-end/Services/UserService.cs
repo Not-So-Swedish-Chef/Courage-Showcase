@@ -1,47 +1,65 @@
-﻿using back_end.Models;
-using back_end.Repositories;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using back_end.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace back_end.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ApplicationDbContext _context;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(ApplicationDbContext context)
         {
-            _userRepository = userRepository;
+            _context = context;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<Event>> GetSavedEventsAsync(int userId)
         {
-            return await _userRepository.GetAllUsersAsync();
+            var user = await _context.Users
+                .Include(u => u.SavedEvents)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            return user?.SavedEvents;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<bool> SaveEventAsync(int userId, int eventId)
         {
-            return await _userRepository.GetUserByIdAsync(id);
+            var user = await _context.Users
+                .Include(u => u.SavedEvents)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return false;
+
+            var eventItem = await _context.Events.FindAsync(eventId);
+            if (eventItem == null)
+                return false;
+
+            if (!user.SavedEvents.Contains(eventItem))
+            {
+                user.SavedEvents.Add(eventItem);
+                await _context.SaveChangesAsync();
+            }
+            return true;
         }
 
-        public async Task<User> GetUserByEmailAsync(string email)
+        public async Task<bool> RemoveSavedEventAsync(int userId, int eventId)
         {
-            return await _userRepository.GetUserByEmailAsync(email);
-        }
+            var user = await _context.Users
+                .Include(u => u.SavedEvents)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return false;
 
-        public async Task AddUserAsync(User user)
-        {
-            await _userRepository.AddUserAsync(user);
-        }
+            var eventItem = await _context.Events.FindAsync(eventId);
+            if (eventItem == null)
+                return false;
 
-        public async Task UpdateUserAsync(User user)
-        {
-            await _userRepository.UpdateUserAsync(user);
-        }
-
-        public async Task DeleteUserAsync(int id)
-        {
-            await _userRepository.DeleteUserAsync(id);
+            if (user.SavedEvents.Contains(eventItem))
+            {
+                user.SavedEvents.Remove(eventItem);
+                await _context.SaveChangesAsync();
+            }
+            return true;
         }
     }
 }

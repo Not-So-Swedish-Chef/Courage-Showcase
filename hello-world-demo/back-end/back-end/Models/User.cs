@@ -1,19 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace back_end.Models
 {
-    public class User
+    public class User: IdentityUser<int>
     {
-        [Key]
-        public int Id { get; set; }
+        [Required]
         public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string Email { get; set; }
-
-        public string Password { get; set; }
-
-        public string AccountType { get; set; }
+        [Required]
+        public string LastName { get; set; } = "";
+        public UserType UserType { get; set; } = UserType.Member;
+        public ICollection<Event> SavedEvents { get; set; } = new List<Event>();
     }
 }

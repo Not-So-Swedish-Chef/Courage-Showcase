@@ -15,8 +15,6 @@ namespace back_end_tests.Models
                 FirstName = "John",
                 LastName = "Doe",
                 Email = "john.doe@example.com",
-                Password = "SecurePassword123",
-                AccountType = "User"
             };
 
             var validationContext = new ValidationContext(validUser);

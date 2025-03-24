@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
     "title": "back-end",
     "version": "1.0"
@@ -202,10 +202,10 @@
         }
       }
     },
-    "/api/User": {
+    "/api/Host/events": {
       "get": {
         "tags": [
-          "User"
+          "Host"
         ],
         "responses": {
           "200": {
@@ -215,7 +215,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/Event"
                   }
                 }
               },
@@ -223,7 +223,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/Event"
                   }
                 }
               },
@@ -231,14 +231,47 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/Event"
                   }
                 }
               }
             }
           }
         }
-      },
+      }
+    },
+    "/api/Host": {
+      "put": {
+        "tags": [
+          "Host"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHostModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHostModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHostModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/register": {
       "post": {
         "tags": [
           "User"
@@ -247,38 +280,90 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegisterModel"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegisterModel"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/RegisterModel"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/User/saved": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
                 }
               }
             }
@@ -286,14 +371,14 @@
         }
       }
     },
-    "/api/User/{id}": {
-      "get": {
+    "/api/User/save/{eventId}": {
+      "post": {
         "tags": [
           "User"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
             "required": true,
             "schema": {
@@ -302,63 +387,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -371,7 +399,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "eventId",
             "in": "path",
             "required": true,
             "schema": {
@@ -401,10 +429,6 @@
             "type": "string",
             "nullable": true
           },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
           "location": {
             "type": "string",
             "nullable": true
@@ -421,19 +445,118 @@
             "type": "string",
             "format": "date-time"
           },
-          "categoryId": {
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "url": {
             "type": "string",
             "nullable": true
           },
-          "price": {
-            "type": "number",
-            "format": "double",
+          "hostId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "host": {
+            "$ref": "#/components/schemas/Host"
+          },
+          "usersWhoSaved": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Host": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "agencyName": {
+            "type": "string",
             "nullable": true
           },
-          "isFree": {
-            "type": "boolean"
+          "bio": {
+            "type": "string",
+            "nullable": true
           },
-          "url": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginModel": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisterModel": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "firstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userType": {
+            "$ref": "#/components/schemas/UserType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateHostModel": {
+        "type": "object",
+        "properties": {
+          "agencyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
             "type": "string",
             "nullable": true
           }
@@ -441,17 +564,21 @@
         "additionalProperties": false
       },
       "User": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "firstName": {
+          "userName": {
             "type": "string",
             "nullable": true
           },
-          "lastName": {
+          "normalizedUserName": {
             "type": "string",
             "nullable": true
           },
@@ -459,16 +586,76 @@
             "type": "string",
             "nullable": true
           },
-          "password": {
+          "normalizedEmail": {
             "type": "string",
             "nullable": true
           },
-          "accountType": {
+          "emailConfirmed": {
+            "type": "boolean"
+          },
+          "passwordHash": {
             "type": "string",
+            "nullable": true
+          },
+          "securityStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "concurrencyStamp": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumberConfirmed": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "lockoutEnd": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lockoutEnabled": {
+            "type": "boolean"
+          },
+          "accessFailedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userType": {
+            "$ref": "#/components/schemas/UserType"
+          },
+          "savedEvents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
             "nullable": true
           }
         },
         "additionalProperties": false
+      },
+      "UserType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
       }
     }
   }

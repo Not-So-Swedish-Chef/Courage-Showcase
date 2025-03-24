@@ -1,5 +1,6 @@
 ﻿using back_end.Models;
 using back_end.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace back_end.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] Event eventItem)
         {
             if (eventItem == null) return BadRequest();
@@ -40,6 +42,7 @@ namespace back_end.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateEvent(int id, [FromBody] Event eventItem)
         {
             if (eventItem == null || id == 0) return BadRequest();
@@ -48,6 +51,7 @@ namespace back_end.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             await _eventService.DeleteEventAsync(id);
