@@ -89,8 +89,22 @@ namespace back_end.Controllers
 
             // Generate a JWT token.
             var token = GenerateJwtToken(user);
-            return Ok(new { Token = token });
+
+            // Return token along with user details
+            return Ok(new
+            {
+                Token = token,
+                User = new
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    UserType = user.UserType.ToString()
+                }
+            });
         }
+
 
         private string GenerateJwtToken(User user)
         {

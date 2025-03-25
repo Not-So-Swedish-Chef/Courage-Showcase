@@ -31,8 +31,8 @@ namespace back_end
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Dependency Injection for Repositories & Services
-            //builder.Services.AddScoped<IUserRepository, UserRepository>();
-            //builder.Services.AddScoped<IUserService, UserService>();
+             builder.Services.AddScoped<IHostService, HostService>();
+             builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddScoped<IEventRepository, EventRepository>();
             builder.Services.AddScoped<IEventService, EventService>();
