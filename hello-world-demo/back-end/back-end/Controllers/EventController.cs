@@ -25,6 +25,7 @@ namespace back_end.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Event>> GetEventById(int id)
         {
             var eventItem = await _eventService.GetEventByIdAsync(id);

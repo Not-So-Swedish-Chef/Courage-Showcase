@@ -90,7 +90,27 @@ namespace back_end.Controllers
             // Generate a JWT token.
             var token = GenerateJwtToken(user);
 
-            // Return token along with user details
+            // Create a ClaimsPrincipal with user data
+            var claims = new List<Claim>
+    {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim("FirstName", user.FirstName),
+            new Claim("LastName", user.LastName),
+            new Claim("UserType", user.UserType.ToString())
+    };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "login");
+            var principal = new ClaimsPrincipal(claimsIdentity);
+
+            // Sign in the user in the context (set user for the current session)
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
+            // Set the user in the HttpContext
+            HttpContext.User = principal;
+
+            // Return the token and user details
             return Ok(new
             {
                 Token = token,
@@ -136,32 +156,54 @@ namespace back_end.Controllers
         [HttpGet("saved")]
         public async Task<ActionResult<IEnumerable<Event>>> GetSavedEvents()
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var savedEvents = await _userService.GetSavedEventsAsync(userId);
+            // Retrieve the currently authenticated user.
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized("User not found.");
+
+            // Get the saved events for the user.
+            var savedEvents = await _userService.GetSavedEventsAsync(user.Id);
             return Ok(savedEvents);
         }
 
+
+        // POST: api/User/save/{eventId}
         // POST: api/User/save/{eventId}
         [HttpPost("save/{eventId}")]
         public async Task<IActionResult> SaveEvent(int eventId)
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var result = await _userService.SaveEventAsync(userId, eventId);
+            // Retrieve the currently authenticated user.
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized("User not found.");
+
+            // Save the event for the user.
+            var result = await _userService.SaveEventAsync(user.Id, eventId);
             if (!result)
                 return BadRequest("Unable to save event.");
+
             return Ok("Event saved successfully.");
         }
 
+
+        // DELETE: api/User/save/{eventId}
         // DELETE: api/User/save/{eventId}
         [HttpDelete("save/{eventId}")]
         public async Task<IActionResult> RemoveSavedEvent(int eventId)
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var result = await _userService.RemoveSavedEventAsync(userId, eventId);
+            // Retrieve the currently authenticated user.
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized("User not found.");
+
+            // Remove the event from the user's saved events.
+            var result = await _userService.RemoveSavedEventAsync(user.Id, eventId);
             if (!result)
                 return BadRequest("Unable to remove event.");
+
             return Ok("Event removed successfully.");
         }
+
     }
 
     // Extend the registration model to include the user type.

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using back_end.Models;
 using back_end.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace back_end.Controllers
@@ -13,10 +14,13 @@ namespace back_end.Controllers
     public class HostController : ControllerBase
     {
         private readonly IHostService _hostService;
+        private readonly UserManager<User> _userManager;
 
-        public HostController(IHostService hostService)
+        // Constructor with both IHostService and UserManager<User> injected
+        public HostController(IHostService hostService, UserManager<User> userManager)
         {
-            _hostService = hostService;
+            _hostService = hostService ?? throw new ArgumentNullException(nameof(hostService));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         // GET: api/Host/events
@@ -24,13 +28,22 @@ namespace back_end.Controllers
         [HttpGet("events")]
         public async Task<ActionResult<IEnumerable<Event>>> GetMyEvents()
         {
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            // Retrieve the currently authenticated user from HttpContext.
+            var userIdString = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !int.TryParse(userIdString, out int userId))
+                return Unauthorized("User not found.");
+
+            // Get the host profile by user ID.
             var host = await _hostService.GetHostByUserIdAsync(userId);
             if (host == null)
                 return NotFound("Host profile not found.");
 
             return Ok(host.Events);
         }
+
+
+
 
         // PUT: api/Host
         // Allows a host to update their profile information.

@@ -1,20 +1,12 @@
 {
   "Version": 1,
-  "Hash": "vfCZ1jhRUoADh0hGL6EbMg2IDOnLw/DZtaM39M0+Las=",
+  "Hash": "YHpaKJmvVFj0dd2ywy9d/vXkDlAttU2O4iIbU1YY9h0=",
   "Source": "back-end",
   "BasePath": "_content/back-end",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [
-    {
-      "Name": "back-end\\wwwroot",
-      "Source": "back-end",
-      "ContentRoot": "C:\\Users\\orazu\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\wwwroot\\",
-      "BasePath": "_content/back-end",
-      "Pattern": "**"
-    }
-  ],
+  "DiscoveryPatterns": [],
   "Assets": [],
   "Endpoints": []
 }
