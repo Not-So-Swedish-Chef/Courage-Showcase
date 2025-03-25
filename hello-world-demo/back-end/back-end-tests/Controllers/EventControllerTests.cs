@@ -1,71 +1,71 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Xunit;
 using Moq;
-using Xunit;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using back_end.Controllers;
 using back_end.Models;
 using back_end.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace back_end_tests.Controllers
 {
     public class EventControllerTests
     {
-        private readonly Mock<IEventService> _mockEventService;
+        private readonly Mock<IEventService> _eventServiceMock;
         private readonly EventController _controller;
 
         public EventControllerTests()
         {
-            _mockEventService = new Mock<IEventService>();
-            _controller = new EventController(_mockEventService.Object);
+            _eventServiceMock = new Mock<IEventService>();
+            _controller = new EventController(_eventServiceMock.Object);
         }
 
         [Fact]
         public async Task GetEvents_ReturnsOkResult_WithListOfEvents()
         {
-            // Arrange
-            var mockEvents = new List<Event>
-            {
-                new Event { Title = "Event 1" },
-                new Event { Title = "Event 2" }
-            };
-            _mockEventService.Setup(service => service.GetAllEventsAsync()).ReturnsAsync(mockEvents);
+            var events = new List<Event> { new Event(), new Event() };
+            _eventServiceMock.Setup(s => s.GetAllEventsAsync()).ReturnsAsync(events);
 
-            // Act
             var result = await _controller.GetEvents();
 
-            // Assert
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnEvents = Assert.IsType<List<Event>>(okResult.Value);
-            Assert.Equal(2, returnEvents.Count);
+            Assert.Equal(events, okResult.Value);
         }
 
         [Fact]
-        public async Task GetEventById_ReturnsNotFound_WhenEventDoesNotExist()
+        public async Task GetEventById_ReturnsNotFound_WhenEventIsNull()
         {
-            // Arrange
-            _mockEventService.Setup(service => service.GetEventByIdAsync(It.IsAny<int>())).ReturnsAsync((Event)null);
+            _eventServiceMock.Setup(s => s.GetEventByIdAsync(It.IsAny<int>())).ReturnsAsync((Event)null);
 
-            // Act
             var result = await _controller.GetEventById(1);
 
-            // Assert
             Assert.IsType<NotFoundResult>(result.Result);
         }
 
         [Fact]
-        public async Task CreateEvent_ReturnsCreatedAtAction_WhenEventIsValid()
+        public async Task CreateEvent_ReturnsBadRequest_WhenEventIsNull()
         {
-            // Arrange
-            var newEvent = new Event { Title = "New Event" };
-            _mockEventService.Setup(service => service.AddEventAsync(newEvent)).Returns(Task.CompletedTask);
+            var result = await _controller.CreateEvent(null);
 
-            // Act
-            var result = await _controller.CreateEvent(newEvent);
+            Assert.IsType<BadRequestResult>(result.Result);
+        }
 
-            // Assert
-            var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-            Assert.Equal("GetEventById", createdAtActionResult.ActionName);
+        [Fact]
+        public async Task UpdateEvent_ReturnsNoContent()
+        {
+            var testEvent = new Event { Id = 1 };
+
+            var result = await _controller.UpdateEvent(1, testEvent);
+
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteEvent_ReturnsNoContent()
+        {
+            var result = await _controller.DeleteEvent(1);
+
+            Assert.IsType<NoContentResult>(result);
         }
     }
 }

@@ -1,61 +1,51 @@
-﻿//using Microsoft.EntityFrameworkCore;
-//using Xunit;
-//using back_end.Models;
-//using back_end.Repositories;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Xunit;
+using Microsoft.EntityFrameworkCore;
+using back_end.Models;
+using back_end.Repositories;
 
-//namespace back_end_tests.Repositories
-//{
-//    public class UserRepositoryTests
-//    {
-//        private DbContextOptions<ApplicationDbContext> GetInMemoryDbContextOptions(string databaseName)
-//        {
-//            return new DbContextOptionsBuilder<ApplicationDbContext>()
-//                .UseInMemoryDatabase(databaseName: databaseName)
-//                .Options;
-//        }
+namespace back_end_tests.Repositories
+{
+    public class UserRepositoryTests
+    {
+        private DbContextOptions<ApplicationDbContext> GetInMemoryDbOptions(string dbName)
+        {
+            return new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: dbName)
+                .Options;
+        }
 
+        [Fact]
+        public async Task GetUserByIdAsync_ReturnsNull_WhenUserNotFound()
+        {
+            // Arrange
+            var options = GetInMemoryDbOptions("GetUserByIdAsync_ReturnsNull");
+            using var context = new ApplicationDbContext(options);
+            var repository = new UserRepository(context);
 
-//        [Fact]
-//        public async Task GetUserByIdAsync_ReturnsNull_WhenUserDoesNotExist()
-//        {
-//            // Arrange
-//            var options = GetInMemoryDbContextOptions("GetUserByIdAsync_ReturnsNull_WhenUserDoesNotExist");
+            // Act
+            var result = await repository.GetUserByIdAsync(999);
 
-//            using (var context = new ApplicationDbContext(options))
-//            {
-//                var repository = new UserRepository(context);
+            // Assert
+            Assert.Null(result);
+        }
 
-//                // Act
-//                var result = await repository.GetUserByIdAsync(1);
+        [Fact]
+        public async Task CreateUserAsync_SavesUserSuccessfully()
+        {
+            // Arrange
+            var options = GetInMemoryDbOptions("CreateUserAsync_SavesUserSuccessfully");
+            using var context = new ApplicationDbContext(options);
+            var repository = new UserRepository(context);
+            var newUser = new User { Email = "test@example.com", FirstName = "Test", LastName = "User", UserName = "test@example.com" };
 
-//                // Assert
-//                Assert.Null(result);
-//            }
-//        }
+            // Act
+            await repository.CreateUserAsync(newUser);
 
-        
-
-//        [Fact]
-//        public async Task GetUserByEmailAsync_ReturnsNull_WhenUserDoesNotExist()
-//        {
-//            // Arrange
-//            var options = GetInMemoryDbContextOptions("GetUserByEmailAsync_ReturnsNull_WhenUserDoesNotExist");
-
-//            using (var context = new ApplicationDbContext(options))
-//            {
-//                var repository = new UserRepository(context);
-
-//                // Act
-//                var result = await repository.GetUserByEmailAsync("nonexistent@example.com");
-
-//                // Assert
-//                Assert.Null(result);
-//            }
-//        }
-
-        
-//    }
-//}
+            // Assert
+            var savedUser = await context.Users.FirstOrDefaultAsync();
+            Assert.NotNull(savedUser);
+            Assert.Equal("test@example.com", savedUser.Email);
+        }
+    }
+}

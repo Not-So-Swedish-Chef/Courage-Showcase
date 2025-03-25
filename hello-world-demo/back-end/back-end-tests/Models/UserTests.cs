@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Xunit;
 using back_end.Models;
 
@@ -7,27 +8,41 @@ namespace back_end_tests.Models
     public class UserTests
     {
         [Fact]
-        public void Validate_ReturnsNoErrors_WhenUserIsValid()
+        public void User_IsValid_WithRequiredFields()
         {
-            // Arrange
-            var validUser = new User
+            var user = new User
             {
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example.com",
+                FirstName = "Ahmed",
+                LastName = "Muqarrib",
+                Email = "test@example.com",
+                UserType = UserType.Member
             };
 
-            var validationContext = new ValidationContext(validUser);
-            var validationResults = new List<ValidationResult>();
+            var context = new ValidationContext(user);
+            var results = new List<ValidationResult>();
 
-            // Act
-            var isValid = Validator.TryValidateObject(validUser, validationContext, validationResults, true);
+            var isValid = Validator.TryValidateObject(user, context, results, true);
 
-            // Assert
             Assert.True(isValid);
-            Assert.Empty(validationResults);
+            Assert.Empty(results);
         }
 
-       
+        [Fact]
+        public void User_IsInvalid_WithoutFirstName()
+        {
+            var user = new User
+            {
+                LastName = "Muqarrib",
+                Email = "test@example.com"
+            };
+
+            var context = new ValidationContext(user);
+            var results = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateObject(user, context, results, true);
+
+            Assert.False(isValid);
+            Assert.Contains(results, r => r.MemberNames.Contains("FirstName"));
+        }
     }
 }
