@@ -15,7 +15,10 @@ namespace back_end
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory());
+            builder.WebHost
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://0.0.0.0:5000", "http://localhost:5001");
+
             // 1️⃣ Add Services to the Container
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

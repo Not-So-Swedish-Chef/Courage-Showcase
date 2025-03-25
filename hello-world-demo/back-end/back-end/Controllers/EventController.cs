@@ -33,7 +33,6 @@ namespace back_end.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] Event eventItem)
         {
             if (eventItem == null) return BadRequest();

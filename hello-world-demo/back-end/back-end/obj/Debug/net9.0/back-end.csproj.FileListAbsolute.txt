@@ -838,7 +838,6 @@ C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.back-end.props
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.back-end.props
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.pack.json
-C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.csproj.Up2Date
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.dll
 C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\refint\back-end.dll
@@ -1743,3 +1742,40 @@ C:\Users\Owner\OneDrive\Desktop\Courage-Showcase\hello-world-demo\back-end\back-
 C:\Users\Owner\OneDrive\Desktop\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.pdb
 C:\Users\Owner\OneDrive\Desktop\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.genruntimeconfig.cache
 C:\Users\Owner\OneDrive\Desktop\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\ref\back-end.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.CommandLine.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Json.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Hosting.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.Configuration.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.Console.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.Debug.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.EventLog.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Logging.EventSource.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\System.Diagnostics.EventLog.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\runtimes\win\lib\net9.0\System.Diagnostics.EventLog.dll
+C:\School\Sem 5\Capstone\Github\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

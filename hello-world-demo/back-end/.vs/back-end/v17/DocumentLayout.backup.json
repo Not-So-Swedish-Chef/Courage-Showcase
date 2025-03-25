@@ -1,0 +1,464 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end-tests\\controllers\\eventcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\eventcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end-tests\\services\\userservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\services\\userservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end-tests\\controllers\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end-tests\\repositories\\userrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\repositories\\userrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\properties\\servicedependencies.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\properties\\servicedependencies.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\services\\hostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\hostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\models\\usertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\usertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\models\\host.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\host.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\controllers\\hostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\hostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\hello-world-demo\\back-end\\back-end\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Controllers\\UserControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\UserControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Controllers\\UserControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\UserControllerTests.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAcwEYAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:57:03.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserServiceTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Services\\UserServiceTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Services\\UserServiceTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Services\\UserServiceTests.cs",
+              "RelativeToolTip": "back-end-tests\\Services\\UserServiceTests.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAASwBUAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:55:28.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Program.cs",
+              "RelativeDocumentMoniker": "back-end\\Program.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Program.cs",
+              "RelativeToolTip": "back-end\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:08:08.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EventControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Controllers\\EventControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\EventControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Controllers\\EventControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\EventControllerTests.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAqwEUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:56:56.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserRepositoryTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "RelativeToolTip": "back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAcwDwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:55:22.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "back-end\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Properties\\launchSettings.json",
+              "RelativeToolTip": "back-end\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-25T03:09:15.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EventController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\EventController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\EventController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\EventController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\EventController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAqwCIAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:27:29.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "back-end\\appsettings.Development.json",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\appsettings.Development.json",
+              "RelativeToolTip": "back-end\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-25T03:54:23.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\appsettings.json",
+              "RelativeDocumentMoniker": "back-end\\appsettings.json",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\appsettings.json",
+              "RelativeToolTip": "back-end\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-25T03:09:56.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HostService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\HostService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\HostService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\HostService.cs",
+              "RelativeToolTip": "back-end\\Services\\HostService.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAYwDQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:49.739Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\UserService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\UserService.cs",
+              "RelativeToolTip": "back-end\\Services\\UserService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAgwEAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:39.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EventService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\EventService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\EventService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Services\\EventService.cs",
+              "RelativeToolTip": "back-end\\Services\\EventService.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAwCoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:37.922Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "serviceDependencies.json",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Properties\\serviceDependencies.json",
+              "RelativeDocumentMoniker": "back-end\\Properties\\serviceDependencies.json",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Properties\\serviceDependencies.json",
+              "RelativeToolTip": "back-end\\Properties\\serviceDependencies.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-25T03:09:35.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:28:39.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAA1wDMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:22.831Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\IUserRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\IUserRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:21.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IEventRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\IEventRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\IEventRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\IEventRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\IEventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:17.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\EventRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\EventRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Repositories\\EventRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\EventRepository.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAA1wDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:11.725Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UserType.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\UserType.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\UserType.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\UserType.cs",
+              "RelativeToolTip": "back-end\\Models\\UserType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:04.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\User.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\User.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\User.cs",
+              "RelativeToolTip": "back-end\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:29:00.32Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Host.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\Host.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Host.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\Host.cs",
+              "RelativeToolTip": "back-end\\Models\\Host.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:28:53.828Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\Event.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Event.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Models\\Event.cs",
+              "RelativeToolTip": "back-end\\Models\\Event.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAuwCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:28:44.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "back-end\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "back-end\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAkwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:28:16.612Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "HostController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\HostController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\HostController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\HostController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\HostController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAAwDsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:27:42.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\hello-world-demo\\back-end\\back-end\\Controllers\\UserController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\UserController.cs",
+              "ViewState": "AgIAALUAAAAAAAAAAAAswMAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:27:35.494Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 171,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
