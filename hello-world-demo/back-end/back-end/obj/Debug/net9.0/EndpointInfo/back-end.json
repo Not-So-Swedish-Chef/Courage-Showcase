@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.4",
   "info": {
-    "title": "back-end",
-    "version": "1.0"
+    "title": "Auth Demo",
+    "version": "v1"
   },
   "paths": {
     "/api/Event": {
@@ -419,6 +419,13 @@
   "components": {
     "schemas": {
       "Event": {
+        "required": [
+          "endDateTime",
+          "hostId",
+          "location",
+          "startDateTime",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -426,12 +433,12 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "location": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "imageUrl": {
             "type": "string",
@@ -446,11 +453,13 @@
             "format": "date-time"
           },
           "price": {
+            "minimum": 0,
             "type": "number",
             "format": "double"
           },
           "url": {
             "type": "string",
+            "format": "uri",
             "nullable": true
           },
           "hostId": {
@@ -657,6 +666,19 @@
         "type": "integer",
         "format": "int32"
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Please add the token in the format: Bearer <your-token>",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

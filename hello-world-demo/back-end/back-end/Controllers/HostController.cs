@@ -10,7 +10,6 @@ namespace back_end.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Optionally, you could restrict further to Hosts using a Role-based check
     public class HostController : ControllerBase
     {
         private readonly IHostService _hostService;
