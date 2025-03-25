@@ -134,7 +134,6 @@ namespace back_end.Controllers
 
         // GET: api/User/saved
         [HttpGet("saved")]
-        [Authorize]
         public async Task<ActionResult<IEnumerable<Event>>> GetSavedEvents()
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -144,7 +143,6 @@ namespace back_end.Controllers
 
         // POST: api/User/save/{eventId}
         [HttpPost("save/{eventId}")]
-        [Authorize]
         public async Task<IActionResult> SaveEvent(int eventId)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -156,7 +154,6 @@ namespace back_end.Controllers
 
         // DELETE: api/User/save/{eventId}
         [HttpDelete("save/{eventId}")]
-        [Authorize]
         public async Task<IActionResult> RemoveSavedEvent(int eventId)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

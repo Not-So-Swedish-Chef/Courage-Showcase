@@ -33,16 +33,23 @@ namespace back_end.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<Event>> CreateEvent([FromBody] Event eventItem)
         {
             if (eventItem == null) return BadRequest();
+
+            // Validate ModelState
+            if (!TryValidateModel(eventItem))
+            {
+                return BadRequest(ModelState);
+            }
+
             await _eventService.AddEventAsync(eventItem);
-            return CreatedAtAction(nameof(GetEventById), new { id = eventItem.Title }, eventItem);
+
+            return CreatedAtAction(nameof(GetEventById), new { id = eventItem.Id }, eventItem);
         }
 
+
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> UpdateEvent(int id, [FromBody] Event eventItem)
         {
             if (eventItem == null || id == 0) return BadRequest();
@@ -51,7 +58,6 @@ namespace back_end.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             await _eventService.DeleteEventAsync(id);

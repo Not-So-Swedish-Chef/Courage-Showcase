@@ -1,41 +1,64 @@
-﻿using System;
+﻿using back_end.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace back_end.Models
+public class Event
 {
-    public class Event
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    public string Title { get; set; } = "";
+
+    [Required]
+    public string Location { get; set; } = "";
+
+    public string ImageUrl { get; set; } = "";
+
+    [Required]
+    public DateTime StartDateTime { get; set; }
+
+    [Required]
+    public DateTime EndDateTime { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    [Range(0, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
+    public decimal Price { get; set; } = 0;
+
+    [Url]
+    public string Url { get; set; } = "";
+
+    // Foreign Key for Host
+    [Required]
+    public int HostId { get; set; }
+
+    // Navigation Property
+    [ForeignKey("HostId")]
+    public virtual back_end.Models.Host? Host { get; set; }  // No default initialization
+
+    // Many-to-Many relationship with UsersWhoSaved
+    public ICollection<User> UsersWhoSaved { get; set; } = new List<User>();
+
+    // Constructor to initialize default date values
+    public Event()
     {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; } = "";
+        StartDateTime = DateTime.UtcNow;
+        EndDateTime = DateTime.UtcNow.AddHours(1);
+    }
 
-        public string Location { get; set; } = "";
+    // Validation Method
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var results = new List<ValidationResult>();
 
-        public string ImageUrl { get; set; } = "";
-
-        public DateTime StartDateTime { get; set; } 
-
-        public DateTime EndDateTime { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Price { get; set; } = 0;
-        public string Url { get; set; } = "";
-        public int HostId { get; set; }
-
-        public virtual Host Host { get; set; } = new Host();
-        public ICollection<User> UsersWhoSaved { get; set; } = new List<User>();
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        if (StartDateTime >= EndDateTime)
         {
-            var results = new List<ValidationResult>();
-
-            
-            // Ensure StartDateTime is before EndDateTime
-            if (StartDateTime >= EndDateTime)
-            {
-                results.Add(new ValidationResult("Start date and time must be before end date and time.", new[] { nameof(StartDateTime), nameof(EndDateTime) }));
-            }
-            return results;
+            results.Add(new ValidationResult(
+                "Start date and time must be before end date and time.",
+                new[] { nameof(StartDateTime), nameof(EndDateTime) }
+            ));
         }
+
+        return results;
     }
 }
