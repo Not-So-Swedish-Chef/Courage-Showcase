@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace back_end.Controllers
 {
+    [Authorize(Roles = "Host")]
     [Route("api/[controller]")]
     [ApiController]
     public class HostController : ControllerBase
@@ -41,9 +42,6 @@ namespace back_end.Controllers
 
             return Ok(host.Events);
         }
-
-
-
 
         // PUT: api/Host
         // Allows a host to update their profile information.

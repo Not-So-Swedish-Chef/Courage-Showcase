@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using back_end.Models;
+using back_end.Models.Api;
 using back_end.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,7 @@ namespace back_end.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly JwtService _jwtService;
         private readonly IConfiguration _configuration;
         private readonly IHostService _hostService; // Inject HostService for host-related logic
         private readonly IUserService _userService; // For saved events endpoints
@@ -26,12 +28,14 @@ namespace back_end.Controllers
         public UserController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
+            JwtService jwtService,
             IConfiguration configuration,
             IHostService hostService,
             IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _jwtService = jwtService;
             _configuration = configuration;
             _hostService = hostService;
             _userService = userService;
@@ -44,26 +48,25 @@ namespace back_end.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Create a new user instance.
             var user = new User
             {
-                UserName = model.Email, // or another unique username
+                UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                UserType = model.UserType // Set the user type (Member or Host)
+                UserType = model.UserType
             };
 
-            // Identity automatically hashes the password.
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
 
-            // If the user is a Host, create the Host row.
+            await _userManager.AddToRoleAsync(user, "Member");
             if (user.UserType == UserType.Host)
             {
+                await _userManager.AddToRoleAsync(user, "Host");
                 await _hostService.CreateHostAsync(user);
             }
 
@@ -71,85 +74,15 @@ namespace back_end.Controllers
         }
 
         // POST: api/User/login
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            // Find the user by email.
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
+            var result = await _jwtService.Authenticate(request);
+            if (result == null)
                 return Unauthorized(new { Message = "Invalid credentials" });
 
-            // Check the password.
-            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-            if (!result.Succeeded)
-                return Unauthorized(new { Message = "Invalid credentials" });
-
-            // Generate a JWT token.
-            var token = GenerateJwtToken(user);
-
-            // Create a ClaimsPrincipal with user data
-            var claims = new List<Claim>
-    {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim("FirstName", user.FirstName),
-            new Claim("LastName", user.LastName),
-            new Claim("UserType", user.UserType.ToString())
-    };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "login");
-            var principal = new ClaimsPrincipal(claimsIdentity);
-
-            // Sign in the user in the context (set user for the current session)
-            await _signInManager.SignInAsync(user, isPersistent: false);
-
-            // Set the user in the HttpContext
-            HttpContext.User = principal;
-
-            // Return the token and user details
-            return Ok(new
-            {
-                Token = token,
-                User = new
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    UserType = user.UserType.ToString()
-                }
-            });
-        }
-
-
-        private string GenerateJwtToken(User user)
-        {
-            // Create claims to include in the token.
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.UserName)
-            };
-
-            // Get key and credentials.
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            // Create the token.
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1), // Token valid for 1 hour
-                signingCredentials: creds);
-
-            // Return the serialized JWT.
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return Ok(result);
         }
 
         // GET: api/User/saved
@@ -166,8 +99,6 @@ namespace back_end.Controllers
             return Ok(savedEvents);
         }
 
-
-        // POST: api/User/save/{eventId}
         // POST: api/User/save/{eventId}
         [HttpPost("save/{eventId}")]
         public async Task<IActionResult> SaveEvent(int eventId)
@@ -177,7 +108,6 @@ namespace back_end.Controllers
             if (user == null)
                 return Unauthorized("User not found.");
 
-            // Save the event for the user.
             var result = await _userService.SaveEventAsync(user.Id, eventId);
             if (!result)
                 return BadRequest("Unable to save event.");
@@ -186,7 +116,6 @@ namespace back_end.Controllers
         }
 
 
-        // DELETE: api/User/save/{eventId}
         // DELETE: api/User/save/{eventId}
         [HttpDelete("save/{eventId}")]
         public async Task<IActionResult> RemoveSavedEvent(int eventId)
@@ -223,18 +152,6 @@ namespace back_end.Controllers
         [Required]
         public string LastName { get; set; }
 
-        // Specify whether the user is a Member or Host.
         public UserType UserType { get; set; } = UserType.Member;
-    }
-
-    // Model for user login.
-    public class LoginModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-    }
+    }    
 }

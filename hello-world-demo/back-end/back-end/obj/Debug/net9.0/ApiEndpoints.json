@@ -163,12 +163,22 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "model",
-        "Type": "back_end.Controllers.LoginModel",
+        "Name": "request",
+        "Type": "back_end.Models.Api.LoginRequestModel",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "back_end.Models.Api.LoginResponseModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "back_end.Controllers.UserController",

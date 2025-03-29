@@ -32,8 +32,12 @@ namespace back_end.Repositories
 
         public async Task UpdateEventAsync(Event eventItem)
         {
-            _context.Events.Update(eventItem);
-            await _context.SaveChangesAsync();
+            var existingEvent = await _context.Events.FindAsync(eventItem.Id);
+            if (existingEvent != null)
+            {
+                _context.Entry(existingEvent).CurrentValues.SetValues(eventItem);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteEventAsync(int id)

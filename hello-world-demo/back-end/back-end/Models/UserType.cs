@@ -6,5 +6,4 @@
         Host,
         Member
     }
-
 }

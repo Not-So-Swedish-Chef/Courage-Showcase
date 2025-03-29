@@ -8,32 +8,31 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Logging;
-using Microsoft.AspNetCore.Authentication; // For PII logging if needed
+using Microsoft.AspNetCore.Authentication;
 
 // Enable detailed logging for development (remove in production)
-// IdentityModelEventSource.ShowPII = true;
+IdentityModelEventSource.ShowPII = true;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure logging
+// 🔹 1️⃣ Configure Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
+// 🔹 2️⃣ Set Content Root
 builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory());
 
-// 1️⃣ Add Services to the Container
+// 🔹 3️⃣ Add Essential Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// 🔹 4️⃣ Configure Swagger
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo()
-    {
-        Title = "Auth Demo",
-        Version = "v1"
-    });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth Demo", Version = "v1" });
 
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
         Name = "Authorization",
@@ -59,19 +58,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Database Context (Entity Framework Core - SQL Server)
+// 🔹 5️⃣ Configure Database Context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddAuthorization();
+// 🔹 6️⃣ Configure Identity (Must come **before** authentication)
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 
-// Dependency Injection for Repositories & Services
-builder.Services.AddScoped<IHostService, HostService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IEventRepository, EventRepository>();
-builder.Services.AddScoped<IEventService, EventService>();
 
-// Enable CORS for frontend communication
+// 🔹 8️⃣ Configure CORS (Before Authentication)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policyBuilder =>
@@ -80,81 +77,53 @@ builder.Services.AddCors(options =>
                      .AllowAnyHeader());
 });
 
-builder.Services.AddIdentity<User, IdentityRole<int>>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
-// Configure JWT Authentication with explicit defaults and logging events.
+// 🔹 9️⃣ Configure Authentication & JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options => 
+{ 
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        RequireSignedTokens = true,
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"])),
-        // Explicitly allow only HS256 so the handler treats this as a plain JWS token.
-        ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
-        TokenDecryptionKey = null
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
     };
-
     options.Events = new JwtBearerEvents
     {
-        OnMessageReceived = context =>
-        {
-            var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
-            if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
-            {
-                // Extract and trim the token; remove extra quotes if present.
-                var token = authHeader.Substring("Bearer ".Length).Trim();
-                if (token.StartsWith("\"") && token.EndsWith("\""))
-                {
-                    token = token.Trim('\"');
-                }
-                context.Token = token;
-            }
-            return Task.CompletedTask;
-        },
         OnAuthenticationFailed = context =>
         {
-            var logger = context.HttpContext.RequestServices
-                .GetRequiredService<ILoggerFactory>()
-                .CreateLogger("Jwt");
-            logger.LogError("Authentication failed: {Message}", context.Exception.Message);
+            Console.WriteLine($"Token authentication failed: {context.Exception.Message}");
             return Task.CompletedTask;
         },
         OnChallenge = context =>
         {
-            context.HandleResponse();
-            context.Response.StatusCode = 401;
-            context.Response.ContentType = "application/json";
-            var result = System.Text.Json.JsonSerializer.Serialize(new { error = "Unauthorized", details = context.ErrorDescription });
-            return context.Response.WriteAsync(result);
-        },
-        OnTokenValidated = context =>
-        {
-            var logger = context.HttpContext.RequestServices
-                .GetRequiredService<ILoggerFactory>()
-                .CreateLogger("Jwt");
-            logger.LogInformation("Authentication succeeded for user: {User}", context.Principal.Identity.Name);
+            Console.WriteLine($"JWT Challenge error: {context.Error}, {context.ErrorDescription}");
             return Task.CompletedTask;
         }
     };
 });
 
-// Build the Application
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<JwtService>();
+// 🔹 7️⃣ Register Application Services
+builder.Services.AddScoped<IHostService, HostService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IEventService, EventService>();
+
+// 🔹 1️⃣0️⃣ Build the Application
 var app = builder.Build();
 
-// Enable Swagger (For API Documentation)
+// 🔹 1️⃣1️⃣ Enable Swagger (For API Documentation)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -162,36 +131,15 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty;  // Makes Swagger available at the root URL.
 });
 
-// Use CORS
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowAllOrigins"); // CORS comes before Authentication
 
-app.UseRouting();
+app.UseRouting(); // Enables endpoint routing
 
-// Enable Authentication & Authorization
-app.UseAuthentication();
+app.UseAuthentication(); // Enables JWT authentication
 
-// Custom Middleware: Force authentication to run on every request, even without [Authorize].
-app.Use(async (context, next) =>
-{
-    // This call forces the authentication middleware to validate the token (if present)
-    var result = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
-    if (result.Succeeded && result.Principal != null)
-    {
-        // Set the HttpContext.User so that it contains the validated token claims.
-        context.User = result.Principal;
-    }
-    await next();
-});
+app.UseAuthorization(); // Enables authorization policies
 
-app.UseAuthorization();
+app.MapControllers(); // Maps API controllers
 
-// Map Controllers (API Endpoints)
-app.MapControllers();
-
-// Run the application
+// 🔹 1️⃣3️⃣ Run the Application
 app.Run();
-
-//TODO: Add Roles
-//TODO: Add Seed Data and Roles (Admin)
-//TODO: Make sure JWT works
-//TODO: Move validation to appropriate class (EventValidator)

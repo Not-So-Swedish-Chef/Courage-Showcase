@@ -29,13 +29,37 @@ namespace back_end.Services
             await _eventRepository.AddEventAsync(eventItem);
         }
 
-        public async Task UpdateEventAsync(Event eventItem)
+        public async Task UpdateEventAsync(Event eventItem, string currentUserId)
         {
+            var existingEvent = await _eventRepository.GetEventByIdAsync(eventItem.Id);
+
+            if (existingEvent == null)
+            {
+                throw new InvalidOperationException("Event not found.");
+            }
+
+            if (existingEvent.HostId.ToString() != currentUserId)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to update this event.");
+            }
+
             await _eventRepository.UpdateEventAsync(eventItem);
         }
 
-        public async Task DeleteEventAsync(int id)
+        public async Task DeleteEventAsync(int id, string currentUserId)
         {
+            var existingEvent = await _eventRepository.GetEventByIdAsync(id);
+
+            if (existingEvent == null)
+            {
+                throw new InvalidOperationException("Event not found.");
+            }
+
+            if (existingEvent.HostId.ToString() != currentUserId)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to update this event.");
+            }
+
             await _eventRepository.DeleteEventAsync(id);
         }
     }

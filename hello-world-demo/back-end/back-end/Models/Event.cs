@@ -47,6 +47,7 @@ public class Event
     }
 
     // Validation Method
+    //TODO: Move validation to appropriate class (EventValidator)
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var results = new List<ValidationResult>();

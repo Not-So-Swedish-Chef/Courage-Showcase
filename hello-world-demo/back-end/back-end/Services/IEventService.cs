@@ -9,7 +9,7 @@ namespace back_end.Services
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventByIdAsync(int id);
         Task AddEventAsync(Event eventItem);
-        Task UpdateEventAsync(Event eventItem);
-        Task DeleteEventAsync(int id);
+        Task UpdateEventAsync(Event eventItem, string currentUserId);
+        Task DeleteEventAsync(int id, string currentUserId);
     }
 }
