@@ -105,34 +105,30 @@ namespace back_end.Controllers
             return Ok(eventDtos);
         }
 
-        // POST: api/User/save/{eventId}
+        [Authorize]
         [HttpPost("save/{eventId}")]
         public async Task<IActionResult> SaveEvent(int eventId)
         {
-            // Retrieve the currently authenticated user.
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User not found.");
 
-            var result = await _userService.SaveEventAsync(user.Id, eventId);
+            var result = await _userService.SaveEventAsync(int.Parse(userId), eventId);
             if (!result)
                 return BadRequest("Unable to save event.");
-
             return Ok("Event saved successfully.");
         }
 
 
-        // DELETE: api/User/save/{eventId}
+        [Authorize]
         [HttpDelete("save/{eventId}")]
         public async Task<IActionResult> RemoveSavedEvent(int eventId)
         {
-            // Retrieve the currently authenticated user.
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User not found.");
 
-            // Remove the event from the user's saved events.
-            var result = await _userService.RemoveSavedEventAsync(user.Id, eventId);
+            var result = await _userService.RemoveSavedEventAsync(int.Parse(userId), eventId);
             if (!result)
                 return BadRequest("Unable to remove event.");
 
