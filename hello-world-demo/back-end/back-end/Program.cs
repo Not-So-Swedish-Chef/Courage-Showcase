@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Authentication;
+using back_end.DTOs;
 
 // Enable detailed logging for development (remove in production)
 IdentityModelEventSource.ShowPII = true;
@@ -112,6 +113,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
 // 🔹 7️⃣ Register Application Services
