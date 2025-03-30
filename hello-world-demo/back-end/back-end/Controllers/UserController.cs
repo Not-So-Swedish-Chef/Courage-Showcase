@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using back_end.DTOs;
 using back_end.Models;
 using back_end.Models.Api;
 using back_end.Services;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace back_end.Controllers
@@ -24,17 +27,20 @@ namespace back_end.Controllers
         private readonly IConfiguration _configuration;
         private readonly IHostService _hostService; // Inject HostService for host-related logic
         private readonly IUserService _userService; // For saved events endpoints
+        private readonly IMapper _mapper;
 
         public UserController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             JwtService jwtService,
             IConfiguration configuration,
+            IMapper mapper,
             IHostService hostService,
             IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mapper = mapper;
             _jwtService = jwtService;
             _configuration = configuration;
             _hostService = hostService;
@@ -85,18 +91,18 @@ namespace back_end.Controllers
             return Ok(result);
         }
 
-        // GET: api/User/saved
+        [Authorize]
         [HttpGet("saved")]
         public async Task<ActionResult<IEnumerable<Event>>> GetSavedEvents()
         {
-            // Retrieve the currently authenticated user.
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User not found.");
 
-            // Get the saved events for the user.
-            var savedEvents = await _userService.GetSavedEventsAsync(user.Id);
-            return Ok(savedEvents);
+            var savedEvents = await _userService.GetSavedEventsAsync(int.Parse(userId));
+            var eventDtos = _mapper.Map<List<EventDTO>>(savedEvents);
+            return Ok(eventDtos);
         }
 
         // POST: api/User/save/{eventId}
