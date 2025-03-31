@@ -9,45 +9,81 @@ namespace back_end.Services
     public class HostService : IHostService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<HostService> _logger;
 
-        public HostService(ApplicationDbContext context)
+        public HostService(ApplicationDbContext context, ILogger<HostService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task CreateHostAsync(User user)
         {
-            // Create a Host record only if one doesn't already exist.
-            var existingHost = await _context.Hosts.FindAsync(user.Id);
-            if (existingHost == null)
+            try
             {
-                var host = new Host
+                var existingHost = await _context.Hosts.FindAsync(user.Id);
+                if (existingHost == null)
                 {
-                    Id = user.Id,  // Assuming the Host primary key is the same as the User Id
-                    User = user
-                };
-                _context.Hosts.Add(host);
-                await _context.SaveChangesAsync();
+                    var host = new Host
+                    {
+                        Id = user.Id,
+                        User = user
+                    };
+                    _context.Hosts.Add(host);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while creating a host for user ID {UserId}", user.Id);
+                throw;
             }
         }
 
-        public async Task<Host> GetHostByUserIdAsync(int userId)
+        public async Task<Host?> GetHostByUserIdAsync(int userId)
         {
-            return await _context.Hosts
-                .Include(h => h.Events)
-                .FirstOrDefaultAsync(h => h.Id == userId);
+            try
+            {
+                var host = await _context.Hosts
+                    .Include(h => h.Events)
+                    .FirstOrDefaultAsync(h => h.Id == userId);
+
+                if (host == null)
+                {
+                    _logger.LogWarning("No host found for user ID {UserId}", userId);
+                    return null;
+                }
+
+                return host;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while retrieving host for user ID {UserId}", userId);
+                throw;
+            }
         }
 
         public async Task<bool> UpdateHostInfoAsync(int userId, UpdateHostModel model)
         {
-            var host = await _context.Hosts.FirstOrDefaultAsync(h => h.Id == userId);
-            if (host == null)
-                return false;
+            try
+            {
+                var host = await _context.Hosts.FirstOrDefaultAsync(h => h.Id == userId);
+                if (host == null)
+                {
+                    _logger.LogWarning("Attempted to update non-existent host for user ID {UserId}", userId);
+                    return false;
+                }
 
-            host.AgencyName = model.AgencyName;
-            host.Bio = model.Bio;
-            await _context.SaveChangesAsync();
-            return true;
+                host.AgencyName = model.AgencyName;
+                host.Bio = model.Bio;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating host info for user ID {UserId}", userId);
+                throw;
+            }
         }
     }
 }

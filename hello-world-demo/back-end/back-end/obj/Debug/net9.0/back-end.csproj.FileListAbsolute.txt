@@ -1747,3 +1747,5 @@ C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.pdb
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\back-end.genruntimeconfig.cache
 C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\obj\Debug\net9.0\ref\back-end.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\DotNetEnv.dll
+C:\Users\orazu\Courage-Showcase\hello-world-demo\back-end\back-end\bin\Debug\net9.0\Sprache.dll

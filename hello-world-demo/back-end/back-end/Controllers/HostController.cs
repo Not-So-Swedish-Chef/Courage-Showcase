@@ -8,7 +8,7 @@ using back_end.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using static NuGet.Packaging.PackagingConstants;
+using Microsoft.Extensions.Logging;
 
 namespace back_end.Controllers
 {
@@ -20,53 +20,76 @@ namespace back_end.Controllers
         private readonly IHostService _hostService;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
+        private readonly ILogger<HostController> _logger;
 
-        // Constructor with both IHostService and UserManager<User> injected
-        public HostController(IHostService hostService, UserManager<User> userManager, IMapper mapper)
+        public HostController(IHostService hostService, UserManager<User> userManager, IMapper mapper, ILogger<HostController> logger)
         {
             _hostService = hostService ?? throw new ArgumentNullException(nameof(hostService));
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _mapper = mapper;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        // GET: api/Host/events
-        // Returns all events created by the authenticated host.
         [HttpGet("events")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetMyEvents()
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetMyEvents()
         {
-            // Retrieve the currently authenticated user from HttpContext.
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("User not found.");
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User not found in claims.");
+                    return Unauthorized("User not found.");
+                }
 
-            // Get the host profile by user ID.
-            var host = await _hostService.GetHostByUserIdAsync(int.Parse(userId));
-            if (host == null)
-                return NotFound("Host profile not found.");
+                var host = await _hostService.GetHostByUserIdAsync(int.Parse(userId));
+                if (host == null)
+                {
+                    _logger.LogWarning($"Host profile not found for user ID {userId}.");
+                    return NotFound("Host profile not found.");
+                }
 
-            var eventDtos = _mapper.Map<List<EventDTO>>(host.Events);
-            return Ok(eventDtos);
+                var eventDtos = _mapper.Map<List<EventDTO>>(host.Events);
+                return Ok(eventDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while getting events for the host.");
+                return StatusCode(500, "An error occurred while retrieving the events.");
+            }
         }
 
-        // PUT: api/Host
-        // Allows a host to update their profile information.
+        
         [HttpPut]
         public async Task<IActionResult> UpdateHostInfo([FromBody] UpdateHostModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogWarning("Invalid model state when updating host info.");
+                    return BadRequest(ModelState);
+                }
 
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            bool result = await _hostService.UpdateHostInfoAsync(userId, model);
-            if (!result)
-                return BadRequest("Unable to update host info.");
+                int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                bool result = await _hostService.UpdateHostInfoAsync(userId, model);
+                if (!result)
+                {
+                    _logger.LogWarning($"Unable to update host info for user ID {userId}.");
+                    return BadRequest("Unable to update host info.");
+                }
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating host profile.");
+                return StatusCode(500, "An error occurred while updating the host information.");
+            }
         }
     }
 
-    // Model to update host information.
     public class UpdateHostModel
     {
         public string? AgencyName { get; set; }

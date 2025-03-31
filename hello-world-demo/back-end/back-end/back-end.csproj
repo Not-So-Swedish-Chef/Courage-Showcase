@@ -10,6 +10,7 @@
   <ItemGroup>
     <!-- Updated package versions to avoid conflicts -->
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />

@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using back_end.DTOs;
@@ -12,8 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 
 namespace back_end.Controllers
 {
@@ -25,9 +23,10 @@ namespace back_end.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly JwtService _jwtService;
         private readonly IConfiguration _configuration;
-        private readonly IHostService _hostService; // Inject HostService for host-related logic
-        private readonly IUserService _userService; // For saved events endpoints
+        private readonly IHostService _hostService;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(
             UserManager<User> userManager,
@@ -36,7 +35,8 @@ namespace back_end.Controllers
             IConfiguration configuration,
             IMapper mapper,
             IHostService hostService,
-            IUserService userService)
+            IUserService userService,
+            ILogger<UserController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,99 +45,155 @@ namespace back_end.Controllers
             _configuration = configuration;
             _hostService = hostService;
             _userService = userService;
+            _logger = logger;
         }
 
-        // POST: api/User/register
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var user = new User
+            try
             {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                UserType = model.UserType
-            };
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserType = model.UserType
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                {
+                    _logger.LogWarning("User registration failed for {Email}.", model.Email);
+                    return BadRequest(result.Errors);
+                }
+
+                await _userManager.AddToRoleAsync(user, "Member");
+                if (user.UserType == UserType.Host)
+                {
+                    await _userManager.AddToRoleAsync(user, "Host");
+                    await _hostService.CreateHostAsync(user);
+                }
+
+                return Ok(new { Message = "User registered successfully" });
             }
-
-            await _userManager.AddToRoleAsync(user, "Member");
-            if (user.UserType == UserType.Host)
+            catch (Exception ex)
             {
-                await _userManager.AddToRoleAsync(user, "Host");
-                await _hostService.CreateHostAsync(user);
+                _logger.LogError(ex, "Error occurred during user registration.");
+                return StatusCode(500, "An error occurred while registering the user.");
             }
-
-            return Ok(new { Message = "User registered successfully" });
         }
 
-        // POST: api/User/login
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel request)
         {
-            var result = await _jwtService.Authenticate(request);
-            if (result == null)
-                return Unauthorized(new { Message = "Invalid credentials" });
+            try
+            {
+                var result = await _jwtService.Authenticate(request);
+                if (result == null)
+                {
+                    _logger.LogWarning("Invalid login attempt for {Email}.", request.Email);
+                    return Unauthorized(new { Message = "Invalid credentials" });
+                }
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during user login.");
+                return StatusCode(500, "An error occurred while logging in.");
+            }
         }
 
         [Authorize]
         [HttpGet("saved")]
-        public async Task<ActionResult<IEnumerable<Event>>> GetSavedEvents()
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetSavedEvents()
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("User not found.");
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User not found in claims.");
+                    return Unauthorized("User not found.");
+                }
 
-            var savedEvents = await _userService.GetSavedEventsAsync(int.Parse(userId));
-            var eventDtos = _mapper.Map<List<EventDTO>>(savedEvents);
-            return Ok(eventDtos);
+                var savedEvents = await _userService.GetSavedEventsAsync(int.Parse(userId));
+                var eventDtos = _mapper.Map<List<EventDTO>>(savedEvents);
+                return Ok(eventDtos);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching saved events.");
+                return StatusCode(500, "An error occurred while retrieving saved events.");
+            }
         }
 
         [Authorize]
         [HttpPost("save/{eventId}")]
         public async Task<IActionResult> SaveEvent(int eventId)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("User not found.");
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User not found in claims.");
+                    return Unauthorized("User not found.");
+                }
 
-            var result = await _userService.SaveEventAsync(int.Parse(userId), eventId);
-            if (!result)
-                return BadRequest("Unable to save event.");
-            return Ok("Event saved successfully.");
+                var result = await _userService.SaveEventAsync(int.Parse(userId), eventId);
+                if (!result)
+                {
+                    _logger.LogWarning("Unable to save event for user {UserId} with event ID {EventId}.", userId, eventId);
+                    return BadRequest("Unable to save event.");
+                }
+
+                return Ok("Event saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while saving the event.");
+                return StatusCode(500, "An error occurred while saving the event.");
+            }
         }
-
 
         [Authorize]
         [HttpDelete("save/{eventId}")]
         public async Task<IActionResult> RemoveSavedEvent(int eventId)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("User not found.");
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    _logger.LogWarning("User not found in claims.");
+                    return Unauthorized("User not found.");
+                }
 
-            var result = await _userService.RemoveSavedEventAsync(int.Parse(userId), eventId);
-            if (!result)
-                return BadRequest("Unable to remove event.");
+                var result = await _userService.RemoveSavedEventAsync(int.Parse(userId), eventId);
+                if (!result)
+                {
+                    _logger.LogWarning("Unable to remove saved event for user {UserId} with event ID {EventId}.", userId, eventId);
+                    return BadRequest("Unable to remove event.");
+                }
 
-            return Ok("Event removed successfully.");
+                return Ok("Event removed successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while removing the saved event.");
+                return StatusCode(500, "An error occurred while removing the event.");
+            }
         }
-
     }
 
-    // Extend the registration model to include the user type.
     public class RegisterModel
     {
         [Required]
@@ -155,5 +211,5 @@ namespace back_end.Controllers
         public string LastName { get; set; }
 
         public UserType UserType { get; set; } = UserType.Member;
-    }    
+    }
 }

@@ -11,24 +11,19 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.AspNetCore.Authentication;
 using back_end.DTOs;
 
-// Enable detailed logging for development (remove in production)
 IdentityModelEventSource.ShowPII = true;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 1️⃣ Configure Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 
-// 🔹 2️⃣ Set Content Root
 builder.WebHost.UseContentRoot(Directory.GetCurrentDirectory());
 
-// 🔹 3️⃣ Add Essential Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// 🔹 4️⃣ Configure Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth Demo", Version = "v1" });
@@ -59,17 +54,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// 🔹 5️⃣ Configure Database Context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 🔹 6️⃣ Configure Identity (Must come **before** authentication)
 builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 
-// 🔹 8️⃣ Configure CORS (Before Authentication)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policyBuilder =>
@@ -78,7 +70,6 @@ builder.Services.AddCors(options =>
                      .AllowAnyHeader());
 });
 
-// 🔹 9️⃣ Configure Authentication & JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -116,32 +107,27 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
-// 🔹 7️⃣ Register Application Services
 builder.Services.AddScoped<IHostService, HostService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 
-// 🔹 1️⃣0️⃣ Build the Application
 var app = builder.Build();
 
-// 🔹 1️⃣1️⃣ Enable Swagger (For API Documentation)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    c.RoutePrefix = string.Empty;  // Makes Swagger available at the root URL.
+    c.RoutePrefix = string.Empty;
 });
 
-app.UseCors("AllowAllOrigins"); // CORS comes before Authentication
+app.UseCors("AllowAllOrigins");
 
-app.UseRouting(); // Enables endpoint routing
+app.UseRouting();
 
-app.UseAuthentication(); // Enables JWT authentication
+app.UseAuthentication();
 
-app.UseAuthorization(); // Enables authorization policies
+app.UseAuthorization();
 
-app.MapControllers(); // Maps API controllers
-
-// 🔹 1️⃣3️⃣ Run the Application
+app.MapControllers(); 
 app.Run();
