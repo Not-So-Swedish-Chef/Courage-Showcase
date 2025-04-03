@@ -9,15 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/no-auth/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/no-auth/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    loadChildren: () => import('./pages/host/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'landing-page',
+    loadChildren: () => import('./pages/member/landing/landing.module').then( m => m.LandingPageModule)
   },
 ];
 

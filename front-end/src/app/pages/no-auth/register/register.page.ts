@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class RegisterPage implements OnInit {
+  public active_tab : string = 'member';
 
   constructor() { }
 
