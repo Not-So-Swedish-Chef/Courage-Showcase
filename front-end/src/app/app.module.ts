@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { RouteReuseStrategy } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -25,7 +26,17 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideFirebaseApp(() => initializeApp({ projectId: "courage-culture-portal", appId: "1:1015530311890:web:c2379adcee065f84105d0b", storageBucket: "courage-culture-portal.firebasestorage.app", apiKey: "AIzaSyCHcvRJnOiUnmpWWyb5HN7RkY1PQSkgfzE", authDomain: "courage-culture-portal.firebaseapp.com", messagingSenderId: "1015530311890" })), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase())],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideFirebaseApp(() => initializeApp({
+       projectId: "courage-culture-portal", 
+       appId: "1:1015530311890:web:c2379adcee065f84105d0b", 
+       storageBucket: "courage-culture-portal.firebasestorage.app", 
+       apiKey: "AIzaSyCHcvRJnOiUnmpWWyb5HN7RkY1PQSkgfzE", 
+       authDomain: "courage-culture-portal.firebaseapp.com", 
+       messagingSenderId: "1015530311890" })),
+    provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()),
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
