@@ -31,6 +31,7 @@ jobs:
 
       - name: Install Frontend Dependencies
         run: |
+          pwd 
           cd frontend
           npm install
 
