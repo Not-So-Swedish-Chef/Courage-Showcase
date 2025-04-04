@@ -15,7 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Setup .NET environment
+      - name: List directories
+        run: ls -R
+        
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
