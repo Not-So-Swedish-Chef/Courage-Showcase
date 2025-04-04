@@ -26,7 +26,7 @@ jobs:
         run: dotnet restore server/back-end.sln
 
       - name: Run C# unit tests
-        run: dotnet test server/back-end-test/back-end-test.csproj --no-build --verbosity normal
+        run: dotnet test server/back-end.sln --verbosity normal
 
       # Setup Node.js and Angular
       - name: Setup Node.js
