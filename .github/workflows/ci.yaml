@@ -8,42 +8,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: List directories
-        run: ls -R
-        
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '8.x'
 
-      # Restore and test C# backend
-      - name: Restore C# dependencies
-        run: dotnet restore server/back-end.sln
-
-      - name: Run C# unit tests
-        run: dotnet test server/back-end.sln --verbosity normal
-        continue-on-error: true
-
-      # Setup Node.js and Angular
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+      - name: Install Backend Dependencies
+        run: |
+          cd server/back-end
+          dotnet restore
 
-      - name: Install frontend dependencies
-        working-directory: frontend
-        run: npm install
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
 
-      - name: Run Angular tests
-        working-directory: frontend
-        run: ng test --watch=false --browsers=ChromeHeadless
+      - name: Run Backend Tests
+        run: |
+          cd server/back-end-tests
+          dotnet test --no-build --verbosity normal
+
+      - name: Run Frontend Tests
+        run: |
+          cd frontend
+          npm run test -- --watch=false --browsers=ChromeHeadless
