@@ -1,0 +1,785 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\services\\userservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\services\\userservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\services\\hostservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\services\\hostservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\services\\eventservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\services\\eventservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\repositories\\userrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\repositories\\userrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\repositories\\eventrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\repositories\\eventrepositorytests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\models\\usertypetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\models\\usertypetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\models\\usertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\models\\usertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\models\\hosttests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\models\\hosttests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\models\\eventtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\models\\eventtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\dtos\\loginresponsemodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\dtos\\loginresponsemodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\dtos\\loginrequestmodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\dtos\\loginrequestmodeltests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\dtos\\eventdtotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\dtos\\eventdtotests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\controllers\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\controllers\\hostcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\hostcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\controllers\\eventcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\eventcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end-tests\\controllers\\homecontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1C70A9D-20CB-4DAF-9A3E-9769559F362E}|back-end-tests\\back-end-tests.csproj|solutionrelative:back-end-tests\\controllers\\homecontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\hostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\hostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\ihostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\ihostservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\eventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\services\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\services\\ieventservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\eventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\repositories\\ieventrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\usertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\usertype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\host.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\host.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\event.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\api\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\api\\loginresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\models\\api\\loginrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\models\\api\\loginrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\migrations\\20250330031031_addusertable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\migrations\\20250330031031_addusertable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\dtos\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\dtos\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\dtos\\eventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\dtos\\eventdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\controllers\\hostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\hostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|c:\\school\\sem 5\\capstone\\github\\courage-showcase\\server\\back-end\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5EA1EE74-B85D-4AD5-9217-73C28FC598DD}|back-end\\back-end.csproj|solutionrelative:back-end\\controllers\\eventcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\UserTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Models\\UserTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\UserTests.cs",
+              "RelativeToolTip": "back-end-tests\\Models\\UserTests.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAiwDEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:13.375Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserTypeTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\UserTypeTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Models\\UserTypeTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\UserTypeTests.cs",
+              "RelativeToolTip": "back-end-tests\\Models\\UserTypeTests.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAmwB4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:47:47.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EventRepositoryTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Repositories\\EventRepositoryTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Repositories\\EventRepositoryTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Repositories\\EventRepositoryTests.cs",
+              "RelativeToolTip": "back-end-tests\\Repositories\\EventRepositoryTests.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAiwF4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:21.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserRepositoryTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "RelativeToolTip": "back-end-tests\\Repositories\\UserRepositoryTests.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAmwCQAAABmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:32.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EventServiceTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\EventServiceTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Services\\EventServiceTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\EventServiceTests.cs",
+              "RelativeToolTip": "back-end-tests\\Services\\EventServiceTests.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAiwE0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:25.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HostServiceTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\HostServiceTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Services\\HostServiceTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\HostServiceTests.cs",
+              "RelativeToolTip": "back-end-tests\\Services\\HostServiceTests.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAwGQAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:48:43.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserServiceTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\UserServiceTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Services\\UserServiceTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Services\\UserServiceTests.cs",
+              "RelativeToolTip": "back-end-tests\\Services\\UserServiceTests.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAmwGEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:27.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HostTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\HostTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Models\\HostTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\HostTests.cs",
+              "RelativeToolTip": "back-end-tests\\Models\\HostTests.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAiwCoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:47:38.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EventTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\EventTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Models\\EventTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Models\\EventTests.cs",
+              "RelativeToolTip": "back-end-tests\\Models\\EventTests.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAiwBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:16.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "LoginResponseModelTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\LoginResponseModelTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\DTOs\\LoginResponseModelTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\LoginResponseModelTests.cs",
+              "RelativeToolTip": "back-end-tests\\DTOs\\LoginResponseModelTests.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAiwB0AAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T01:12:26.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LoginRequestModelTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\LoginRequestModelTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\DTOs\\LoginRequestModelTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\LoginRequestModelTests.cs",
+              "RelativeToolTip": "back-end-tests\\DTOs\\LoginRequestModelTests.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAiwDYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T01:12:01.688Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EventDTOTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\EventDTOTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\DTOs\\EventDTOTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\DTOs\\EventDTOTests.cs",
+              "RelativeToolTip": "back-end-tests\\DTOs\\EventDTOTests.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAiwFEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T01:11:22.173Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "HostControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\HostControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\HostControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\HostControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\HostControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:47:22.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "HomeControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\HomeControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\HomeControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\HomeControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\HomeControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:40:08.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "EventControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\EventControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\EventControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\EventControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\EventControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:39:58.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UserControllerTests.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\UserControllerTests.cs",
+              "RelativeDocumentMoniker": "back-end-tests\\Controllers\\UserControllerTests.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end-tests\\Controllers\\UserControllerTests.cs",
+              "RelativeToolTip": "back-end-tests\\Controllers\\UserControllerTests.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAAwD8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:39:21.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\JwtService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\JwtService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\JwtService.cs",
+              "RelativeToolTip": "back-end\\Services\\JwtService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:54.516Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Program.cs",
+              "RelativeDocumentMoniker": "back-end\\Program.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Program.cs",
+              "RelativeToolTip": "back-end\\Program.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAGoAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:54:00.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\UserService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\UserService.cs",
+              "RelativeToolTip": "back-end\\Services\\UserService.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAkwFsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:48.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\IUserService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IUserService.cs",
+              "RelativeToolTip": "back-end\\Services\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:44.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "HostService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\HostService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\HostService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\HostService.cs",
+              "RelativeToolTip": "back-end\\Services\\HostService.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAgwFgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:39.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IHostService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IHostService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\IHostService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IHostService.cs",
+              "RelativeToolTip": "back-end\\Services\\IHostService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:35.244Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "EventService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\EventService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\EventService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\EventService.cs",
+              "RelativeToolTip": "back-end\\Services\\EventService.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAgwGYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:21.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IEventService.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IEventService.cs",
+              "RelativeDocumentMoniker": "back-end\\Services\\IEventService.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Services\\IEventService.cs",
+              "RelativeToolTip": "back-end\\Services\\IEventService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:53:25.997Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAA1wDMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:55.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "IUserRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\IUserRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\IUserRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\IUserRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\IUserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:51.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IEventRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\IEventRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\IEventRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\IEventRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\IEventRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:44.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "EventRepository.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\EventRepository.cs",
+              "RelativeDocumentMoniker": "back-end\\Repositories\\EventRepository.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Repositories\\EventRepository.cs",
+              "RelativeToolTip": "back-end\\Repositories\\EventRepository.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAgwGEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:39.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UserType.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\UserType.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\UserType.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\UserType.cs",
+              "RelativeToolTip": "back-end\\Models\\UserType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:34.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\User.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\User.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\User.cs",
+              "RelativeToolTip": "back-end\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:29.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Host.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Host.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Host.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Host.cs",
+              "RelativeToolTip": "back-end\\Models\\Host.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:24.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "Event.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Event.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Event.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Event.cs",
+              "RelativeToolTip": "back-end\\Models\\Event.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAgwD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:19.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "LoginResponseModel.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Api\\LoginResponseModel.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Api\\LoginResponseModel.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Api\\LoginResponseModel.cs",
+              "RelativeToolTip": "back-end\\Models\\Api\\LoginResponseModel.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAiwBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:09.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "LoginRequestModel.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Api\\LoginRequestModel.cs",
+              "RelativeDocumentMoniker": "back-end\\Models\\Api\\LoginRequestModel.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Models\\Api\\LoginRequestModel.cs",
+              "RelativeToolTip": "back-end\\Models\\Api\\LoginRequestModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:52:05.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "ApplicationDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "RelativeToolTip": "back-end\\Migrations\\ApplicationDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAHwBAAAAAAAAAAAkwJUBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:51:22.808Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "20250330031031_AddUserTable.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Migrations\\20250330031031_AddUserTable.cs",
+              "RelativeDocumentMoniker": "back-end\\Migrations\\20250330031031_AddUserTable.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Migrations\\20250330031031_AddUserTable.cs",
+              "RelativeToolTip": "back-end\\Migrations\\20250330031031_AddUserTable.cs",
+              "ViewState": "AgIAACIBAAAAAAAAAAAkwDsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:51:11.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\DTOs\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "back-end\\DTOs\\MappingProfile.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\DTOs\\MappingProfile.cs",
+              "RelativeToolTip": "back-end\\DTOs\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:51:04.795Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "EventDTO.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\DTOs\\EventDTO.cs",
+              "RelativeDocumentMoniker": "back-end\\DTOs\\EventDTO.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\DTOs\\EventDTO.cs",
+              "RelativeToolTip": "back-end\\DTOs\\EventDTO.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAmwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:46.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "back-end\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "back-end\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAkwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:38.488Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\UserController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAuwNcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:32.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "HostController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\HostController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\HostController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\HostController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\HostController.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAQwGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:28.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:25.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "EventController.cs",
+              "DocumentMoniker": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\EventController.cs",
+              "RelativeDocumentMoniker": "back-end\\Controllers\\EventController.cs",
+              "ToolTip": "C:\\School\\Sem 5\\Capstone\\Github\\Courage-Showcase\\server\\back-end\\Controllers\\EventController.cs",
+              "RelativeToolTip": "back-end\\Controllers\\EventController.cs",
+              "ViewState": "AgIAAHkAAAAAAAAAAAAkwJIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T00:50:21.512Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 171,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
