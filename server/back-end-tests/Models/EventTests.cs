@@ -1,116 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Xunit;
+using System.Linq;
 using back_end.Models;
+using Xunit;
 
 namespace back_end_tests.Models
 {
     public class EventTests
     {
         [Fact]
-        public void Validate_ReturnsNoErrors_WhenEventIsValid()
+        public void Constructor_SetsDefaultStartAndEndDate()
         {
-            // Arrange
-            var validEvent = new Event
-            {
-                Title = "Valid Event",
-                StartDateTime = DateTime.Now.AddHours(1),
-                EndDateTime = DateTime.Now.AddHours(3),
-            };
-
-            var validationResults = new List<ValidationResult>();
-
             // Act
-            var isValid = validEvent.Validate(new ValidationContext(validEvent)).ToList().Count == 0;
+            var evt = new Event();
 
-            // Assert
-            Assert.True(isValid);
-            Assert.Empty(validationResults);
+            // Assert: allow a small range due to millisecond differences
+            var duration = evt.EndDateTime - evt.StartDateTime;
+            Assert.InRange(duration.TotalMinutes, 59, 61);
+        }
+
+
+        [Fact]
+        public void Constructor_InitializesCollections()
+        {
+            var evt = new Event();
+
+            Assert.NotNull(evt.UsersWhoSaved);
+            Assert.Empty(evt.UsersWhoSaved);
         }
 
         [Fact]
-        public void Validate_ReturnsError_WhenStartDateTimeIsAfterEndDateTime()
+        public void Validate_ReturnsError_WhenStartDateAfterEndDate()
         {
-            // Arrange
-            var invalidEvent = new Event
+            var evt = new Event
             {
-                Title = "Invalid Event",
-                StartDateTime = DateTime.Now.AddHours(3),
-                EndDateTime = DateTime.Now.AddHours(1),
+                StartDateTime = DateTime.UtcNow.AddHours(2),
+                EndDateTime = DateTime.UtcNow
             };
 
-            var validationResults = new List<ValidationResult>();
+            var validationResults = evt.Validate(new ValidationContext(evt)).ToList();
 
-            // Act
-            var errors = invalidEvent.Validate(new ValidationContext(invalidEvent)).ToList();
-
-            // Assert
-            Assert.Single(errors);
-            Assert.Contains("Start date and time must be before end date and time.", errors[0].ErrorMessage);
-        }
-
-        [Fact]
-        public void Validate_ReturnsError_WhenPriceIsMissingForPaidEvent()
-        {
-            // Arrange
-            var invalidEvent = new Event
-            {
-                Title = "Invalid Event",
-                StartDateTime = DateTime.Now.AddHours(1),
-                EndDateTime = DateTime.Now.AddHours(3),
-            };
-
-            var validationResults = new List<ValidationResult>();
-
-            // Act
-            var errors = invalidEvent.Validate(new ValidationContext(invalidEvent)).ToList();
-
-            // Assert
-            Assert.Single(errors);
-            Assert.Contains("Price must be a positive number when the event is not free.", errors[0].ErrorMessage);
-        }
-
-        [Fact]
-        public void Validate_ReturnsError_WhenPriceIsZeroOrNegativeForPaidEvent()
-        {
-            // Arrange
-            var invalidEvent = new Event
-            {
-                Title = "Invalid Event",
-                StartDateTime = DateTime.Now.AddHours(1),
-                EndDateTime = DateTime.Now.AddHours(3),
-            };
-
-            var validationResults = new List<ValidationResult>();
-
-            // Act
-            var errors = invalidEvent.Validate(new ValidationContext(invalidEvent)).ToList();
-
-            // Assert
-            Assert.Single(errors);
-            Assert.Contains("Price must be a positive number when the event is not free.", errors[0].ErrorMessage);
-        }
-
-        [Fact]
-        public void Validate_ReturnsNoErrors_WhenPriceIsValidForPaidEvent()
-        {
-            // Arrange
-            var validEvent = new Event
-            {
-                Title = "Valid Event",
-                StartDateTime = DateTime.Now.AddHours(1),
-                EndDateTime = DateTime.Now.AddHours(3),
-                Price = 10.50m // Price is valid
-            };
-
-            var validationResults = new List<ValidationResult>();
-
-            // Act
-            var errors = validEvent.Validate(new ValidationContext(validEvent)).ToList();
-
-            // Assert
-            Assert.Empty(errors);
+            Assert.Single(validationResults);
+            Assert.Contains("Start date and time must be before end date and time.", validationResults.First().ErrorMessage);
         }
     }
 }

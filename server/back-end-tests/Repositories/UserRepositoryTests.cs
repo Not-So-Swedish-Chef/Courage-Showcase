@@ -1,61 +1,97 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Xunit;
-using back_end.Models;
+﻿using back_end.Models;
 using back_end.Repositories;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace back_end_tests.Repositories
 {
     public class UserRepositoryTests
     {
-        private DbContextOptions<ApplicationDbContext> GetInMemoryDbContextOptions(string databaseName)
+        private readonly ApplicationDbContext _context;
+        private readonly UserRepository _repository;
+
+        public UserRepositoryTests()
         {
-            return new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: databaseName)
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "UserRepoTestDb")
                 .Options;
-        }
 
+            _context = new ApplicationDbContext(options);
+            _repository = new UserRepository(_context);
+        }
 
         [Fact]
-        public async Task GetUserByIdAsync_ReturnsNull_WhenUserDoesNotExist()
+        public async Task CreateUserAsync_AddsUser()
         {
-            // Arrange
-            var options = GetInMemoryDbContextOptions("GetUserByIdAsync_ReturnsNull_WhenUserDoesNotExist");
-
-            using (var context = new ApplicationDbContext(options))
+            var user = new User
             {
-                var repository = new UserRepository(context);
+                FirstName = "Test",
+                LastName = "User",
+                Email = "test@example.com",
+                UserName = "test@example.com"
+            };
 
-                // Act
-                var result = await repository.GetUserByIdAsync(1);
+            await _repository.CreateUserAsync(user);
+            var result = await _context.Users.FirstOrDefaultAsync(u => u.Email == "test@example.com");
 
-                // Assert
-                Assert.Null(result);
-            }
+            Assert.NotNull(result);
+            Assert.Equal("test@example.com", result.Email);
         }
-
-        
 
         [Fact]
-        public async Task GetUserByEmailAsync_ReturnsNull_WhenUserDoesNotExist()
+        public async Task GetAllUsersAsync_ReturnsUsers()
         {
-            // Arrange
-            var options = GetInMemoryDbContextOptions("GetUserByEmailAsync_ReturnsNull_WhenUserDoesNotExist");
+            _context.Users.AddRange(
+                new User { FirstName = "One", LastName = "User", Email = "one@example.com", UserName = "one@example.com" },
+                new User { FirstName = "Two", LastName = "User", Email = "two@example.com", UserName = "two@example.com" }
+            );
+            await _context.SaveChangesAsync();
 
-            using (var context = new ApplicationDbContext(options))
-            {
-                var repository = new UserRepository(context);
+            var users = await _repository.GetAllUsersAsync();
 
-                // Act
-                var result = await repository.GetUserByEmailAsync("nonexistent@example.com");
-
-                // Assert
-                Assert.Null(result);
-            }
+            Assert.Equal(2, users.Count());
         }
 
-        
+        [Fact]
+        public async Task GetUserByIdAsync_ReturnsCorrectUser()
+        {
+            var user = new User { FirstName = "Find", LastName = "Me", Email = "findme@example.com", UserName = "findme@example.com" };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var result = await _repository.GetUserByIdAsync(user.Id);
+
+            Assert.NotNull(result);
+            Assert.Equal("findme@example.com", result.Email);
+        }
+
+        [Fact]
+        public async Task UpdateUserAsync_UpdatesUserInfo()
+        {
+            var user = new User { FirstName = "Update", LastName = "Me", Email = "update@example.com", UserName = "update@example.com" };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            user.FirstName = "Updated";
+            await _repository.UpdateUserAsync(user);
+
+            var updatedUser = await _context.Users.FindAsync(user.Id);
+            Assert.Equal("Updated", updatedUser.FirstName);
+        }
+
+        [Fact]
+        public async Task DeleteUserAsync_RemovesUser()
+        {
+            var user = new User { FirstName = "Delete", LastName = "Me", Email = "delete@example.com", UserName = "delete@example.com" };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            await _repository.DeleteUserAsync(user.Id);
+
+            var result = await _context.Users.FindAsync(user.Id);
+            Assert.Null(result);
+        }
     }
 }

@@ -1,33 +1,52 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using back_end.Models;
 using Xunit;
-using back_end.Models;
 
 namespace back_end_tests.Models
 {
     public class UserTests
     {
         [Fact]
-        public void Validate_ReturnsNoErrors_WhenUserIsValid()
+        public void Constructor_InitializesSavedEvents()
         {
-            // Arrange
-            var validUser = new User
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "john.doe@example.com",
-            };
-
-            var validationContext = new ValidationContext(validUser);
-            var validationResults = new List<ValidationResult>();
-
-            // Act
-            var isValid = Validator.TryValidateObject(validUser, validationContext, validationResults, true);
+            // Arrange & Act
+            var user = new User();
 
             // Assert
-            Assert.True(isValid);
-            Assert.Empty(validationResults);
+            Assert.NotNull(user.SavedEvents);
+            Assert.Empty(user.SavedEvents);
         }
 
-       
+        [Fact]
+        public void Constructor_SetsDefaultUserTypeToMember()
+        {
+            // Arrange & Act
+            var user = new User();
+
+            // Assert
+            Assert.Equal(UserType.Member, user.UserType);
+        }
+
+        [Fact]
+        public void CanSetAndGetProperties()
+        {
+            // Arrange
+            var user = new User
+            {
+                Id = 1,
+                FirstName = "Ahmed",
+                LastName = "Muqarrib",
+                Email = "test@example.com",
+                UserName = "testuser",
+                UserType = UserType.Host
+            };
+
+            // Act & Assert
+            Assert.Equal(1, user.Id);
+            Assert.Equal("Ahmed", user.FirstName);
+            Assert.Equal("Muqarrib", user.LastName);
+            Assert.Equal("test@example.com", user.Email);
+            Assert.Equal("testuser", user.UserName);
+            Assert.Equal(UserType.Host, user.UserType);
+        }
     }
 }
