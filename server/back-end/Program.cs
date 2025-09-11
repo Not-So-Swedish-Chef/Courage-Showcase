@@ -1,15 +1,17 @@
-﻿using System.Text;
+﻿using AutoMapper;
+using back_end.DTOs;
 using back_end.Models;
 using back_end.Repositories;
 using back_end.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.AspNetCore.Authentication;
-using back_end.DTOs;
+using System.Text;
 
 IdentityModelEventSource.ShowPII = true;
 
@@ -104,7 +106,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+}); 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IHostService, HostService>();
@@ -113,6 +118,15 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 
 var app = builder.Build();
+
+await using (var scope = app.Services.CreateAsyncScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+    await SeedRolesAsync(roleManager); 
+}
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -131,3 +145,22 @@ app.UseAuthorization();
 
 app.MapControllers(); 
 app.Run();
+
+//Seed roles
+static async Task SeedRolesAsync(RoleManager<IdentityRole<int>> roleManager)
+{
+    string[] roles = { "Member", "Host", "Admin" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            var result = await roleManager.CreateAsync(new IdentityRole<int> { Name = role });
+            if (!result.Succeeded)
+            {
+                var msg = string.Join("; ", result.Errors.Select(e => $"{e.Code}:{e.Description}"));
+                throw new InvalidOperationException($"Failed creating role '{role}': {msg}");
+            }
+        }
+    }
+}
