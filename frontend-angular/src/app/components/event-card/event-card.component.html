@@ -1,0 +1,18 @@
+<div class="card" (click)="goToDetail()">
+    <img [src]="event.imageUrl" alt="event image" class="card-img" />
+  
+    <div class="card-body">
+      <h3>{{ event.title }}</h3>
+      <p>{{ event.location }}</p>
+  
+      <p class="date">
+        {{ event.startDateTime | date:'medium' }} 
+        - {{ event.endDateTime | date:'shortTime' }}
+      </p>
+  
+      <span class="price">
+        {{ event.price === 0 ? 'FREE' : ('$' + event.price) }}
+      </span>
+    </div>
+  </div>
+  

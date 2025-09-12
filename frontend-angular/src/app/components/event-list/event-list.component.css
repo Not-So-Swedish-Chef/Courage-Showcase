@@ -1,0 +1,9 @@
+.event-list {
+  padding: 20px;
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}

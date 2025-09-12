@@ -1,0 +1,19 @@
+<div *ngIf="loading">Loading event...</div>
+
+<div *ngIf="!loading && event" class="event-detail">
+  <button class="back-btn" (click)="goBack()">⬅ Back to Events</button>
+
+  <h2>{{ event.title }}</h2>
+  <img [src]="event.imageUrl" alt="event image" />
+
+  <p><strong>Location:</strong> {{ event.location }}</p>
+  <p><strong>Start:</strong> {{ event.startDateTime | date:'medium' }}</p>
+  <p><strong>End:</strong> {{ event.endDateTime | date:'medium' }}</p>
+  <p><strong>Price:</strong> {{ event.price === 0 ? 'FREE' : ('$' + event.price) }}</p>
+  <p><strong>URL:</strong> <a [href]="event.url" target="_blank">{{ event.url }}</a></p>
+
+  <div class="actions">
+    <button class="update-btn" (click)="updateEvent()">Update</button>
+    <button class="delete-btn" (click)="deleteEvent()">Delete</button>
+  </div>
+</div>
