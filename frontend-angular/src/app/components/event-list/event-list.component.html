@@ -1,17 +1,38 @@
 <div class="event-list">
-    <h2>Events</h2>
-  
-    <div *ngIf="isLoading">Loading...</div>
-  
-    <div *ngIf="!isLoading && events.length === 0">
-      No events available.
-    </div>
-  
-    <div class="card-grid" *ngIf="!isLoading && events.length > 0">
-      <app-event-card 
-        *ngFor="let ev of events" 
-        [event]="ev">
-      </app-event-card>
-    </div>
+  <h2>Events</h2>
+
+  <!-- filter bar -->
+  <div class="filter-bar">
+    <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
+      <input
+        type="number"
+        placeholder="Min Price"
+        [(ngModel)]="filters.minPrice"
+        name="minPrice"
+      />
+      <input
+        type="number"
+        placeholder="Max Price"
+        [(ngModel)]="filters.maxPrice"
+        name="maxPrice"
+      />
+      <input type="date" [(ngModel)]="filters.startFrom" name="startFrom" />
+      <input type="date" [(ngModel)]="filters.endTo" name="endTo" />
+      <button type="submit">Search</button>
+      <button type="button" (click)="resetFilters()">Reset</button>
+    </form>
   </div>
-  
+  <!-- error message -->
+  <div *ngIf="errorMessages.length > 0" class="error-message">
+    <ul>
+      <li *ngFor="let msg of errorMessages">{{ msg }}</li>
+    </ul>
+  </div>
+  <div *ngIf="isLoading">Loading...</div>
+
+  <div *ngIf="!isLoading && events.length === 0">No events available.</div>
+
+  <div class="card-grid" *ngIf="!isLoading && events.length > 0">
+    <app-event-card *ngFor="let ev of events" [event]="ev"> </app-event-card>
+  </div>
+</div>
