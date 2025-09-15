@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using back_end.DTOs;
 using back_end.Models;
 using back_end.Services;
@@ -140,6 +140,56 @@ namespace back_end.Controllers
             {
                 _logger.LogError(ex, $"Error occurred while deleting event with ID: {id}");
                 return StatusCode(500, "An error occurred while deleting the event.");
+            }
+        }
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> SearchEvents(
+            [FromQuery] string? query = null,
+            [FromQuery] DateTime? from = null,
+            [FromQuery] DateTime? to = null,
+            [FromQuery] decimal? minPrice = null,
+            [FromQuery] decimal? maxPrice = null)
+        {
+            try
+            {
+                // Apply default values based on requirements
+                decimal? effectiveMinPrice = minPrice;
+                decimal? effectiveMaxPrice = maxPrice;
+                DateTime? effectiveFrom = from;
+                DateTime? effectiveTo = to;
+
+                // Price defaults
+                if (minPrice.HasValue && !maxPrice.HasValue)
+                {
+                    effectiveMaxPrice = 200m; // Default max price to $200
+                }
+                else if (!minPrice.HasValue && maxPrice.HasValue)
+                {
+                    effectiveMinPrice = 0m; // Default min price to $0
+                }
+
+                // Date defaults
+                if (from.HasValue && !to.HasValue)
+                {
+                    // Search from the provided date onwards (no end date limit)
+                    effectiveTo = null;
+                }
+                else if (!from.HasValue && to.HasValue)
+                {
+                    // Search from current date to the provided date
+                    effectiveFrom = DateTime.UtcNow.Date;
+                }
+
+                var events = await _eventService.SearchEventsAsync(query, effectiveFrom, effectiveTo, effectiveMinPrice, effectiveMaxPrice);
+                var eventDtos = _mapper.Map<List<EventDTO>>(events);
+                return Ok(eventDtos);
+            }
+            catch (DataException ex)
+            {
+                _logger.LogError(ex, "Error occurred while searching events.");
+                return StatusCode(500, "An error occurred while searching events.");
             }
         }
     }

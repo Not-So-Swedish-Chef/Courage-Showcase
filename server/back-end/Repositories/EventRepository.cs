@@ -1,4 +1,4 @@
-﻿using back_end.Models;
+using back_end.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -90,6 +90,51 @@ namespace back_end.Repositories
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Database error saving event.");
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null)
+        {
+            try
+            {
+                var eventsQuery = _context.Events.AsQueryable();
+
+                // Filter by text query (search in title and location)
+                if (!string.IsNullOrWhiteSpace(query))
+                {
+                    eventsQuery = eventsQuery.Where(e => 
+                        e.Title.Contains(query) || 
+                        e.Location.Contains(query));
+                }
+
+                // Filter by date range
+                if (from.HasValue)
+                {
+                    eventsQuery = eventsQuery.Where(e => e.StartDateTime >= from.Value);
+                }
+
+                if (to.HasValue)
+                {
+                    eventsQuery = eventsQuery.Where(e => e.StartDateTime <= to.Value);
+                }
+
+                // Filter by price range
+                if (minPrice.HasValue)
+                {
+                    eventsQuery = eventsQuery.Where(e => e.Price >= minPrice.Value);
+                }
+
+                if (maxPrice.HasValue)
+                {
+                    eventsQuery = eventsQuery.Where(e => e.Price <= maxPrice.Value);
+                }
+
+                return await eventsQuery.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database error searching events.");
                 throw;
             }
         }

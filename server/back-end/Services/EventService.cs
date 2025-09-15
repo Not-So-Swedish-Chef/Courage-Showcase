@@ -1,4 +1,4 @@
-﻿using back_end.Models;
+using back_end.Models;
 using back_end.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -96,6 +96,18 @@ namespace back_end.Services
             catch (Exception ex)
             {
                 throw new DataException("An error occurred while deleting the event.", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null)
+        {
+            try
+            {
+                return await _eventRepository.SearchEventsAsync(query, from, to, minPrice, maxPrice);
+            }
+            catch (Exception ex)
+            {
+                throw new DataException("An error occurred while searching events.", ex);
             }
         }
     }
