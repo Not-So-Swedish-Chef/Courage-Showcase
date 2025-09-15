@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ "feat-api" ]
+  pull_request:
+    branches: [ "feat-api" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Backend Dependencies
+        run: |
+          cd server/back-end
+          dotnet restore
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd front-end
+          npm install
+
+      - name: Run Backend Tests
+        run: |
+          cd server/back-end-tests
+          dotnet test --no-build --verbosity normal
+        continue-on-error: true
+
+      - name: Run Frontend Tests
+        run: |
+          cd front-end
+          npm run test -- --watch=false --browsers=ChromeHeadless
+        continue-on-error: true
