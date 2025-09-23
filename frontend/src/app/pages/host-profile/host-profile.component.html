@@ -1,0 +1,10 @@
+<div class="host-profile">
+  <h2>Host Profile</h2>
+
+  <div *ngIf="isLoading">Loading host info...</div>
+
+  <div *ngIf="!isLoading && host">
+    <p><strong>Agency:</strong> {{ host.agencyName || "—" }}</p>
+    <p><strong>Bio:</strong> {{ host.bio || "—" }}</p>
+  </div>
+</div>

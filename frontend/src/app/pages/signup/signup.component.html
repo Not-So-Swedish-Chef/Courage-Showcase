@@ -1,0 +1,115 @@
+<div class="signup-wrap">
+  <h2>Create Account</h2>
+
+  <form (ngSubmit)="submit()" #form="ngForm" novalidate>
+    <!-- First Name -->
+    <label>
+      First name:
+      <input
+        [(ngModel)]="firstName"
+        name="firstName"
+        required
+        minlength="2"
+        #fn="ngModel"
+      />
+    </label>
+    <div class="error" *ngIf="fn.invalid && fn.touched">
+      <p *ngIf="fn.errors?.['required']">First name is required.</p>
+      <p *ngIf="fn.errors?.['minlength']">Must be at least 2 characters.</p>
+    </div>
+
+    <!-- Last Name -->
+    <label>
+      Last name:
+      <input
+        [(ngModel)]="lastName"
+        name="lastName"
+        required
+        minlength="2"
+        #ln="ngModel"
+      />
+    </label>
+    <div class="error" *ngIf="ln.invalid && ln.touched">
+      <p *ngIf="ln.errors?.['required']">Last name is required.</p>
+      <p *ngIf="ln.errors?.['minlength']">Must be at least 2 characters.</p>
+    </div>
+
+    <!-- Email -->
+    <label>
+      Email:
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        email
+        #em="ngModel"
+      />
+    </label>
+    <div class="error" *ngIf="em.invalid && em.touched">
+      <p *ngIf="em.errors?.['required']">Email is required.</p>
+      <p *ngIf="em.errors?.['email']">Please enter a valid email address.</p>
+    </div>
+
+    <!-- Password -->
+    <label>
+      Password:
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        #pwd="ngModel"
+        required
+        minlength="6"
+        appPasswordValidator
+      />
+    </label>
+    <div class="password-hints" *ngIf="pwd.invalid && pwd.touched">
+      <p *ngIf="pwd.errors?.['required']">Password is required.</p>
+      <p *ngIf="pwd.errors?.['minlength']">
+        Password must be at least 6 characters.
+      </p>
+      <p *ngIf="pwd.errors?.['uppercase']">
+        Must contain at least one uppercase (A-Z).
+      </p>
+      <p *ngIf="pwd.errors?.['digit']">
+        Must contain at least one digit (0-9).
+      </p>
+      <p *ngIf="pwd.errors?.['special']">
+        Must contain at least one special character (!&#64;#$...)
+      </p>
+    </div>
+
+    <!-- User Type -->
+    <div class="radio-group">
+      <label>
+        <input
+          type="radio"
+          [(ngModel)]="userType"
+          [value]="1"
+          name="userType"
+        />
+        Host
+      </label>
+      <label>
+        <input
+          type="radio"
+          [(ngModel)]="userType"
+          [value]="2"
+          name="userType"
+        />
+        Member
+      </label>
+    </div>
+
+    <!-- Error Message -->
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+      Register
+    </button>
+  </form>
+
+  <p class="hint">Already have an account? <a routerLink="/login">Log in</a></p>
+</div>

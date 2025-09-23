@@ -1,0 +1,36 @@
+<header class="header">
+  <div class="header-inner">
+
+    <a routerLink="/" class="brand">
+      <img src="assets/images/logosvg2.svg" alt="logo" width="70" height="20" />
+      <span class="brand-title">Events Hub</span>
+    </a>
+
+
+    <ng-container *ngIf="user$ | async as user">
+      <nav class="nav" *ngIf="user">
+        <a
+          *ngFor="let item of navFor(user.userType)"
+          [routerLink]="item.link"
+          class="nav-link"
+        >
+          {{ item.label }}
+        </a>
+      </nav>
+
+
+      <div class="actions" *ngIf="user">
+        <span class="hi" *ngIf="user.firstName">Hi, {{ user.firstName }}!</span>
+        <button class="btn btn-danger" (click)="logout()">Logout</button>
+      </div>
+    </ng-container>
+
+    <!-- Login / Signup -->
+    <ng-container *ngIf="!(user$ | async)">
+      <div class="actions">
+        <a class="btn btn-primary" routerLink="/login">Login</a>
+        <a class="btn btn-secondary" routerLink="/signup">Sign up</a>
+      </div>
+    </ng-container>
+  </div>
+</header>
