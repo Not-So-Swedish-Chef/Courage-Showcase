@@ -1,0 +1,13 @@
+<div class="my-events">
+  <h2>My Events</h2>
+
+  <div *ngIf="isLoading">Loading your events...</div>
+
+  <div *ngIf="!isLoading && events.length === 0">
+    <p>You have not created any events yet.</p>
+  </div>
+
+  <div class="card-grid" *ngIf="!isLoading && events.length > 0">
+    <app-event-card *ngFor="let ev of events" [event]="ev"></app-event-card>
+  </div>
+</div>

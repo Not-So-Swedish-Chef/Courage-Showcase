@@ -1,0 +1,73 @@
+<div class="event-form">
+  <h2>{{ isEditMode ? "Update Event" : "Create Event" }}</h2>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <!-- Title -->
+    <label>
+      Title:
+      <input type="text" name="title" [(ngModel)]="event.title" required />
+    </label>
+
+    <!-- Location -->
+    <label>
+      Location:
+      <input
+        type="text"
+        name="location"
+        [(ngModel)]="event.location"
+        required
+      />
+    </label>
+
+    <!-- Image -->
+    <label>
+      Image:
+      <input type="file" (change)="onFileSelected($event)" />
+      <small *ngIf="selectedFile">Selected: {{ selectedFile.name }}</small>
+    </label>
+
+    <!-- Start Date -->
+    <label>
+      Start Date & Time:
+      <input
+        type="datetime-local"
+        name="startDateTime"
+        [(ngModel)]="event.startDateTime"
+        required
+      />
+    </label>
+
+    <!-- End Date -->
+    <label>
+      End Date & Time:
+      <input
+        type="datetime-local"
+        name="endDateTime"
+        [(ngModel)]="event.endDateTime"
+        required
+      />
+    </label>
+
+    <!-- Price -->
+    <label>
+      Price:
+      <input type="number" name="price" [(ngModel)]="event.price" />
+    </label>
+
+    <!-- URL -->
+    <label>
+      URL:
+      <input type="url" name="url" [(ngModel)]="event.url" />
+    </label>
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{
+        isSubmitting
+          ? "Submitting..."
+          : isEditMode
+          ? "Update Event"
+          : "Create Event"
+      }}
+    </button>
+  </form>
+</div>

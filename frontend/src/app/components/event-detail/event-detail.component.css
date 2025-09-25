@@ -1,0 +1,68 @@
+.event-detail {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.event-detail h2 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.event-detail img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.event-detail p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.event-detail strong {
+  color: #222;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button.back-btn {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.actions button.update-btn {
+  background: #4caf50;
+  color: white;
+}
+
+/* Delete */
+.actions button.delete-btn {
+  background: #f44336;
+  color: white;
+}

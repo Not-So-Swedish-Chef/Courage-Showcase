@@ -1,0 +1,21 @@
+<div class="profile-edit">
+  <h2>Edit Profile</h2>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <!-- Agency Name -->
+    <label>
+      Agency Name:
+      <input type="text" name="agencyName" [(ngModel)]="agencyName" required />
+    </label>
+
+    <!-- Bio -->
+    <label>
+      Bio:
+      <textarea name="bio" [(ngModel)]="bio"></textarea>
+    </label>
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? "Saving..." : "Save" }}
+    </button>
+  </form>
+</div>
