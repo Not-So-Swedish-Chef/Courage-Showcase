@@ -99,11 +99,11 @@ namespace back_end.Services
             }
         }
 
-        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null)
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? locations = null, int? age = null)
         {
             try
             {
-                return await _eventRepository.SearchEventsAsync(query, from, to, minPrice, maxPrice);
+                return await _eventRepository.SearchEventsAsync(query, from, to, minPrice, maxPrice, disabilityTags, locations, age);
             }
             catch (Exception ex)
             {

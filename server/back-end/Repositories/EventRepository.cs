@@ -1,4 +1,5 @@
 using back_end.Models;
+using back_end.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,7 +21,10 @@ namespace back_end.Repositories
         {
             try
             {
-                return await _context.Events.ToListAsync();
+                return await _context.Events
+                    .Include(e => e.DisabilityTags)
+                    .Include(e => e.Host)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -34,7 +38,10 @@ namespace back_end.Repositories
         {
             try
             {
-                return await _context.Events.FindAsync(id);
+                return await _context.Events
+                    .Include(e => e.DisabilityTags)
+                    .Include(e => e.Host)
+                    .FirstOrDefaultAsync(e => e.Id == id);
             }
             catch (Exception ex)
             {
@@ -47,13 +54,14 @@ namespace back_end.Repositories
         {
             try
             {
+                // Tags are already handled in the controller, just save the event
                 await _context.Events.AddAsync(eventItem);
                 await _context.SaveChangesAsync();
                 return;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Database error updating event.");
+                _logger.LogError(ex, "Database error adding event.");
                 throw;
             }
         }
@@ -62,10 +70,26 @@ namespace back_end.Repositories
         {
             try
             {
-                var existingEvent = await _context.Events.FindAsync(eventItem.Id);
+                var existingEvent = await _context.Events
+                    .Include(e => e.DisabilityTags)
+                    .FirstOrDefaultAsync(e => e.Id == eventItem.Id);
+                    
                 if (existingEvent != null)
                 {
+                    // Update scalar properties
                     _context.Entry(existingEvent).CurrentValues.SetValues(eventItem);
+                    
+                    // Update DisabilityTags collection
+                    existingEvent.DisabilityTags.Clear();
+                    foreach (var tag in eventItem.DisabilityTags)
+                    {
+                        var existingTag = await _context.DisabilityTags.FindAsync(tag.Id);
+                        if (existingTag != null)
+                        {
+                            existingEvent.DisabilityTags.Add(existingTag);
+                        }
+                    }
+                    
                     await _context.SaveChangesAsync();
                 }
             }
@@ -94,18 +118,21 @@ namespace back_end.Repositories
             }
         }
 
-        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null)
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? locations = null, int? age = null)
         {
             try
             {
-                var eventsQuery = _context.Events.AsQueryable();
+                var eventsQuery = _context.Events
+                    .Include(e => e.DisabilityTags)
+                    .AsQueryable();
 
                 // Filter by text query (search in title and location)
                 if (!string.IsNullOrWhiteSpace(query))
                 {
+                    var queryLower = query.ToLowerInvariant();
                     eventsQuery = eventsQuery.Where(e => 
                         e.Title.Contains(query) || 
-                        e.Location.Contains(query));
+                        e.Location.ToString().ToLower().Contains(queryLower));
                 }
 
                 // Filter by date range
@@ -128,6 +155,52 @@ namespace back_end.Repositories
                 if (maxPrice.HasValue)
                 {
                     eventsQuery = eventsQuery.Where(e => e.Price <= maxPrice.Value);
+                }
+
+                // Filter by disability tags (events must have at least one of the specified tags)
+                if (disabilityTags != null && disabilityTags.Any())
+                {
+                    // Normalize the input tags using TagNormalizer for consistency
+                    var normalizedInputTags = disabilityTags
+                        .Select(tag => TagNormalizer.Normalize(tag))
+                        .ToList();
+
+                    // Get tag IDs that match the normalized names
+                    var matchingTagIds = await _context.DisabilityTags
+                        .Where(dt => normalizedInputTags.Contains(dt.NormalizedName))
+                        .Select(dt => dt.Id)
+                        .ToListAsync();
+
+                    if (matchingTagIds.Any())
+                    {
+                        eventsQuery = eventsQuery.Where(e => 
+                            e.DisabilityTags.Any(dt => matchingTagIds.Contains(dt.Id)));
+                    }
+                    else
+                    {
+                        // No matching tags found, return empty result
+                        return new List<Event>();
+                    }
+                }
+
+                // Filter by locations (events must be in one of the specified locations)
+                if (locations != null && locations.Any())
+                {
+                    // Normalize location strings for case-insensitive comparison
+                    var normalizedLocations = locations
+                        .Select(loc => loc.ToLowerInvariant().Trim())
+                        .ToList();
+
+                    eventsQuery = eventsQuery.Where(e => 
+                        normalizedLocations.Contains(e.Location.ToString().ToLower()));
+                }
+
+                // Filter by age (event must be suitable for the specified age)
+                if (age.HasValue)
+                {
+                    eventsQuery = eventsQuery.Where(e => 
+                        (!e.MinAge.HasValue || e.MinAge.Value <= age.Value) &&
+                        (!e.MaxAge.HasValue || e.MaxAge.Value >= age.Value));
                 }
 
                 return await eventsQuery.ToListAsync();
