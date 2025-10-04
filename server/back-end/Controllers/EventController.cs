@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace back_end.Controllers
 {
-    [Authorize(Roles = "Host")]
+    [Authorize(Roles = "Host, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class EventController : ControllerBase

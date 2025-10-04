@@ -44,7 +44,7 @@ namespace back_end.Services
                     return false;
 
                 var eventItem = await _context.Events.FindAsync(eventId);
-                if (eventItem == null)
+                if (eventItem == null || eventItem.Status == back_end.Enums.EventStatus.Canceled)
                     return false;
 
                 if (!user.SavedEvents.Contains(eventItem))

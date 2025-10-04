@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using back_end.Controllers;
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +45,7 @@ namespace back_end.Services
             try
             {
                 var host = await _context.Hosts
-                    .Include(h => h.Events)
+                    .Include(h => h.Events.Where(e => e.Status != back_end.Enums.EventStatus.Canceled))
                     .FirstOrDefaultAsync(h => h.Id == userId);
 
                 if (host == null)
