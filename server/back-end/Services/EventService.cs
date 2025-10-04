@@ -33,7 +33,7 @@ namespace back_end.Services
             try
             {
                 var eventItem = await _eventRepository.GetEventByIdAsync(id);
-                return eventItem ?? throw new DataException("Event not found.");
+                return eventItem;
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace back_end.Services
         {
             try
             {
-                var existingEvent = await _eventRepository.GetEventByIdAsync(eventItem.Id);
+                var existingEvent = await _eventRepository.GetEventByIdIncludingCanceledAsync(eventItem.Id);
                 if (existingEvent == null)
                 {
                     throw new DataException("Event not found.");
@@ -80,7 +80,7 @@ namespace back_end.Services
         {
             try
             {
-                var existingEvent = await _eventRepository.GetEventByIdAsync(id);
+                var existingEvent = await _eventRepository.GetEventByIdIncludingCanceledAsync(id);
                 if (existingEvent == null)
                 {
                     throw new DataException("Event not found.");

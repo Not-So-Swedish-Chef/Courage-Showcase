@@ -32,7 +32,7 @@ namespace back_end.Controllers
                         t.Id,
                         t.Name,
                         t.NormalizedName,
-                        EventCount = t.Events.Count
+                        EventCount = t.Events.Count(e => e.Status != back_end.Enums.EventStatus.Canceled)
                     })
                     .OrderBy(t => t.Name)
                     .ToListAsync();
@@ -166,10 +166,11 @@ namespace back_end.Controllers
                     return NotFound();
                 }
 
-                // Check if tag is being used by any events
-                if (tag.Events.Any())
+                // Check if tag is being used by any active events (exclude canceled events)
+                var activeEvents = tag.Events.Where(e => e.Status != back_end.Enums.EventStatus.Canceled).ToList();
+                if (activeEvents.Any())
                 {
-                    return BadRequest($"Cannot delete tag '{tag.Name}' because it is being used by {tag.Events.Count} event(s).");
+                    return BadRequest($"Cannot delete tag '{tag.Name}' because it is being used by {activeEvents.Count} active event(s).");
                 }
 
                 _context.DisabilityTags.Remove(tag);

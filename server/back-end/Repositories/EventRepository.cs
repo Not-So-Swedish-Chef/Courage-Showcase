@@ -24,6 +24,7 @@ namespace back_end.Repositories
                 return await _context.Events
                     .Include(e => e.DisabilityTags)
                     .Include(e => e.Host)
+                    .Where(e => e.Status != back_end.Enums.EventStatus.Canceled)
                     .ToListAsync();
             }
             catch (Exception ex)
@@ -35,6 +36,23 @@ namespace back_end.Repositories
 
 
         public async Task<Event> GetEventByIdAsync(int id)
+        {
+            try
+            {
+                return await _context.Events
+                    .Include(e => e.DisabilityTags)
+                    .Include(e => e.Host)
+                    .Where(e => e.Status != back_end.Enums.EventStatus.Canceled)
+                    .FirstOrDefaultAsync(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database error retrieving event.");
+                throw;
+            }
+        }
+
+        public async Task<Event> GetEventByIdIncludingCanceledAsync(int id)
         {
             try
             {
@@ -107,13 +125,13 @@ namespace back_end.Repositories
                 var eventItem = await _context.Events.FindAsync(id);
                 if (eventItem != null)
                 {
-                    _context.Events.Remove(eventItem);
+                    eventItem.Status = back_end.Enums.EventStatus.Canceled;
                     await _context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Database error saving event.");
+                _logger.LogError(ex, "Database error canceling event.");
                 throw;
             }
         }
@@ -124,9 +142,9 @@ namespace back_end.Repositories
             {
                 var eventsQuery = _context.Events
                     .Include(e => e.DisabilityTags)
+                    .Where(e => e.Status != back_end.Enums.EventStatus.Canceled)
                     .AsQueryable();
 
-                // Filter by text query (search in title and location)
                 if (!string.IsNullOrWhiteSpace(query))
                 {
                     var queryLower = query.ToLowerInvariant();
@@ -135,7 +153,6 @@ namespace back_end.Repositories
                         e.Location.ToString().ToLower().Contains(queryLower));
                 }
 
-                // Filter by date range
                 if (from.HasValue)
                 {
                     eventsQuery = eventsQuery.Where(e => e.StartDateTime >= from.Value);
@@ -146,7 +163,6 @@ namespace back_end.Repositories
                     eventsQuery = eventsQuery.Where(e => e.StartDateTime <= to.Value);
                 }
 
-                // Filter by price range
                 if (minPrice.HasValue)
                 {
                     eventsQuery = eventsQuery.Where(e => e.Price >= minPrice.Value);
@@ -157,15 +173,12 @@ namespace back_end.Repositories
                     eventsQuery = eventsQuery.Where(e => e.Price <= maxPrice.Value);
                 }
 
-                // Filter by disability tags (events must have at least one of the specified tags)
                 if (disabilityTags != null && disabilityTags.Any())
                 {
-                    // Normalize the input tags using TagNormalizer for consistency
                     var normalizedInputTags = disabilityTags
                         .Select(tag => TagNormalizer.Normalize(tag))
                         .ToList();
 
-                    // Get tag IDs that match the normalized names
                     var matchingTagIds = await _context.DisabilityTags
                         .Where(dt => normalizedInputTags.Contains(dt.NormalizedName))
                         .Select(dt => dt.Id)
@@ -178,15 +191,12 @@ namespace back_end.Repositories
                     }
                     else
                     {
-                        // No matching tags found, return empty result
                         return new List<Event>();
                     }
                 }
 
-                // Filter by locations (events must be in one of the specified locations)
                 if (locations != null && locations.Any())
                 {
-                    // Normalize location strings for case-insensitive comparison
                     var normalizedLocations = locations
                         .Select(loc => loc.ToLowerInvariant().Trim())
                         .ToList();
@@ -195,7 +205,6 @@ namespace back_end.Repositories
                         normalizedLocations.Contains(e.Location.ToString().ToLower()));
                 }
 
-                // Filter by age (event must be suitable for the specified age)
                 if (age.HasValue)
                 {
                     eventsQuery = eventsQuery.Where(e => 

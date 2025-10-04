@@ -8,6 +8,7 @@ namespace back_end.Repositories
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
         Task<Event> GetEventByIdAsync(int id);
+        Task<Event> GetEventByIdIncludingCanceledAsync(int id);
         Task AddEventAsync(Event eventItem);
         Task UpdateEventAsync(Event eventItem);
         Task DeleteEventAsync(int id);

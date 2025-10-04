@@ -52,13 +52,14 @@ namespace back_end.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Event>> GetEventById(int id)
+        public async Task<ActionResult<EventDTO>> GetEventById(int id)
         {
             try
             {
                 var eventItem = await _eventService.GetEventByIdAsync(id);
                 if (eventItem == null) return NotFound();
-                return Ok(eventItem);
+                var eventDto = _mapper.Map<EventDTO>(eventItem);
+                return Ok(eventDto);
             }
             catch (DataException ex)
             {
@@ -156,16 +157,79 @@ namespace back_end.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvent(int id, [FromBody] Event eventItem)
+        public async Task<IActionResult> UpdateEvent(int id, [FromBody] EventDTO eventDto)
         {
             try
             {
-                if (eventItem == null || id == 0) return BadRequest("Invalid event data.");
+                if (eventDto == null || id == 0) return BadRequest("Invalid event data.");
 
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (userId != eventItem.HostId.ToString())
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("User not found.");
+                }
+
+                if (userId != eventDto.HostId.ToString())
                 {
                     return Unauthorized("You are not authorized to update this event.");
+                }
+
+                // Parse location string to OntarioCity enum
+                if (!Enum.TryParse<OntarioCity>(eventDto.Location, true, out var locationEnum))
+                {
+                    return BadRequest($"Invalid location. Must be a valid Ontario city name.");
+                }
+
+                // Map DTO to Event entity
+                var eventItem = new Event
+                {
+                    Id = id,
+                    Title = eventDto.Title,
+                    Location = locationEnum,
+                    ImageUrl = eventDto.ImageUrl,
+                    StartDateTime = eventDto.StartDateTime,
+                    EndDateTime = eventDto.EndDateTime,
+                    Price = eventDto.Price,
+                    Url = eventDto.Url,
+                    HostId = eventDto.HostId,
+                    MinAge = eventDto.MinAge,
+                    MaxAge = eventDto.MaxAge,
+                    Status = (EventStatus)eventDto.Status,
+                    DisabilityTags = new List<DisabilityTag>()
+                };
+
+                // Handle disability tags
+                if (eventDto.DisabilityTags != null && eventDto.DisabilityTags.Any())
+                {
+                    foreach (var tagName in eventDto.DisabilityTags)
+                    {
+                        if (string.IsNullOrWhiteSpace(tagName)) continue;
+
+                        var normalizedName = back_end.Utils.TagNormalizer.Normalize(tagName);
+                        
+                        var existingTag = await _context.DisabilityTags
+                            .FirstOrDefaultAsync(t => t.NormalizedName == normalizedName);
+
+                        if (existingTag != null)
+                        {
+                            eventItem.DisabilityTags.Add(existingTag);
+                        }
+                        else
+                        {
+                            var newTag = new DisabilityTag
+                            {
+                                Name = tagName.Trim(),
+                                NormalizedName = normalizedName
+                            };
+                            _context.DisabilityTags.Add(newTag);
+                            eventItem.DisabilityTags.Add(newTag);
+                        }
+                    }
+                }
+
+                if (!TryValidateModel(eventItem))
+                {
+                    return BadRequest(ModelState);
                 }
 
                 await _eventService.UpdateEventAsync(eventItem, userId);
