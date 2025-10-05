@@ -57,7 +57,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, i
 
         // Store enums as strings if you prefer readability
         modelBuilder.Entity<Event>().Property(e => e.Status).HasConversion<string>();
-        modelBuilder.Entity<Event>().Property(e => e.Location).HasConversion<string>();
+        modelBuilder.Entity<Event>().Property(e => e.City).HasConversion<string>();
     }
 }
 

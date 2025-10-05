@@ -1,4 +1,4 @@
-﻿using back_end.Enums;
+using back_end.Enums;
 using back_end.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,11 @@ public class Event : IValidatableObject
     public string Title { get; set; } = "";
 
     [Required]
-    public OntarioCity Location { get; set; } = OntarioCity.Toronto;
+    [MaxLength(300)]
+    public string Location { get; set; } = "";
+
+    [Required]
+    public OntarioCity City { get; set; } = OntarioCity.Toronto;
 
     public string ImageUrl { get; set; } = "";
 

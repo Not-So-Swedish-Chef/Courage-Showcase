@@ -13,7 +13,11 @@ namespace back_end.DTOs
         public string Title { get; set; } = "";
 
         [Required]
+        [MaxLength(300)]
         public string Location { get; set; } = "";
+
+        [Required]
+        public string City { get; set; } = "";
 
         public string ImageUrl { get; set; } = "";
 
