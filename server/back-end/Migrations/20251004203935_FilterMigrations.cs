@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace back_end.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FilterMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,6 +53,20 @@ namespace back_end.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DisabilityTags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
+                    NormalizedName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DisabilityTags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,14 +200,17 @@ namespace back_end.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HostId = table.Column<int>(type: "int", nullable: false)
+                    HostId = table.Column<int>(type: "int", nullable: false),
+                    MinAge = table.Column<int>(type: "int", nullable: true),
+                    MaxAge = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,6 +219,30 @@ namespace back_end.Migrations
                         name: "FK_Events_Hosts_HostId",
                         column: x => x.HostId,
                         principalTable: "Hosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventDisabilityTags",
+                columns: table => new
+                {
+                    DisabilityTagsId = table.Column<int>(type: "int", nullable: false),
+                    EventsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventDisabilityTags", x => new { x.DisabilityTagsId, x.EventsId });
+                    table.ForeignKey(
+                        name: "FK_EventDisabilityTags_DisabilityTags_DisabilityTagsId",
+                        column: x => x.DisabilityTagsId,
+                        principalTable: "DisabilityTags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventDisabilityTags_Events_EventsId",
+                        column: x => x.EventsId,
+                        principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -268,6 +309,17 @@ namespace back_end.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DisabilityTags_NormalizedName",
+                table: "DisabilityTags",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventDisabilityTags_EventsId",
+                table: "EventDisabilityTags",
+                column: "EventsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Events_HostId",
                 table: "Events",
                 column: "HostId");
@@ -297,10 +349,16 @@ namespace back_end.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "EventDisabilityTags");
+
+            migrationBuilder.DropTable(
                 name: "UserSavedEvents");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "DisabilityTags");
 
             migrationBuilder.DropTable(
                 name: "Events");

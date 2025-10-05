@@ -1,5 +1,6 @@
 using AutoMapper;
 using back_end.DTOs;
+using back_end.Enums;
 using back_end.Models;
 using back_end.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,10 +9,12 @@ using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace back_end.Controllers
 {
-    [Authorize(Roles = "Host")]
+    [Authorize(Roles = "Host, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class EventController : ControllerBase
@@ -19,13 +22,15 @@ namespace back_end.Controllers
         private readonly IEventService _eventService;
         private readonly ILogger<EventController> _logger;
         private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _context;
 
 
-        public EventController(ILogger<EventController> logger, IEventService eventService, IMapper mapper)
+        public EventController(ILogger<EventController> logger, IEventService eventService, IMapper mapper, ApplicationDbContext context)
         {
             _eventService = eventService;
             _logger = logger;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet]
@@ -47,13 +52,14 @@ namespace back_end.Controllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Event>> GetEventById(int id)
+        public async Task<ActionResult<EventDTO>> GetEventById(int id)
         {
             try
             {
                 var eventItem = await _eventService.GetEventByIdAsync(id);
                 if (eventItem == null) return NotFound();
-                return Ok(eventItem);
+                var eventDto = _mapper.Map<EventDTO>(eventItem);
+                return Ok(eventDto);
             }
             catch (DataException ex)
             {
@@ -63,11 +69,11 @@ namespace back_end.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Event>> CreateEvent([FromBody] Event eventItem)
+        public async Task<ActionResult<EventDTO>> CreateEvent([FromBody] EventDTO eventDto)
         {
             try
             {
-                if (eventItem == null) return BadRequest("Event data is missing.");
+                if (eventDto == null) return BadRequest("Event data is missing.");
 
                 var email = User.FindFirst(ClaimTypes.Email)?.Value;
                 var userType = User.FindFirst(ClaimTypes.Role)?.Value;
@@ -77,6 +83,60 @@ namespace back_end.Controllers
                     return Unauthorized("User claims missing.");
                 }
 
+                // Parse location string to OntarioCity enum
+                if (!Enum.TryParse<OntarioCity>(eventDto.Location, true, out var locationEnum))
+                {
+                    return BadRequest($"Invalid location. Must be a valid Ontario city name (e.g., Toronto, Ottawa, Hamilton).");
+                }
+
+                // Map DTO to Event entity
+                var eventItem = new Event
+                {
+                    Title = eventDto.Title,
+                    Location = locationEnum,
+                    ImageUrl = eventDto.ImageUrl,
+                    StartDateTime = eventDto.StartDateTime,
+                    EndDateTime = eventDto.EndDateTime,
+                    Price = eventDto.Price,
+                    Url = eventDto.Url,
+                    HostId = eventDto.HostId,
+                    MinAge = eventDto.MinAge,
+                    MaxAge = eventDto.MaxAge,
+                    Status = (EventStatus)eventDto.Status,
+                    DisabilityTags = new List<DisabilityTag>()
+                };
+
+                // Handle disability tags - create new ones if they don't exist
+                if (eventDto.DisabilityTags != null && eventDto.DisabilityTags.Any())
+                {
+                    foreach (var tagName in eventDto.DisabilityTags)
+                    {
+                        if (string.IsNullOrWhiteSpace(tagName)) continue;
+
+                        var normalizedName = back_end.Utils.TagNormalizer.Normalize(tagName);
+                        
+                        // Check if tag exists
+                        var existingTag = await _context.DisabilityTags
+                            .FirstOrDefaultAsync(t => t.NormalizedName == normalizedName);
+
+                        if (existingTag != null)
+                        {
+                            eventItem.DisabilityTags.Add(existingTag);
+                        }
+                        else
+                        {
+                            // Create new tag
+                            var newTag = new DisabilityTag
+                            {
+                                Name = tagName.Trim(),
+                                NormalizedName = normalizedName
+                            };
+                            _context.DisabilityTags.Add(newTag);
+                            eventItem.DisabilityTags.Add(newTag);
+                        }
+                    }
+                }
+
                 if (!TryValidateModel(eventItem))
                 {
                     return BadRequest(ModelState);
@@ -84,7 +144,10 @@ namespace back_end.Controllers
 
                 await _eventService.AddEventAsync(eventItem);
 
-                return CreatedAtAction(nameof(GetEventById), new { id = eventItem.Id }, eventItem);
+                // Map back to DTO for response
+                var responseDto = _mapper.Map<EventDTO>(eventItem);
+
+                return CreatedAtAction(nameof(GetEventById), new { id = eventItem.Id }, responseDto);
             }
             catch (DataException ex)
             {
@@ -94,16 +157,79 @@ namespace back_end.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEvent(int id, [FromBody] Event eventItem)
+        public async Task<IActionResult> UpdateEvent(int id, [FromBody] EventDTO eventDto)
         {
             try
             {
-                if (eventItem == null || id == 0) return BadRequest("Invalid event data.");
+                if (eventDto == null || id == 0) return BadRequest("Invalid event data.");
 
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (userId != eventItem.HostId.ToString())
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("User not found.");
+                }
+
+                if (userId != eventDto.HostId.ToString())
                 {
                     return Unauthorized("You are not authorized to update this event.");
+                }
+
+                // Parse location string to OntarioCity enum
+                if (!Enum.TryParse<OntarioCity>(eventDto.Location, true, out var locationEnum))
+                {
+                    return BadRequest($"Invalid location. Must be a valid Ontario city name.");
+                }
+
+                // Map DTO to Event entity
+                var eventItem = new Event
+                {
+                    Id = id,
+                    Title = eventDto.Title,
+                    Location = locationEnum,
+                    ImageUrl = eventDto.ImageUrl,
+                    StartDateTime = eventDto.StartDateTime,
+                    EndDateTime = eventDto.EndDateTime,
+                    Price = eventDto.Price,
+                    Url = eventDto.Url,
+                    HostId = eventDto.HostId,
+                    MinAge = eventDto.MinAge,
+                    MaxAge = eventDto.MaxAge,
+                    Status = (EventStatus)eventDto.Status,
+                    DisabilityTags = new List<DisabilityTag>()
+                };
+
+                // Handle disability tags
+                if (eventDto.DisabilityTags != null && eventDto.DisabilityTags.Any())
+                {
+                    foreach (var tagName in eventDto.DisabilityTags)
+                    {
+                        if (string.IsNullOrWhiteSpace(tagName)) continue;
+
+                        var normalizedName = back_end.Utils.TagNormalizer.Normalize(tagName);
+                        
+                        var existingTag = await _context.DisabilityTags
+                            .FirstOrDefaultAsync(t => t.NormalizedName == normalizedName);
+
+                        if (existingTag != null)
+                        {
+                            eventItem.DisabilityTags.Add(existingTag);
+                        }
+                        else
+                        {
+                            var newTag = new DisabilityTag
+                            {
+                                Name = tagName.Trim(),
+                                NormalizedName = normalizedName
+                            };
+                            _context.DisabilityTags.Add(newTag);
+                            eventItem.DisabilityTags.Add(newTag);
+                        }
+                    }
+                }
+
+                if (!TryValidateModel(eventItem))
+                {
+                    return BadRequest(ModelState);
                 }
 
                 await _eventService.UpdateEventAsync(eventItem, userId);
@@ -150,7 +276,10 @@ namespace back_end.Controllers
             [FromQuery] DateTime? from = null,
             [FromQuery] DateTime? to = null,
             [FromQuery] decimal? minPrice = null,
-            [FromQuery] decimal? maxPrice = null)
+            [FromQuery] decimal? maxPrice = null,
+            [FromQuery] List<string>? disabilityTags = null,
+            [FromQuery] List<string>? locations = null,
+            [FromQuery] int? age = null)
         {
             try
             {
@@ -182,7 +311,7 @@ namespace back_end.Controllers
                     effectiveFrom = DateTime.UtcNow.Date;
                 }
 
-                var events = await _eventService.SearchEventsAsync(query, effectiveFrom, effectiveTo, effectiveMinPrice, effectiveMaxPrice);
+                var events = await _eventService.SearchEventsAsync(query, effectiveFrom, effectiveTo, effectiveMinPrice, effectiveMaxPrice, disabilityTags, locations, age);
                 var eventDtos = _mapper.Map<List<EventDTO>>(events);
                 return Ok(eventDtos);
             }

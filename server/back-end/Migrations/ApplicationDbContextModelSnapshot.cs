@@ -21,6 +21,47 @@ namespace back_end.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("DisabilityTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique();
+
+                    b.ToTable("DisabilityTags");
+                });
+
+            modelBuilder.Entity("DisabilityTagEvent", b =>
+                {
+                    b.Property<int>("DisabilityTagsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DisabilityTagsId", "EventsId");
+
+                    b.HasIndex("EventsId");
+
+                    b.ToTable("EventDisabilityTags", (string)null);
+                });
+
             modelBuilder.Entity("Event", b =>
                 {
                     b.Property<int>("Id")
@@ -43,15 +84,26 @@ namespace back_end.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("MaxAge")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MinAge")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Url")
                         .IsRequired()
@@ -305,6 +357,21 @@ namespace back_end.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("DisabilityTagEvent", b =>
+                {
+                    b.HasOne("DisabilityTag", null)
+                        .WithMany()
+                        .HasForeignKey("DisabilityTagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Event", b =>
