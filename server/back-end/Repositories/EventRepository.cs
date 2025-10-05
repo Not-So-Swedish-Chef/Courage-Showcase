@@ -136,7 +136,7 @@ namespace back_end.Repositories
             }
         }
 
-        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? locations = null, int? age = null)
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? cities = null, int? age = null)
         {
             try
             {
@@ -150,7 +150,8 @@ namespace back_end.Repositories
                     var queryLower = query.ToLowerInvariant();
                     eventsQuery = eventsQuery.Where(e => 
                         e.Title.Contains(query) || 
-                        e.Location.ToString().ToLower().Contains(queryLower));
+                        e.Location.ToLower().Contains(queryLower) ||
+                        e.City.ToString().ToLower().Contains(queryLower));
                 }
 
                 if (from.HasValue)
@@ -195,14 +196,14 @@ namespace back_end.Repositories
                     }
                 }
 
-                if (locations != null && locations.Any())
+                if (cities != null && cities.Any())
                 {
-                    var normalizedLocations = locations
-                        .Select(loc => loc.ToLowerInvariant().Trim())
+                    var normalizedCities = cities
+                        .Select(city => city.ToLowerInvariant().Trim())
                         .ToList();
 
                     eventsQuery = eventsQuery.Where(e => 
-                        normalizedLocations.Contains(e.Location.ToString().ToLower()));
+                        normalizedCities.Contains(e.City.ToString().ToLower()));
                 }
 
                 if (age.HasValue)

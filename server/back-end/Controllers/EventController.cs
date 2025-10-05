@@ -83,17 +83,18 @@ namespace back_end.Controllers
                     return Unauthorized("User claims missing.");
                 }
 
-                // Parse location string to OntarioCity enum
-                if (!Enum.TryParse<OntarioCity>(eventDto.Location, true, out var locationEnum))
+                // Parse city string to OntarioCity enum
+                if (!Enum.TryParse<OntarioCity>(eventDto.City, true, out var cityEnum))
                 {
-                    return BadRequest($"Invalid location. Must be a valid Ontario city name (e.g., Toronto, Ottawa, Hamilton).");
+                    return BadRequest($"Invalid city. Must be a valid Ontario city name (e.g., Toronto, Ottawa, Hamilton).");
                 }
 
                 // Map DTO to Event entity
                 var eventItem = new Event
                 {
                     Title = eventDto.Title,
-                    Location = locationEnum,
+                    Location = eventDto.Location,
+                    City = cityEnum,
                     ImageUrl = eventDto.ImageUrl,
                     StartDateTime = eventDto.StartDateTime,
                     EndDateTime = eventDto.EndDateTime,
@@ -174,10 +175,10 @@ namespace back_end.Controllers
                     return Unauthorized("You are not authorized to update this event.");
                 }
 
-                // Parse location string to OntarioCity enum
-                if (!Enum.TryParse<OntarioCity>(eventDto.Location, true, out var locationEnum))
+                // Parse city string to OntarioCity enum
+                if (!Enum.TryParse<OntarioCity>(eventDto.City, true, out var cityEnum))
                 {
-                    return BadRequest($"Invalid location. Must be a valid Ontario city name.");
+                    return BadRequest($"Invalid city. Must be a valid Ontario city name.");
                 }
 
                 // Map DTO to Event entity
@@ -185,7 +186,8 @@ namespace back_end.Controllers
                 {
                     Id = id,
                     Title = eventDto.Title,
-                    Location = locationEnum,
+                    Location = eventDto.Location,
+                    City = cityEnum,
                     ImageUrl = eventDto.ImageUrl,
                     StartDateTime = eventDto.StartDateTime,
                     EndDateTime = eventDto.EndDateTime,
@@ -278,7 +280,7 @@ namespace back_end.Controllers
             [FromQuery] decimal? minPrice = null,
             [FromQuery] decimal? maxPrice = null,
             [FromQuery] List<string>? disabilityTags = null,
-            [FromQuery] List<string>? locations = null,
+            [FromQuery] List<string>? cities = null,
             [FromQuery] int? age = null)
         {
             try
@@ -311,7 +313,7 @@ namespace back_end.Controllers
                     effectiveFrom = DateTime.UtcNow.Date;
                 }
 
-                var events = await _eventService.SearchEventsAsync(query, effectiveFrom, effectiveTo, effectiveMinPrice, effectiveMaxPrice, disabilityTags, locations, age);
+                var events = await _eventService.SearchEventsAsync(query, effectiveFrom, effectiveTo, effectiveMinPrice, effectiveMaxPrice, disabilityTags, cities, age);
                 var eventDtos = _mapper.Map<List<EventDTO>>(events);
                 return Ok(eventDtos);
             }

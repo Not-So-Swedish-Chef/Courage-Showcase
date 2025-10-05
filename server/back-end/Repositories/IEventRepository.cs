@@ -12,6 +12,6 @@ namespace back_end.Repositories
         Task AddEventAsync(Event eventItem);
         Task UpdateEventAsync(Event eventItem);
         Task DeleteEventAsync(int id);
-        Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? locations = null, int? age = null);
+        Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? cities = null, int? age = null);
     }
 }
