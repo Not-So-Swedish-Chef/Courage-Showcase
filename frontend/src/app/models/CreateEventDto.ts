@@ -1,9 +1,14 @@
 export interface CreateEventDto {
-    title: string;
-    location: string;
-    startDateTime: string;
-    endDateTime: string;
-    price: number;
-    url?: string;
-    image?: File;
-  }
+  title: string;
+  location: string;
+  city: string;
+  startDateTime: string;
+  endDateTime: string;
+  price: number;
+  url?: string;
+  image?: File;
+  minAge: number;
+  maxAge: number;
+  disabilityTags: string[];
+  status: number; //Active = 0, Expired = 1, Canceled = 2
+}
