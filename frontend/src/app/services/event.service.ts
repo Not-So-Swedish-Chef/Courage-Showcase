@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { EventDetails } from '../models/EventDetails';
 import { CreateEventDto } from '../models/CreateEventDto';
 import { UpdateEventDto } from '../models/UpdateEventDto';
+import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class EventService {
   constructor(private http: HttpClient) {}
@@ -35,7 +36,7 @@ export class EventService {
   /** update */
   updateEvent(dto: UpdateEventDto): Observable<EventDetails> {
     return this.http.put<EventDetails>(
-      `http://localhost:5000/api/event/${dto.id}`,
+      `${environment.apiBaseUrl}/event/${dto.id}`,
       {
         id: dto.id,
         title: dto.title,
@@ -59,7 +60,7 @@ export class EventService {
   }
   /** get all events */
   getEvents(): Observable<EventDetails[]> {
-    return this.http.get<EventDetails[]>('http://localhost:5000/api/event');
+    return this.http.get<EventDetails[]>(`${environment.apiBaseUrl}/event`);
   }
 
   /** filtered events */
@@ -85,24 +86,24 @@ export class EventService {
     }
 
     return this.http.get<EventDetails[]>(
-      'http://localhost:5000/api/event/search',
+      `${environment.apiBaseUrl}/event/search`,
       { params }
     );
   }
 
   /** get detail */
   getEventById(id: number): Observable<EventDetails> {
-    return this.http.get<EventDetails>(`http://localhost:5000/api/event/${id}`);
+    return this.http.get<EventDetails>(`${environment.apiBaseUrl}/event/${id}`);
   }
 
   /** delete */
   deleteEvent(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:5000/api/event/${id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/event/${id}`);
   }
 
   getMyEvents(): Observable<EventDetails[]> {
     return this.http.get<EventDetails[]>(
-      'http://localhost:5000/api/host/events'
+      `${environment.apiBaseUrl}/host/events`
     );
   }
 }
