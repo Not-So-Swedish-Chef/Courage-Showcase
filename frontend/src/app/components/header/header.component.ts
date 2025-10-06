@@ -16,11 +16,15 @@ interface NavItem {
 export class HeaderComponent {
   user$ = this.auth.user$;
 
-  memberNav: NavItem[] = [{ label: 'Events', link: '/events' }];
+  memberNav: NavItem[] = [
+    { label: 'Events', link: '/events' },
+    { label: 'Saved', link: '/saved-events' },
+  ];
   hostNav: NavItem[] = [
     { label: 'Events', link: '/events' },
     { label: 'Create', link: '/events/create' },
     { label: 'Created By Me', link: '/my-events' },
+    { label: 'Saved', link: '/saved-events' },
     { label: 'Profile', link: '/profile/edit' },
   ];
 

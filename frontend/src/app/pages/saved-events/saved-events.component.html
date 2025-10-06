@@ -1,0 +1,16 @@
+<div class="saved-events">
+  <h2>❤️ Saved Events</h2>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <div *ngIf="!loading && savedEvents.length === 0" class="empty">
+    You haven’t saved any events yet.
+  </div>
+
+  <div class="event-list" *ngIf="savedEvents.length > 0">
+    <app-event-card
+      *ngFor="let event of savedEvents"
+      [event]="event"
+    ></app-event-card>
+  </div>
+</div>
