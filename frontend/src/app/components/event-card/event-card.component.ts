@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Event } from '../../models/event';
+import { EventDetails } from '../../models/EventDetails';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./event-card.component.css'],
 })
 export class EventCardComponent {
-  @Input() event!: Event;
+  @Input() event!: EventDetails;
 
   constructor(private router: Router) {}
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event.service';
-import { Event as EventModel } from '../../models/event';
+import { EventDetails } from '../../models/EventDetails';
 
 @Component({
   selector: 'app-my-events',
@@ -8,7 +8,7 @@ import { Event as EventModel } from '../../models/event';
   styleUrls: ['./my-events.component.css'],
 })
 export class MyEventsComponent implements OnInit {
-  events: EventModel[] = [];
+  events: EventDetails[] = [];
   isLoading = true;
 
   constructor(private eventService: EventService) {}

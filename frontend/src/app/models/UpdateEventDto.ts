@@ -8,8 +8,10 @@ export interface UpdateEventDto {
   price?: number;
   url?: string;
   image?: File | null;
+  imageUrl: string;
   minAge?: number;
   maxAge?: number;
   disabilityTags?: string[];
   status?: number;
+  hostId: number;
 }
