@@ -1,37 +1,88 @@
 <div class="event-list">
   <h2>Events</h2>
-
-  <!-- filter bar -->
+  <!-- 🔹 Filter Section -->
   <div class="filter-bar">
     <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
-      <input
-        type="number"
-        placeholder="Min Price"
-        [(ngModel)]="filters.minPrice"
-        name="minPrice"
-      />
-      <input
-        type="number"
-        placeholder="Max Price"
-        [(ngModel)]="filters.maxPrice"
-        name="maxPrice"
-      />
-      <input type="date" [(ngModel)]="filters.startFrom" name="startFrom" />
-      <input type="date" [(ngModel)]="filters.endTo" name="endTo" />
-      <button type="submit">Search</button>
-      <button type="button" (click)="resetFilters()">Reset</button>
+      <div class="filter-grid">
+        <label>
+          Min Price:
+          <input
+            type="number"
+            [(ngModel)]="filters.minPrice"
+            name="minPrice"
+            placeholder="0"
+          />
+        </label>
+        <label>
+          Max Price:
+          <input
+            type="number"
+            [(ngModel)]="filters.maxPrice"
+            name="maxPrice"
+            placeholder="200"
+          />
+        </label>
+        <label>
+          Start From:
+          <input type="date" [(ngModel)]="filters.startFrom" name="startFrom" />
+        </label>
+        <label>
+          End To: <input type="date" [(ngModel)]="filters.endTo" name="endTo" />
+        </label>
+        <label>
+          Age:
+          <input
+            type="number"
+            [(ngModel)]="filters.age"
+            name="age"
+            min="0"
+            max="150"
+            placeholder="Age"
+          />
+        </label>
+        <label>
+          Disability Tag:
+          <input
+            type="text"
+            [(ngModel)]="filters.disabilityTag"
+            name="disabilityTag"
+            placeholder="e.g. Wheelchair"
+          />
+        </label>
+      </div>
+      <!-- 🔹 Multi-select Cities -->
+      <div class="city-filter">
+        <label>Cities:</label>
+        <div class="city-checkboxes">
+          <label *ngFor="let c of ontarioCities">
+            <input
+              type="checkbox"
+              [value]="c"
+              (change)="onCityToggle(c, $event)"
+              [checked]="filters.cities.includes(c)"
+            />
+            {{ c }}
+          </label>
+        </div>
+      </div>
+      <!-- 🔹 Buttons -->
+      <div class="filter-buttons">
+        <button type="submit">Apply Filters</button>
+        <button type="button" (click)="resetFilters()">Reset</button>
+      </div>
     </form>
   </div>
-  <!-- error message -->
+  <!-- 🔹 Error Messages -->
   <div *ngIf="errorMessages.length > 0" class="error-message">
     <ul>
       <li *ngFor="let msg of errorMessages">{{ msg }}</li>
     </ul>
   </div>
-  <div *ngIf="isLoading">Loading...</div>
-
-  <div *ngIf="!isLoading && events.length === 0">No events available.</div>
-
+  <!-- 🔹 Loading & Results -->
+  <div *ngIf="isLoading" class="loading">Loading events...</div>
+  <div *ngIf="!isLoading && events.length === 0" class="no-events">
+    No events available.
+  </div>
   <div class="card-grid" *ngIf="!isLoading && events.length > 0">
     <app-event-card *ngFor="let ev of events" [event]="ev"> </app-event-card>
   </div>

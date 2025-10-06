@@ -1,29 +1,77 @@
-<div *ngIf="loading">Loading event...</div>
+<div *ngIf="loading" class="loading">
+  <p>Loading event...</p>
+</div>
 
 <div *ngIf="!loading && event" class="event-detail">
   <button class="back-btn" (click)="goBack()">⬅ Back to Events</button>
 
-  <h2>{{ event.title }}</h2>
-  <img [src]="event.imageUrl" alt="event image" />
+  <!-- 标题 -->
+  <div class="header-row">
+    <h2>{{ event.title }}</h2>
+  </div>
 
-  <p><strong>Location:</strong> {{ event.location }}</p>
-  <p><strong>Start:</strong> {{ event.startDateTime | date : "medium" }}</p>
-  <p><strong>End:</strong> {{ event.endDateTime | date : "medium" }}</p>
-  <p>
-    <strong>Price:</strong>
-    {{ event.price === 0 ? "FREE" : "$" + event.price }}
-  </p>
-  <p>
-    <strong>URL:</strong>
-    <a [href]="event.url" target="_blank">{{ event.url }}</a>
-  </p>
+  <img [src]="event.imageUrl" alt="event image" class="event-img" />
 
-  <p *ngIf="event.hostId">
-    <a [routerLink]="['/host', event.hostId]">View Host Profile</a>
-  </p>
+  <div class="info-grid">
+    <p><strong>📍 City:</strong> {{ event.city || "N/A" }}</p>
+    <p><strong>🏠 Location:</strong> {{ event.location }}</p>
+
+    <p>
+      <strong>🗓️ Start:</strong> {{ event.startDateTime | date : "medium" }}
+    </p>
+    <p><strong>⏰ End:</strong> {{ event.endDateTime | date : "medium" }}</p>
+
+    <p>
+      <strong>💰 Price:</strong>
+      <span class="price-badge">
+        {{ event.price === 0 ? "FREE" : "$" + event.price }}
+      </span>
+    </p>
+
+    <p>
+      <strong>🎂 Age Limit:</strong>
+      {{ event.minAge || 0 }} - {{ event.maxAge || "Any" }}
+    </p>
+
+    <p>
+      <strong>🔗 Website:</strong>
+      <a [href]="event.url" target="_blank">{{ event.url }}</a>
+    </p>
+
+    <p class="host-link">
+      <strong>👤 Host:</strong>
+      <a [routerLink]="['/host', event.hostId]">
+        <i class="fa-solid fa-user-tie"></i> View Host Info
+      </a>
+    </p>
+
+    <p>
+      <strong>📊 Status:</strong>
+      <span
+        [ngClass]="{
+          active: event.status === 0,
+          expired: event.status === 1,
+          caancelled: event.status === 2
+        }"
+      >
+        {{
+          event.status === 1
+            ? "Active"
+            : event.status === 0
+            ? "Pending"
+            : "Closed"
+        }}
+      </span>
+    </p>
+  </div>
+
+  <div *ngIf="event.disabilityTags?.length" class="tags">
+    <strong>♿ Accessibility:</strong>
+    <span class="tag" *ngFor="let tag of event.disabilityTags">{{ tag }}</span>
+  </div>
 
   <div class="actions">
-    <button class="update-btn" (click)="updateEvent()">Update</button>
-    <button class="delete-btn" (click)="deleteEvent()">Delete</button>
+    <button class="update-btn" (click)="updateEvent()">✏️ Update</button>
+    <button class="delete-btn" (click)="deleteEvent()">🗑 Delete</button>
   </div>
 </div>

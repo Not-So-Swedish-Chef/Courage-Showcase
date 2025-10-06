@@ -1,0 +1,22 @@
+.saved-events {
+  padding: 1rem 2rem;
+}
+
+h2 {
+  color: #333;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.loading,
+.empty {
+  color: #666;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}

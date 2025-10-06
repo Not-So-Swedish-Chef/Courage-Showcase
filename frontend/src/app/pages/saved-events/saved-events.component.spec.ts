@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventFormComponent } from './event-form.component';
+import { SavedEventsComponent } from './saved-events.component';
 
-describe('EventFormComponent', () => {
-  let component: EventFormComponent;
-  let fixture: ComponentFixture<EventFormComponent>;
+describe('SavedEventsComponent', () => {
+  let component: SavedEventsComponent;
+  let fixture: ComponentFixture<SavedEventsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EventFormComponent]
+      declarations: [SavedEventsComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EventFormComponent);
+    fixture = TestBed.createComponent(SavedEventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

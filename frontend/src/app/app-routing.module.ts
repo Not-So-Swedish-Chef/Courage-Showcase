@@ -10,6 +10,7 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { HostProfileComponent } from './pages/host-profile/host-profile.component';
+import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'events', component: EventListComponent },
   { path: 'my-events', component: MyEventsComponent },
   { path: 'events/:id', component: EventDetailComponent },
+  { path: 'saved-events', component: SavedEventsComponent },
   { path: '**', redirectTo: '' },
 ];
 
