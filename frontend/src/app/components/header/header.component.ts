@@ -20,7 +20,7 @@ export class HeaderComponent {
   hostNav: NavItem[] = [
     { label: 'Events', link: '/events' },
     { label: 'Create', link: '/events/create' },
-    { label: 'My Events', link: '/my-events' },
+    { label: 'Created By Me', link: '/my-events' },
     { label: 'Profile', link: '/profile/edit' },
   ];
 
