@@ -45,6 +45,7 @@ namespace back_end.Services
             try
             {
                 var host = await _context.Hosts
+                    .Include(h => h.User)
                     .Include(h => h.Events.Where(e => e.Status != back_end.Enums.EventStatus.Canceled))
                     .FirstOrDefaultAsync(h => h.Id == userId);
 
