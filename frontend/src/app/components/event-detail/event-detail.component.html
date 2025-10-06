@@ -49,9 +49,9 @@
       <strong>📊 Status:</strong>
       <span
         [ngClass]="{
-          active: event.status === 1,
-          pending: event.status === 0,
-          closed: event.status === 2
+          active: event.status === 0,
+          expired: event.status === 1,
+          caancelled: event.status === 2
         }"
       >
         {{

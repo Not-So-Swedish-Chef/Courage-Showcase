@@ -34,5 +34,10 @@
     <span class="price">
       {{ event.price === 0 ? "FREE" : "$" + event.price }}
     </span>
+
+    <div class="actions" *ngIf="showActions">
+      <button class="update-btn" (click)="onUpdate($event)">✏️ Update</button>
+      <button class="delete-btn" (click)="onDelete($event)">🗑 Delete</button>
+    </div>
   </div>
 </div>

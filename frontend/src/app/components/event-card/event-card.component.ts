@@ -3,6 +3,7 @@ import { EventDetails } from '../../models/EventDetails';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-event-card',
@@ -11,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EventCardComponent implements OnInit {
   @Input() event!: EventDetails;
+  @Input() showActions: boolean = false;
   isFav = false;
   private apiUrl = 'http://localhost:5000/api/User';
   isProcessing = false;
@@ -18,7 +20,8 @@ export class EventCardComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private http: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private eventService: EventService
   ) {}
 
   ngOnInit() {
@@ -104,6 +107,37 @@ export class EventCardComponent implements OnInit {
         console.error('Toggle favorite failed:', err);
       },
     });
+  }
+
+  onUpdate(event: MouseEvent) {
+    event.stopPropagation();
+    if (this.event) {
+      this.router.navigate(['/events/update', this.event.id]);
+    }
+  }
+
+  // ✅ Delete button handler
+  onDelete(event: MouseEvent) {
+    event.stopPropagation();
+
+    if (!this.event) return;
+    if (confirm('Are you sure you want to delete this event?')) {
+      this.eventService.deleteEvent(this.event.id).subscribe({
+        next: () => {
+          alert('Event deleted');
+          // 刷新当前页面（例如 /my-events）
+          window.location.reload();
+        },
+        error: (err) => {
+          if (err.status === 403) {
+            alert('You are not allowed to delete this event.');
+          } else {
+            alert('Delete failed.');
+          }
+          console.error('Delete failed', err);
+        },
+      });
+    }
   }
 
   goToDetail() {
