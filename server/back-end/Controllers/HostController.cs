@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -28,6 +28,29 @@ namespace back_end.Controllers
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        [HttpGet("{userId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<HostDTO>> GetHostByUserId(int userId)
+        {
+            try
+            {
+                var host = await _hostService.GetHostByUserIdAsync(userId);
+                if (host == null)
+                {
+                    _logger.LogWarning($"Host not found for user ID {userId}.");
+                    return NotFound("Host not found.");
+                }
+
+                var hostDto = _mapper.Map<HostDTO>(host);
+                return Ok(hostDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving host for user ID {userId}.");
+                return StatusCode(500, "An error occurred while retrieving the host information.");
+            }
         }
 
         [HttpGet("events")]

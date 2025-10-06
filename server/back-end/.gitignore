@@ -8,3 +8,7 @@
 bin/
 obj/
 .vs/
+
+# appsettings files (contain secrets)
+appsettings.json
+appsettings.*.json
