@@ -6,6 +6,9 @@ import { CreateEventDto } from '../../../models/CreateEventDto';
 import { UpdateEventDto } from '../../../models/UpdateEventDto';
 import { EventService } from '../../../services/event.service';
 import { AuthService } from '../../../services/auth.service';
+import { CloudinaryService } from '../../../services/cloudinary.service';
+import { forkJoin, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-form',
@@ -65,12 +68,15 @@ export class EventFormComponent implements OnInit {
   urlError = '';
   dateError = '';
   ageError = '';
+  imageError = '';
+  isUploadingImage = false;
 
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private cloudinaryService: CloudinaryService
   ) {}
 
   // --- Load existing event if editing ---
@@ -106,7 +112,31 @@ export class EventFormComponent implements OnInit {
 
   // --- Handle file selection ---
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    if (!file) {
+      this.selectedFile = undefined;
+      this.imageError = '';
+      return;
+    }
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      this.imageError = '⚠️ Invalid file type. Please upload JPG, PNG, GIF, or WebP.';
+      this.selectedFile = undefined;
+      return;
+    }
+
+    // Validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      this.imageError = '⚠️ File size exceeds 10MB. Please choose a smaller image.';
+      this.selectedFile = undefined;
+      return;
+    }
+
+    this.selectedFile = file;
+    this.imageError = '';
   }
 
   // --- Validate URL format ---
@@ -152,7 +182,7 @@ export class EventFormComponent implements OnInit {
     this.validateDateRange();
     this.validateAgeRange();
 
-    if (form.invalid || this.urlError || this.dateError || this.ageError) {
+    if (form.invalid || this.urlError || this.dateError || this.ageError || this.imageError) {
       alert('⚠️ Please fix validation errors before submitting.');
       return;
     }
@@ -183,28 +213,46 @@ export class EventFormComponent implements OnInit {
 
     const hostId = currentUser.id!;
 
-    // ✅ Build DTO (Create or Update)
-    const dto: CreateEventDto | UpdateEventDto = {
-      ...this.event,
-      disabilityTags: tags,
-      imageUrl: this.event.imageUrl || this.DEFAULT_EVENT_IMAGE,
-      hostId,
-    };
+    const uploadImage$ = this.selectedFile
+      ? this.cloudinaryService.uploadImage(this.selectedFile, 'events')
+      : of(this.event.imageUrl || this.DEFAULT_EVENT_IMAGE);
 
-    const request$ = this.isEditMode
-      ? this.eventService.updateEvent(dto as UpdateEventDto)
-      : this.eventService.createEvent(dto as CreateEventDto);
+    this.isUploadingImage = !!this.selectedFile;
 
-    request$.subscribe({
-      next: () => {
-        alert(this.isEditMode ? '✅ Event updated!' : '🎉 Event created!');
-        this.router.navigate(['/events']);
-      },
-      error: (err) => {
-        console.error('❌ Save failed:', err);
-        alert('Failed to save event, see console for details.');
-      },
-      complete: () => (this.isSubmitting = false),
-    });
+    uploadImage$
+      .pipe(
+        switchMap((imageUrl: string) => {
+          // Step 2: Build DTO with the image URL
+          const dto: CreateEventDto | UpdateEventDto = {
+            ...this.event,
+            disabilityTags: tags,
+            imageUrl: imageUrl,
+            hostId,
+          };
+
+          // Step 3: Create or update event
+          return this.isEditMode
+            ? this.eventService.updateEvent(dto as UpdateEventDto)
+            : this.eventService.createEvent(dto as CreateEventDto);
+        })
+      )
+      .subscribe({
+        next: () => {
+          alert(this.isEditMode ? '✅ Event updated!' : '🎉 Event created!');
+          this.router.navigate(['/events']);
+        },
+        error: (err) => {
+          console.error('❌ Save failed:', err);
+          if (err.error?.error) {
+            alert(`Failed: ${err.error.error}`);
+          } else {
+            alert('Failed to save event. See console for details.');
+          }
+        },
+        complete: () => {
+          this.isSubmitting = false;
+          this.isUploadingImage = false;
+        },
+      });
   }
 }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using back_end.DTOs;
 using back_end.Models;
 using back_end.Repositories;
@@ -116,6 +116,7 @@ builder.Services.AddScoped<IHostService, HostService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
 
 var app = builder.Build();
 
