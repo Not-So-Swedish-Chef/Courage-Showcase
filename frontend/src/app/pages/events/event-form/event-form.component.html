@@ -48,6 +48,27 @@
       </small>
     </label>
 
+    <!-- Image Upload -->
+    <label>
+      <span>Event Image</span>
+      <input
+        type="file"
+        name="image"
+        (change)="onFileSelected($event)"
+        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+      />
+      <small *ngIf="selectedFile" class="hint">
+        📷 Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }} KB)
+      </small>
+      <small *ngIf="!selectedFile && !event.imageUrl" class="hint">
+        💡 No image selected. A default image will be used.
+      </small>
+      <small *ngIf="!selectedFile && event.imageUrl" class="hint">
+        🖼️ Current image: {{ event.imageUrl }}
+      </small>
+      <small class="error" *ngIf="imageError">{{ imageError }}</small>
+    </label>
+
     <!-- Start Date -->
     <label>
       <span>Start Date & Time *</span>
