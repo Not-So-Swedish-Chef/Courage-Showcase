@@ -1,11 +1,9 @@
 <header class="header">
   <div class="header-inner">
-
     <a routerLink="/" class="brand">
       <img src="assets/images/logosvg2.svg" alt="logo" width="70" height="20" />
       <span class="brand-title">Events Hub</span>
     </a>
-
 
     <ng-container *ngIf="user$ | async as user">
       <nav class="nav" *ngIf="user">
@@ -18,9 +16,15 @@
         </a>
       </nav>
 
-
       <div class="actions" *ngIf="user">
         <span class="hi" *ngIf="user.firstName">Hi, {{ user.firstName }}!</span>
+        <button
+          *ngIf="user.userType === 0"
+          class="btn btn-warning"
+          routerLink="/admin"
+        >
+          Admin Panel
+        </button>
         <button class="btn btn-danger" (click)="logout()">Logout</button>
       </div>
     </ng-container>
