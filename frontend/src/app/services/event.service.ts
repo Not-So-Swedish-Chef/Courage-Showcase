@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class EventService {
   constructor(private http: HttpClient) {}
-  private readonly BASE_URL = 'http://localhost:5000/api/event';
 
   /** create */
   createEvent(dto: CreateEventDto): Observable<EventDetails> {
@@ -28,7 +27,7 @@ export class EventService {
       status: dto.status,
     };
 
-    return this.http.post<EventDetails>(this.BASE_URL, payload, {
+    return this.http.post<EventDetails>(`${environment.apiBaseUrl}/event`, payload, {
       headers: { 'Content-Type': 'application/json' },
     });
   }

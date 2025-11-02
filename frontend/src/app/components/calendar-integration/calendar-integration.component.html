@@ -1,0 +1,42 @@
+<div class="calendar-integration">
+  <div class="calendar-dropdown">
+    <button 
+      class="add-to-calendar-btn" 
+      (click)="toggleDropdown()"
+      [disabled]="isLoading"
+      type="button">
+      <span *ngIf="!isLoading">Add to Calendar</span>
+      <span *ngIf="isLoading">Adding...</span>
+      <span class="dropdown-arrow" [class.rotated]="showDropdown">▼</span>
+    </button>
+
+    <!-- Working dropdown with simple styling -->
+    <div *ngIf="showDropdown" style="position: fixed; top: 200px; left: 100px; background: white; border: 2px solid #333; padding: 20px; z-index: 9999; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); min-width: 300px;">
+      <h4 style="margin: 0 0 15px 0; color: #333;">Add "{{ event.title }}" to Calendar</h4>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Google Calendar Web -->
+        <button (click)="openGoogleCalendarUrl()" style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa; cursor: pointer; text-align: left;">
+          Google Calendar (Web)
+        </button>
+        
+        <!-- Outlook Calendar -->
+        <button (click)="openOutlookCalendarUrl()" style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa; cursor: pointer; text-align: left;">
+          Outlook Calendar
+        </button>
+        
+        <!-- Download ICS -->
+        <button (click)="downloadCalendarFile()" style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #f8f9fa; cursor: pointer; text-align: left;">
+          Download Calendar File
+        </button>
+        
+        <button (click)="closeDropdown()" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #e9ecef; cursor: pointer; margin-top: 10px;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop for mobile -->
+  <div class="dropdown-backdrop" [class.show]="showDropdown" (click)="closeDropdown()"></div>
+</div>

@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 // Interceptors
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordValidatorDirective } from './directives/password-validator.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { EventFormComponent } from './pages/events/event-form/event-form.component';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -32,6 +33,7 @@ import { ProfileEditComponent } from './pages/profile-edit/profile-edit.componen
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { HostProfileComponent } from './pages/host-profile/host-profile.component';
 import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
+import { CalendarIntegrationComponent } from './components/calendar-integration/calendar-integration.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { SavedEventsComponent } from './pages/saved-events/saved-events.componen
     FooterComponent,
     EventCardComponent,
     PasswordValidatorDirective,
+    ClickOutsideDirective,
     EventFormComponent,
     EventListComponent,
     EventDetailComponent,
@@ -50,6 +53,7 @@ import { SavedEventsComponent } from './pages/saved-events/saved-events.componen
     MyEventsComponent,
     HostProfileComponent,
     SavedEventsComponent,
+    CalendarIntegrationComponent,
   ],
   imports: [
     BrowserModule,
