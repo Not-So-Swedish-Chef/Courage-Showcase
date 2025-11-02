@@ -1,0 +1,50 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <nav class="admin-sidebar">
+    <h3 class="sidebar-title">Admin Menu</h3>
+
+    <a routerLink="/admin/events" routerLinkActive="active-link">
+      Manage Events
+    </a>
+
+    <a routerLink="/admin/users" routerLinkActive="active-link">
+      Manage Users
+    </a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="admin-content">
+    <h2 class="page-title">Manage Users</h2>
+
+    <div *ngIf="loading" class="loading">Loading users...</div>
+
+    <div class="admin-card" *ngIf="!loading">
+      <table *ngIf="users.length > 0" class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>User Type</th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.firstName }} {{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ getUserTypeLabel(user.userType) }}</td>
+
+            <td>
+              <button class="delete-btn" (click)="deleteUser(user.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="users.length === 0" class="no-data">No users found.</p>
+    </div>
+  </div>
+</div>

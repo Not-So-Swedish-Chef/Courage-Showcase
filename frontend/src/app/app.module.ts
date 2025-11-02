@@ -32,6 +32,9 @@ import { ProfileEditComponent } from './pages/profile-edit/profile-edit.componen
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { HostProfileComponent } from './pages/host-profile/host-profile.component';
 import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminEventsComponent } from './pages/admin-events/admin-events.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { SavedEventsComponent } from './pages/saved-events/saved-events.componen
     MyEventsComponent,
     HostProfileComponent,
     SavedEventsComponent,
+    AdminHomeComponent,
+    AdminUsersComponent,
+    AdminEventsComponent,
   ],
   imports: [
     BrowserModule,
