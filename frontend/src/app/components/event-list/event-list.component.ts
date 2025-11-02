@@ -22,7 +22,9 @@ export class EventListComponent implements OnInit {
     disabilityTag: '',
   };
 
-  ontarioCities = [
+  citySearchTerm = '';
+
+  readonly ontarioCities = [
     'Ajax',
     'Aurora',
     'Barrie',
@@ -75,7 +77,79 @@ export class EventListComponent implements OnInit {
     'Welland',
     'Whitby',
     'Windsor',
-  ];
+  ].sort((a, b) => a.localeCompare(b));
+
+  get selectedCities(): string[] {
+    return this.sortCities(this.filters.cities);
+  }
+
+  get availableCities(): string[] {
+    return this.ontarioCities.filter((city) =>
+      !this.filters.cities.includes(city)
+    );
+  }
+
+  get filteredAvailableCities(): string[] {
+    const search = this.citySearchTerm.trim().toLowerCase();
+    const available = this.availableCities;
+
+    if (!search) {
+      return available;
+    }
+
+    return available.filter((city) =>
+      city.toLowerCase().includes(search)
+    );
+  }
+
+  get matchingSelectedCities(): string[] {
+    const search = this.citySearchTerm.trim().toLowerCase();
+    if (!search) {
+      return [];
+    }
+
+    return this.selectedCities.filter((city) =>
+      city.toLowerCase().includes(search)
+    );
+  }
+
+  get allCitiesSelected(): boolean {
+    return this.filters.cities.length === this.ontarioCities.length;
+  }
+
+  get noCityMatchesHeadline(): string {
+    if (this.filteredAvailableCities.length > 0) {
+      return '';
+    }
+
+    if (!this.citySearchTerm.trim() && this.allCitiesSelected) {
+      return 'All Ontario cities are selected.';
+    }
+
+    if (!this.citySearchTerm.trim()) {
+      return 'No cities available to add.';
+    }
+
+    return 'No city names match.';
+  }
+
+  get noCityMatchesDetail(): string | null {
+    if (this.filteredAvailableCities.length > 0) {
+      return null;
+    }
+
+    const search = this.citySearchTerm.trim();
+    if (!search) {
+      return null;
+    }
+
+    if (this.matchingSelectedCities.length > 0) {
+      const list = this.matchingSelectedCities.join(', ');
+      return `${list} ${this.matchingSelectedCities.length === 1 ? 'is' : 'are'} already selected.`;
+    }
+
+    return null;
+  }
 
   constructor(private eventService: EventService) {}
 
@@ -138,17 +212,32 @@ export class EventListComponent implements OnInit {
       cities: [],
       disabilityTag: '',
     };
+    this.citySearchTerm = '';
     this.errorMessages = [];
     this.loadAllEvents();
   }
 
-  /** 多选城市切换 */
-  onCityToggle(city: string, event: any) {
-    if (event.target.checked) {
-      this.filters.cities.push(city);
-    } else {
-      this.filters.cities = this.filters.cities.filter((c) => c !== city);
+  addCity(city: string) {
+    if (this.filters.cities.includes(city)) {
+      return;
     }
+    this.filters.cities = this.sortCities([...this.filters.cities, city]);
+  }
+
+  removeCity(city: string) {
+    this.filters.cities = this.filters.cities.filter((c) => c !== city);
+  }
+
+  clearSelectedCities() {
+    this.filters.cities = [];
+  }
+
+  clearCitySearch() {
+    this.citySearchTerm = '';
+  }
+
+  private sortCities(cities: string[]): string[] {
+    return [...cities].sort((a, b) => a.localeCompare(b));
   }
 
   /** 校验过滤项 */

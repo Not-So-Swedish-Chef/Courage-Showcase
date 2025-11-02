@@ -46,25 +46,135 @@ h2 {
 
 .city-filter {
   margin-top: 1rem;
-}
-
-.city-checkboxes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.4rem 1rem;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 0.8rem;
+  padding: 0.9rem;
   background: #f9f9f9;
-  height: 120px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-.city-checkboxes label {
+.city-filter-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.75rem;
+}
+
+.city-filter-header label {
+  font-weight: 600;
+  color: #333;
+}
+
+.city-search-input {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.city-search-input input {
+  width: 100%;
+  padding: 0.45rem 2rem 0.45rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 0.9rem;
+}
+
+.city-search-clear {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.city-selected-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.city-clear-selected {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+}
+
+.city-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.city-chip {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.city-chip:hover,
+.city-chip:focus {
+  background: #eef5ff;
+  border-color: #7aa7ff;
+  outline: none;
+}
+
+.city-chip.selected {
+  background: #e5f8e6;
+  border-color: #54c86a;
+  color: #256a32;
+}
+
+.city-chip.selected:hover,
+.city-chip.selected:focus {
+  background: #d2f1d4;
+  border-color: #3daf53;
+}
+
+.chip-remove {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.city-empty-state {
+  border: 1px dashed #c9c9c9;
+  border-radius: 6px;
+  padding: 0.75rem;
+  background: #fff;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 .filter-buttons {
