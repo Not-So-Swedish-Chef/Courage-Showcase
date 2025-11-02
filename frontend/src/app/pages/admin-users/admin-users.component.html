@@ -25,20 +25,51 @@
             <th>Name</th>
             <th>Email</th>
             <th>User Type</th>
+            <th>Suspend Status</th>
             <th class="actions-col">Actions</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr
+            *ngFor="let user of users"
+            [class.suspended-row]="isSuspended(user)"
+          >
             <td>{{ user.firstName }} {{ user.lastName }}</td>
             <td>{{ user.email }}</td>
+
             <td>{{ getUserTypeLabel(user.userType) }}</td>
 
             <td>
-              <button class="delete-btn" (click)="deleteUser(user.id)">
-                Delete
-              </button>
+              <span *ngIf="isSuspended(user)" class="suspended-badge">
+                Suspended until {{ user.suspendUntil | date : "shortDate" }}
+              </span>
+              <span *ngIf="!isSuspended(user)">Active</span>
+            </td>
+
+            <td>
+              <div class="actions">
+                <button class="suspend-btn" (click)="openSuspend(user)">
+                  Suspend
+                </button>
+
+                <button class="delete-btn" (click)="deleteUser(user.id)">
+                  Delete
+                </button>
+              </div>
+
+              <!-- Inline suspend UI -->
+              <div *ngIf="suspendTarget === user" class="suspend-panel">
+                <label>Suspend Until:</label>
+                <input type="date" [(ngModel)]="suspendUntil" />
+
+                <button class="confirm-btn" (click)="confirmSuspend()">
+                  Confirm
+                </button>
+                <button class="cancel-btn" (click)="cancelSuspend()">
+                  Cancel
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

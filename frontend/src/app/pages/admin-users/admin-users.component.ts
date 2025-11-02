@@ -5,31 +5,52 @@ import { User } from '../../models/user';
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
-  styleUrl: './admin-users.component.css',
+  styleUrls: ['./admin-users.component.css'],
 })
 export class AdminUsersComponent implements OnInit {
   users: User[] = [];
   loading = true;
 
+  suspendTarget: User | null = null;
+  suspendUntil: string = ''; // date input value (YYYY-MM-DD)
+
   constructor(private adminUserService: AdminUserService) {}
 
   ngOnInit(): void {
-    this.adminUserService.getUsers().subscribe((data) => {
-      this.users = data;
+    this.adminUserService.getUsers().subscribe((res) => {
+      this.users = res;
       this.loading = false;
     });
   }
 
   deleteUser(id?: number) {
     if (!id) return;
-    if (!confirm('Are you sure you want to delete this user?')) return;
-
-    this.adminUserService.deleteUser(id).subscribe(() => {
-      this.users = this.users.filter((u) => u.id !== id);
-    });
+    this.adminUserService.deleteUser(id).subscribe(() => {});
   }
 
-  getUserTypeLabel(type: 0 | 1 | 2): string {
+  openSuspend(user: User) {
+    this.suspendTarget = user;
+    this.suspendUntil = '';
+  }
+
+  confirmSuspend() {
+    if (!this.suspendTarget || !this.suspendUntil) return;
+
+    const date = new Date(this.suspendUntil);
+    this.adminUserService.suspendUser(this.suspendTarget.id!, date);
+
+    this.suspendTarget = null;
+  }
+
+  cancelSuspend() {
+    this.suspendTarget = null;
+  }
+
+  isSuspended(user: User): boolean {
+    return !!user.suspendUntil && new Date(user.suspendUntil) > new Date();
+  }
+
+  getUserTypeLabel(type: number): string {
     return type === 0 ? 'Admin' : type === 1 ? 'Host' : 'Member';
   }
 }

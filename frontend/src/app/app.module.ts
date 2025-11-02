@@ -35,7 +35,9 @@ import { SavedEventsComponent } from './pages/saved-events/saved-events.componen
 import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminEventsComponent } from './pages/admin-events/admin-events.component';
-
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +58,7 @@ import { AdminEventsComponent } from './pages/admin-events/admin-events.componen
     AdminHomeComponent,
     AdminUsersComponent,
     AdminEventsComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,8 @@ import { AdminEventsComponent } from './pages/admin-events/admin-events.componen
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     provideClientHydration(),
