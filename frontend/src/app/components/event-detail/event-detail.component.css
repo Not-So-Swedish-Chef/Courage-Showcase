@@ -190,3 +190,19 @@ h2 {
     font-size: 0.9rem;
   }
 }
+
+.calendar-btn {
+  background: #4f46e5;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: background 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.calendar-btn:hover {
+  background: #3730a3;
+}

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
 import { EventDetails } from '../../models/EventDetails';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -46,23 +45,81 @@ export class EventDetailComponent implements OnInit {
   }
 
   deleteEvent() {
-    if (this.event) {
-      if (confirm('Are you sure you want to delete this event?')) {
-        this.eventService.deleteEvent(this.event.id).subscribe({
-          next: () => {
-            alert('Event deleted');
-            this.router.navigate(['/events']);
-          },
-          error: (err) => {
-            if (err.status === 403) {
-              alert('You are not allowed to delete this event.');
-            } else {
-              alert('Delete failed.');
-            }
-            console.error('Delete failed', err);
-          },
-        });
-      }
+    if (!this.event) return;
+
+    if (confirm('Are you sure you want to delete this event?')) {
+      this.eventService.deleteEvent(this.event.id).subscribe({
+        next: () => {
+          alert('Event deleted');
+          this.router.navigate(['/events']);
+        },
+        error: (err) => {
+          if (err.status === 403)
+            alert('You are not allowed to delete this event.');
+          else alert('Delete failed.');
+          console.error(err);
+        },
+      });
     }
+  }
+
+  addToGoogleCalendar() {
+    if (!this.event) return;
+
+    const title = encodeURIComponent(this.event.title);
+    const location = encodeURIComponent(this.event.location ?? '');
+    const details = encodeURIComponent(`More info: ${this.event.url ?? ''}`);
+
+    const start =
+      new Date(this.event.startDateTime)
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .split('.')[0] + 'Z';
+
+    const end =
+      new Date(this.event.endDateTime)
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .split('.')[0] + 'Z';
+
+    const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${location}&details=${details}`;
+    window.open(url, '_blank');
+  }
+
+  addToAppleCalendar() {
+    if (!this.event) return;
+
+    const start =
+      new Date(this.event.startDateTime)
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .split('.')[0] + 'Z';
+
+    const end =
+      new Date(this.event.endDateTime)
+        .toISOString()
+        .replace(/[-:]/g, '')
+        .split('.')[0] + 'Z';
+
+    const summary = this.event.title.replace(/,/g, '\\,');
+    const location = (this.event.location ?? '').replace(/,/g, '\\,');
+    const url = this.event.url ?? '';
+
+    const ics = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+URL:${url}
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:${summary}
+LOCATION:${location}
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${summary}.ics`;
+    link.click();
   }
 }

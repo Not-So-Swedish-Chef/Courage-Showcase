@@ -5,48 +5,55 @@
 <div *ngIf="!loading && event" class="event-detail">
   <button class="back-btn" (click)="goBack()">⬅ Back to Events</button>
 
-  <!-- 标题 -->
   <div class="header-row">
     <h2>{{ event.title }}</h2>
   </div>
 
   <img [src]="event.imageUrl" alt="event image" class="event-img" />
+  <div class="right-actions">
+    <button class="calendar-btn" (click)="addToGoogleCalendar()">
+      <i class="fa-brands fa-google"></i> Google Calendar
+    </button>
 
+    <button class="calendar-btn" (click)="addToAppleCalendar()">
+      <i class="fa-brands fa-apple"></i> Apple Calendar
+    </button>
+  </div>
   <div class="info-grid">
-    <p><strong>📍 City:</strong> {{ event.city || "N/A" }}</p>
-    <p><strong>🏠 Location:</strong> {{ event.location }}</p>
+    <p><strong>City:</strong> {{ event.city || "N/A" }}</p>
+    <p><strong>Location:</strong> {{ event.location }}</p>
 
     <p>
-      <strong>🗓️ Start:</strong> {{ event.startDateTime | date : "medium" }}
+      <strong>Start:</strong> {{ event.startDateTime | date : "medium" }}
     </p>
-    <p><strong>⏰ End:</strong> {{ event.endDateTime | date : "medium" }}</p>
+    <p><strong>End:</strong> {{ event.endDateTime | date : "medium" }}</p>
 
     <p>
-      <strong>💰 Price:</strong>
+      <strong>Price:</strong>
       <span class="price-badge">
         {{ event.price === 0 ? "FREE" : "$" + event.price }}
       </span>
     </p>
 
     <p>
-      <strong>🎂 Age Limit:</strong>
+      <strong>Age Limit:</strong>
       {{ event.minAge || 0 }} - {{ event.maxAge || "Any" }}
     </p>
 
     <p>
-      <strong>🔗 Website:</strong>
+      <strong>Website:</strong>
       <a [href]="event.url" target="_blank">{{ event.url }}</a>
     </p>
 
     <p class="host-link">
-      <strong>👤 Host:</strong>
+      <strong>Host:</strong>
       <a [routerLink]="['/host', event.hostId]">
         <i class="fa-solid fa-user-tie"></i> View Host Info
       </a>
     </p>
 
     <p>
-      <strong>📊 Status:</strong>
+      <strong>Status:</strong>
       <span
         [ngClass]="{
           active: event.status === 0,
@@ -58,15 +65,15 @@
           event.status === 1
             ? "Active"
             : event.status === 0
-            ? "Pending"
-            : "Closed"
+            ? "Expired"
+            : "Cancelled"
         }}
       </span>
     </p>
   </div>
 
   <div *ngIf="event.disabilityTags?.length" class="tags">
-    <strong>♿ Accessibility:</strong>
+    <strong>Accessibility:</strong>
     <span class="tag" *ngFor="let tag of event.disabilityTags">{{ tag }}</span>
   </div>
 
