@@ -11,7 +11,10 @@ import { ProfileEditComponent } from './pages/profile-edit/profile-edit.componen
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { HostProfileComponent } from './pages/host-profile/host-profile.component';
 import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
-
+import { AdminGuard } from './guards/admin/guard';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminEventsComponent } from './pages/admin-events/admin-events.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   // { path: 'events', component: EventsComponent, canActivate: [authGuard] },
@@ -25,6 +28,17 @@ const routes: Routes = [
   { path: 'my-events', component: MyEventsComponent },
   { path: 'events/:id', component: EventDetailComponent },
   { path: 'saved-events', component: SavedEventsComponent },
+  { path: 'admin', component: AdminHomeComponent, canActivate: [AdminGuard] },
+  {
+    path: 'admin/users',
+    component: AdminUsersComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'admin/events',
+    component: AdminEventsComponent,
+    canActivate: [AdminGuard],
+  },
   { path: '**', redirectTo: '' },
 ];
 

@@ -1,0 +1,27 @@
+<div class="admin-layout">
+  <!-- Left Sidebar -->
+  <nav class="admin-sidebar">
+    <h3 class="sidebar-title">Admin Menu</h3>
+
+    <a
+      routerLink="/admin"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Dashboard
+    </a>
+
+    <a routerLink="/admin/users" routerLinkActive="active-link">
+      Manage Users
+    </a>
+
+    <a routerLink="/admin/events" routerLinkActive="active-link">
+      Manage Events
+    </a>
+  </nav>
+
+  <div class="admin-content">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome! Select an option from the menu.</p>
+  </div>
+</div>

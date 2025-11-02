@@ -35,6 +35,12 @@ import { HostProfileComponent } from './pages/host-profile/host-profile.componen
 import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
 import { CalendarIntegrationComponent } from './components/calendar-integration/calendar-integration.component';
 
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminEventsComponent } from './pages/admin-events/admin-events.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +60,10 @@ import { CalendarIntegrationComponent } from './components/calendar-integration/
     HostProfileComponent,
     SavedEventsComponent,
     CalendarIntegrationComponent,
+    AdminHomeComponent,
+    AdminUsersComponent,
+    AdminEventsComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +75,8 @@ import { CalendarIntegrationComponent } from './components/calendar-integration/
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     provideClientHydration(),

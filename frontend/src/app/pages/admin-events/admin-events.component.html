@@ -1,0 +1,66 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <nav class="admin-sidebar">
+    <h3 class="sidebar-title">Admin Menu</h3>
+
+    <a routerLink="/admin/events" routerLinkActive="active-link">
+      Manage Events
+    </a>
+
+    <a routerLink="/admin/users" routerLinkActive="active-link">
+      Manage Users
+    </a>
+  </nav>
+
+  <!-- Right Panel -->
+  <div class="admin-content">
+    <h2 class="page-title">Manage Events</h2>
+
+    <div *ngIf="loading" class="loading">Loading events...</div>
+
+    <!-- Card Container -->
+    <div class="admin-card" *ngIf="!loading">
+      <table *ngIf="events.length > 0" class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>City</th>
+            <th>Start</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th class="actions-col">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td>{{ event.title }}</td>
+            <td>{{ event.city }}</td>
+            <td>{{ event.startDateTime | date : "short" }}</td>
+            <td>{{ event.price === 0 ? "Free" : "$" + event.price }}</td>
+
+            <td>
+              <span class="status draft" *ngIf="event.status === 0"
+                >Active</span
+              >
+              <span class="status published" *ngIf="event.status === 1"
+                >Expired</span
+              >
+              <span class="status cancelled" *ngIf="event.status === 2"
+                >Canceled</span
+              >
+            </td>
+
+            <td>
+              <button class="delete-btn" (click)="deleteEvent(event.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="events.length === 0" class="no-data">No events found.</p>
+    </div>
+  </div>
+</div>

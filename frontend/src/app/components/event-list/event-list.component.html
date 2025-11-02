@@ -52,17 +52,67 @@
       </div>
       <!-- 🔹 Multi-select Cities -->
       <div class="city-filter">
-        <label>Cities:</label>
-        <div class="city-checkboxes">
-          <label *ngFor="let c of ontarioCities">
+        <div class="city-filter-header">
+          <label for="citySearch">Find City:</label>
+          <div class="city-search-input">
             <input
-              type="checkbox"
-              [value]="c"
-              (change)="onCityToggle(c, $event)"
-              [checked]="filters.cities.includes(c)"
+              id="citySearch"
+              name="citySearch"
+              type="text"
+              [(ngModel)]="citySearchTerm"
+              placeholder="City name here"
+              autocomplete="off"
             />
-            {{ c }}
-          </label>
+            <button
+              *ngIf="citySearchTerm"
+              type="button"
+              class="city-search-clear"
+              (click)="clearCitySearch()"
+              aria-label="Clear city search"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div class="city-selected-meta" *ngIf="filters.cities.length > 0">
+          <span>{{ filters.cities.length }} selected</span>
+          <button
+            type="button"
+            class="city-clear-selected"
+            (click)="clearSelectedCities()"
+          >
+            Clear all
+          </button>
+        </div>
+
+        <div class="city-chips selected" *ngIf="filters.cities.length > 0">
+          <button
+            type="button"
+            class="city-chip selected"
+            *ngFor="let city of selectedCities"
+            (click)="removeCity(city)"
+          >
+            {{ city }}
+            <span class="chip-remove" aria-hidden="true">×</span>
+            <span class="visually-hidden">Remove {{ city }}</span>
+          </button>
+        </div>
+
+        <div class="city-chips available" *ngIf="filteredAvailableCities.length > 0">
+          <button
+            type="button"
+            class="city-chip"
+            *ngFor="let city of filteredAvailableCities"
+            (click)="addCity(city)"
+          >
+            {{ city }}
+          </button>
+        </div>
+
+        <div class="city-empty-state" *ngIf="filteredAvailableCities.length === 0">
+          <p>{{ noCityMatchesHeadline }}</p>
+          <p *ngIf="noCityMatchesDetail">{{ noCityMatchesDetail }}</p>
         </div>
       </div>
       <!-- 🔹 Buttons -->
