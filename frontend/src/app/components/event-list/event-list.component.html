@@ -1,37 +1,138 @@
 <div class="event-list">
   <h2>Events</h2>
-
-  <!-- filter bar -->
+  <!-- 🔹 Filter Section -->
   <div class="filter-bar">
     <form (ngSubmit)="applyFilters()" #filterForm="ngForm">
-      <input
-        type="number"
-        placeholder="Min Price"
-        [(ngModel)]="filters.minPrice"
-        name="minPrice"
-      />
-      <input
-        type="number"
-        placeholder="Max Price"
-        [(ngModel)]="filters.maxPrice"
-        name="maxPrice"
-      />
-      <input type="date" [(ngModel)]="filters.startFrom" name="startFrom" />
-      <input type="date" [(ngModel)]="filters.endTo" name="endTo" />
-      <button type="submit">Search</button>
-      <button type="button" (click)="resetFilters()">Reset</button>
+      <div class="filter-grid">
+        <label>
+          Min Price:
+          <input
+            type="number"
+            [(ngModel)]="filters.minPrice"
+            name="minPrice"
+            placeholder="0"
+          />
+        </label>
+        <label>
+          Max Price:
+          <input
+            type="number"
+            [(ngModel)]="filters.maxPrice"
+            name="maxPrice"
+            placeholder="200"
+          />
+        </label>
+        <label>
+          Start From:
+          <input type="date" [(ngModel)]="filters.startFrom" name="startFrom" />
+        </label>
+        <label>
+          End To: <input type="date" [(ngModel)]="filters.endTo" name="endTo" />
+        </label>
+        <label>
+          Age:
+          <input
+            type="number"
+            [(ngModel)]="filters.age"
+            name="age"
+            min="0"
+            max="150"
+            placeholder="Age"
+          />
+        </label>
+        <label>
+          Disability Tag:
+          <input
+            type="text"
+            [(ngModel)]="filters.disabilityTag"
+            name="disabilityTag"
+            placeholder="e.g. Wheelchair"
+          />
+        </label>
+      </div>
+      <!-- 🔹 Multi-select Cities -->
+      <div class="city-filter">
+        <div class="city-filter-header">
+          <label for="citySearch">Find City:</label>
+          <div class="city-search-input">
+            <input
+              id="citySearch"
+              name="citySearch"
+              type="text"
+              [(ngModel)]="citySearchTerm"
+              placeholder="City name here"
+              autocomplete="off"
+            />
+            <button
+              *ngIf="citySearchTerm"
+              type="button"
+              class="city-search-clear"
+              (click)="clearCitySearch()"
+              aria-label="Clear city search"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+
+        <div class="city-selected-meta" *ngIf="filters.cities.length > 0">
+          <span>{{ filters.cities.length }} selected</span>
+          <button
+            type="button"
+            class="city-clear-selected"
+            (click)="clearSelectedCities()"
+          >
+            Clear all
+          </button>
+        </div>
+
+        <div class="city-chips selected" *ngIf="filters.cities.length > 0">
+          <button
+            type="button"
+            class="city-chip selected"
+            *ngFor="let city of selectedCities"
+            (click)="removeCity(city)"
+          >
+            {{ city }}
+            <span class="chip-remove" aria-hidden="true">×</span>
+            <span class="visually-hidden">Remove {{ city }}</span>
+          </button>
+        </div>
+
+        <div class="city-chips available" *ngIf="filteredAvailableCities.length > 0">
+          <button
+            type="button"
+            class="city-chip"
+            *ngFor="let city of filteredAvailableCities"
+            (click)="addCity(city)"
+          >
+            {{ city }}
+          </button>
+        </div>
+
+        <div class="city-empty-state" *ngIf="filteredAvailableCities.length === 0">
+          <p>{{ noCityMatchesHeadline }}</p>
+          <p *ngIf="noCityMatchesDetail">{{ noCityMatchesDetail }}</p>
+        </div>
+      </div>
+      <!-- 🔹 Buttons -->
+      <div class="filter-buttons">
+        <button type="submit">Apply Filters</button>
+        <button type="button" (click)="resetFilters()">Reset</button>
+      </div>
     </form>
   </div>
-  <!-- error message -->
+  <!-- 🔹 Error Messages -->
   <div *ngIf="errorMessages.length > 0" class="error-message">
     <ul>
       <li *ngFor="let msg of errorMessages">{{ msg }}</li>
     </ul>
   </div>
-  <div *ngIf="isLoading">Loading...</div>
-
-  <div *ngIf="!isLoading && events.length === 0">No events available.</div>
-
+  <!-- 🔹 Loading & Results -->
+  <div *ngIf="isLoading" class="loading">Loading events...</div>
+  <div *ngIf="!isLoading && events.length === 0" class="no-events">
+    No events available.
+  </div>
   <div class="card-grid" *ngIf="!isLoading && events.length > 0">
     <app-event-card *ngFor="let ev of events" [event]="ev"> </app-event-card>
   </div>

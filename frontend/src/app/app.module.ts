@@ -31,7 +31,13 @@ import { EventDetailComponent } from './components/event-detail/event-detail.com
 import { ProfileEditComponent } from './pages/profile-edit/profile-edit.component';
 import { MyEventsComponent } from './pages/my-events/my-events.component';
 import { HostProfileComponent } from './pages/host-profile/host-profile.component';
-
+import { SavedEventsComponent } from './pages/saved-events/saved-events.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminEventsComponent } from './pages/admin-events/admin-events.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +54,11 @@ import { HostProfileComponent } from './pages/host-profile/host-profile.componen
     ProfileEditComponent,
     MyEventsComponent,
     HostProfileComponent,
+    SavedEventsComponent,
+    AdminHomeComponent,
+    AdminUsersComponent,
+    AdminEventsComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +70,8 @@ import { HostProfileComponent } from './pages/host-profile/host-profile.componen
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   providers: [
     provideClientHydration(),

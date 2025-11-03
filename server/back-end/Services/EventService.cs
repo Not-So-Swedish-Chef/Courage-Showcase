@@ -33,7 +33,7 @@ namespace back_end.Services
             try
             {
                 var eventItem = await _eventRepository.GetEventByIdAsync(id);
-                return eventItem ?? throw new DataException("Event not found.");
+                return eventItem;
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace back_end.Services
         {
             try
             {
-                var existingEvent = await _eventRepository.GetEventByIdAsync(eventItem.Id);
+                var existingEvent = await _eventRepository.GetEventByIdIncludingCanceledAsync(eventItem.Id);
                 if (existingEvent == null)
                 {
                     throw new DataException("Event not found.");
@@ -80,7 +80,7 @@ namespace back_end.Services
         {
             try
             {
-                var existingEvent = await _eventRepository.GetEventByIdAsync(id);
+                var existingEvent = await _eventRepository.GetEventByIdIncludingCanceledAsync(id);
                 if (existingEvent == null)
                 {
                     throw new DataException("Event not found.");
@@ -99,11 +99,11 @@ namespace back_end.Services
             }
         }
 
-        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null)
+        public async Task<IEnumerable<Event>> SearchEventsAsync(string? query = null, DateTime? from = null, DateTime? to = null, decimal? minPrice = null, decimal? maxPrice = null, List<string>? disabilityTags = null, List<string>? cities = null, int? age = null)
         {
             try
             {
-                return await _eventRepository.SearchEventsAsync(query, from, to, minPrice, maxPrice);
+                return await _eventRepository.SearchEventsAsync(query, from, to, minPrice, maxPrice, disabilityTags, cities, age);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User, UserType } from '../models/user';
-
+import { environment } from '../../environments/environment';
 const LS_KEY = 'eh_user_info';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AuthService {
     userType: 1 | 2;
   }): Promise<{ ok: boolean; errors?: any }> {
     try {
-      const res = await fetch('http://localhost:5000/api/User/register', {
+      const res = await fetch(`${environment.apiBaseUrl}/User/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -61,7 +61,7 @@ export class AuthService {
 
   async login(payload: { email: string; password: string }): Promise<boolean> {
     try {
-      const res = await fetch('http://localhost:5000/api/User/login', {
+      const res = await fetch(`${environment.apiBaseUrl}/User/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -99,6 +99,4 @@ export class AuthService {
       return false;
     }
   }
-
-  
 }

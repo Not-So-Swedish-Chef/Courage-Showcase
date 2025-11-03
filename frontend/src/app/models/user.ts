@@ -5,5 +5,7 @@ export interface User {
   lastName?: string;
   email?: string;
   userType: UserType;
-  token?: string; 
+  token?: string;
+
+  suspendUntil?: Date | null;
 }

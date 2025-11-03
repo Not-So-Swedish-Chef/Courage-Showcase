@@ -1,4 +1,5 @@
 ﻿using back_end.Models;
+using back_end.Enums;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
@@ -21,8 +22,12 @@ namespace back_end.Tests.Models
             Assert.Equal("", eventObj.ImageUrl);
             Assert.Equal("", eventObj.Url);
             Assert.Equal(0, eventObj.Price);
+            Assert.Equal(OntarioCity.Toronto, eventObj.City);
+            Assert.Equal(EventStatus.Active, eventObj.Status);
             Assert.NotNull(eventObj.UsersWhoSaved);
             Assert.Empty(eventObj.UsersWhoSaved);
+            Assert.NotNull(eventObj.DisabilityTags);
+            Assert.Empty(eventObj.DisabilityTags);
         }
 
         [Fact]
@@ -37,23 +42,31 @@ namespace back_end.Tests.Models
             eventObj.Id = 1;
             eventObj.Title = "Test Event";
             eventObj.Location = "Test Location";
+            eventObj.City = OntarioCity.Ottawa;
             eventObj.ImageUrl = "https://test.com/image.jpg";
             eventObj.StartDateTime = startDate;
             eventObj.EndDateTime = endDate;
             eventObj.Price = 50.99m;
             eventObj.Url = "https://test.com";
             eventObj.HostId = 1;
+            eventObj.Status = EventStatus.Active;
+            eventObj.MinAge = 18;
+            eventObj.MaxAge = 65;
 
             // Assert
             Assert.Equal(1, eventObj.Id);
             Assert.Equal("Test Event", eventObj.Title);
             Assert.Equal("Test Location", eventObj.Location);
+            Assert.Equal(OntarioCity.Ottawa, eventObj.City);
             Assert.Equal("https://test.com/image.jpg", eventObj.ImageUrl);
             Assert.Equal(startDate, eventObj.StartDateTime);
             Assert.Equal(endDate, eventObj.EndDateTime);
             Assert.Equal(50.99m, eventObj.Price);
             Assert.Equal("https://test.com", eventObj.Url);
             Assert.Equal(1, eventObj.HostId);
+            Assert.Equal(EventStatus.Active, eventObj.Status);
+            Assert.Equal(18, eventObj.MinAge);
+            Assert.Equal(65, eventObj.MaxAge);
         }
 
         [Theory]
@@ -183,7 +196,7 @@ namespace back_end.Tests.Models
 
             // Assert
             Assert.Single(customValidationResults);
-            Assert.Contains("Start date and time must be before end date and time.",
+            Assert.Contains("Start date/time must be before end date/time.",
                 customValidationResults.First().ErrorMessage);
         }
 
@@ -225,6 +238,142 @@ namespace back_end.Tests.Models
             Assert.Equal(2, eventObj.UsersWhoSaved.Count);
             Assert.Contains(user1, eventObj.UsersWhoSaved);
             Assert.Contains(user2, eventObj.UsersWhoSaved);
+        }
+
+        [Fact]
+        public void Event_DisabilityTags_CanAddTags()
+        {
+            // Arrange
+            var eventObj = new Event();
+            var tag1 = new DisabilityTag { Id = 1, Name = "Wheelchair Accessible" };
+            var tag2 = new DisabilityTag { Id = 2, Name = "ASL Interpreter" };
+
+            // Act
+            eventObj.DisabilityTags.Add(tag1);
+            eventObj.DisabilityTags.Add(tag2);
+
+            // Assert
+            Assert.Equal(2, eventObj.DisabilityTags.Count);
+            Assert.Contains(tag1, eventObj.DisabilityTags);
+            Assert.Contains(tag2, eventObj.DisabilityTags);
+        }
+
+        [Fact]
+        public void Event_MinAgeGreaterThanMaxAge_CustomValidationFails()
+        {
+            // Arrange
+            var eventObj = new Event
+            {
+                Title = "Test Event",
+                Location = "Test Location",
+                HostId = 1,
+                StartDateTime = DateTime.UtcNow.AddDays(1),
+                EndDateTime = DateTime.UtcNow.AddDays(2),
+                MinAge = 65,
+                MaxAge = 18 // Min > Max
+            };
+
+            var validationContext = new ValidationContext(eventObj);
+
+            // Act
+            var customValidationResults = eventObj.Validate(validationContext);
+
+            // Assert
+            Assert.Single(customValidationResults);
+            Assert.Contains("MinAge cannot be greater than MaxAge.",
+                customValidationResults.First().ErrorMessage);
+        }
+
+        [Fact]
+        public void Event_ValidAgeRange_CustomValidationPasses()
+        {
+            // Arrange
+            var eventObj = new Event
+            {
+                Title = "Test Event",
+                Location = "Test Location",
+                HostId = 1,
+                StartDateTime = DateTime.UtcNow.AddDays(1),
+                EndDateTime = DateTime.UtcNow.AddDays(2),
+                MinAge = 18,
+                MaxAge = 65
+            };
+
+            var validationContext = new ValidationContext(eventObj);
+
+            // Act
+            var customValidationResults = eventObj.Validate(validationContext);
+
+            // Assert
+            Assert.Empty(customValidationResults);
+        }
+
+        [Theory]
+        [InlineData(151)]
+        [InlineData(200)]
+        public void Event_InvalidMinAge_ValidationFails(int invalidAge)
+        {
+            // Arrange
+            var eventObj = new Event
+            {
+                Title = "Test Event",
+                Location = "Test Location",
+                HostId = 1,
+                MinAge = invalidAge
+            };
+
+            // Act
+            var validationResults = ValidateModel(eventObj);
+
+            // Assert
+            Assert.Contains(validationResults, v => v.MemberNames.Contains(nameof(Event.MinAge)));
+        }
+
+        [Theory]
+        [InlineData(151)]
+        [InlineData(200)]
+        public void Event_InvalidMaxAge_ValidationFails(int invalidAge)
+        {
+            // Arrange
+            var eventObj = new Event
+            {
+                Title = "Test Event",
+                Location = "Test Location",
+                HostId = 1,
+                MaxAge = invalidAge
+            };
+
+            // Act
+            var validationResults = ValidateModel(eventObj);
+
+            // Assert
+            Assert.Contains(validationResults, v => v.MemberNames.Contains(nameof(Event.MaxAge)));
+        }
+
+        [Fact]
+        public void Event_StatusEnum_CanBeSet()
+        {
+            // Arrange
+            var eventObj = new Event();
+
+            // Act
+            eventObj.Status = EventStatus.Expired;
+
+            // Assert
+            Assert.Equal(EventStatus.Expired, eventObj.Status);
+        }
+
+        [Fact]
+        public void Event_CityEnum_CanBeSet()
+        {
+            // Arrange
+            var eventObj = new Event();
+
+            // Act
+            eventObj.City = OntarioCity.Hamilton;
+
+            // Assert
+            Assert.Equal(OntarioCity.Hamilton, eventObj.City);
         }
 
         private static IList<ValidationResult> ValidateModel(object model)

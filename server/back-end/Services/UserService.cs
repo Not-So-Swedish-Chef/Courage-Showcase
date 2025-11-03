@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using back_end.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ namespace back_end.Services
             try
             {
                 var user = await _context.Users
-                    .Include(u => u.SavedEvents)
+                    .Include(u => u.SavedEvents.Where(e => e.Status != back_end.Enums.EventStatus.Canceled))
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
                 return user?.SavedEvents ?? new List<Event>();
@@ -44,7 +44,7 @@ namespace back_end.Services
                     return false;
 
                 var eventItem = await _context.Events.FindAsync(eventId);
-                if (eventItem == null)
+                if (eventItem == null || eventItem.Status == back_end.Enums.EventStatus.Canceled)
                     return false;
 
                 if (!user.SavedEvents.Contains(eventItem))

@@ -8,6 +8,10 @@
   </div>
 
   <div class="card-grid" *ngIf="!isLoading && events.length > 0">
-    <app-event-card *ngFor="let ev of events" [event]="ev"></app-event-card>
+    <app-event-card
+      *ngFor="let ev of events"
+      [event]="ev"
+      [showActions]="true"
+    ></app-event-card>
   </div>
 </div>

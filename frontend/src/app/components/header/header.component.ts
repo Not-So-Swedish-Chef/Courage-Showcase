@@ -16,17 +16,29 @@ interface NavItem {
 export class HeaderComponent {
   user$ = this.auth.user$;
 
-  memberNav: NavItem[] = [{ label: 'Events', link: '/events' }];
+  memberNav: NavItem[] = [
+    { label: 'Events', link: '/events' },
+    { label: 'Saved', link: '/saved-events' },
+  ];
   hostNav: NavItem[] = [
     { label: 'Events', link: '/events' },
     { label: 'Create', link: '/events/create' },
-    { label: 'My Events', link: '/my-events' },
+    { label: 'Created By Me', link: '/my-events' },
+    { label: 'Saved', link: '/saved-events' },
     { label: 'Profile', link: '/profile/edit' },
+  ];
+
+  adminNav: NavItem[] = [
+    { label: 'Events', link: '/events' },
+    { label: 'Create', link: '/events/create' },
+    { label: 'Created By Me', link: '/my-events' },
+    { label: 'Saved', link: '/saved-events' },
   ];
 
   constructor(private auth: AuthService, private router: Router) {}
 
   navFor(type: UserType | null | undefined): NavItem[] {
+    if (type === 0) return this.adminNav; // 0 = Admin
     if (type === 1) return this.hostNav; // 1 = Host
     if (type === 2) return this.memberNav; // 2 = Member
     return [];

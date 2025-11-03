@@ -60,11 +60,13 @@ namespace back_end_tests.Services
         }
 
         [Fact]
-        public async Task GetEventByIdAsync_WithInvalidId_ShouldThrowDataException()
+        public async Task GetEventByIdAsync_WithInvalidId_ShouldReturnNull()
         {
             _mockRepo.Setup(r => r.GetEventByIdAsync(999)).ReturnsAsync((Event?)null);
 
-            await Assert.ThrowsAsync<DataException>(() => _service.GetEventByIdAsync(999));
+            var result = await _service.GetEventByIdAsync(999);
+
+            Assert.Null(result);
         }
 
         [Fact]
@@ -81,7 +83,7 @@ namespace back_end_tests.Services
         public async Task UpdateEventAsync_WithAuthorizedUser_ShouldUpdate()
         {
             var evt = CreateSampleEvent();
-            _mockRepo.Setup(r => r.GetEventByIdAsync(evt.Id)).ReturnsAsync(evt);
+            _mockRepo.Setup(r => r.GetEventByIdIncludingCanceledAsync(evt.Id)).ReturnsAsync(evt);
 
             await _service.UpdateEventAsync(evt, evt.HostId.ToString());
 
@@ -92,7 +94,7 @@ namespace back_end_tests.Services
         public async Task UpdateEventAsync_WhenEventNotFound_ShouldThrowDataException()
         {
             var evt = CreateSampleEvent();
-            _mockRepo.Setup(r => r.GetEventByIdAsync(evt.Id)).ReturnsAsync((Event?)null);
+            _mockRepo.Setup(r => r.GetEventByIdIncludingCanceledAsync(evt.Id)).ReturnsAsync((Event?)null);
 
             await Assert.ThrowsAsync<DataException>(
                 () => _service.UpdateEventAsync(evt, evt.HostId.ToString()));
@@ -102,7 +104,7 @@ namespace back_end_tests.Services
         public async Task DeleteEventAsync_WithAuthorizedUser_ShouldDelete()
         {
             var evt = CreateSampleEvent();
-            _mockRepo.Setup(r => r.GetEventByIdAsync(evt.Id)).ReturnsAsync(evt);
+            _mockRepo.Setup(r => r.GetEventByIdIncludingCanceledAsync(evt.Id)).ReturnsAsync(evt);
 
             await _service.DeleteEventAsync(evt.Id, evt.HostId.ToString());
 
@@ -112,7 +114,7 @@ namespace back_end_tests.Services
         [Fact]
         public async Task DeleteEventAsync_WhenEventNotFound_ShouldThrowDataException()
         {
-            _mockRepo.Setup(r => r.GetEventByIdAsync(1)).ReturnsAsync((Event?)null);
+            _mockRepo.Setup(r => r.GetEventByIdIncludingCanceledAsync(1)).ReturnsAsync((Event?)null);
 
             await Assert.ThrowsAsync<DataException>(
                 () => _service.DeleteEventAsync(1, "100"));
@@ -122,12 +124,72 @@ namespace back_end_tests.Services
         public async Task SearchEventsAsync_ShouldReturnResults()
         {
             var events = new List<Event> { CreateSampleEvent(), CreateSampleEvent(2) };
-            _mockRepo.Setup(r => r.SearchEventsAsync("Sample", null, null, null, null))
+            _mockRepo.Setup(r => r.SearchEventsAsync("Sample", null, null, null, null, null, null, null))
                      .ReturnsAsync(events);
 
             var result = await _service.SearchEventsAsync("Sample");
 
             Assert.Equal(2, ((List<Event>)result).Count);
+        }
+
+        [Fact]
+        public async Task SearchEventsAsync_WithDisabilityTags_ShouldReturnFilteredResults()
+        {
+            var events = new List<Event> { CreateSampleEvent() };
+            var tags = new List<string> { "Wheelchair Accessible" };
+            _mockRepo.Setup(r => r.SearchEventsAsync(null, null, null, null, null, tags, null, null))
+                     .ReturnsAsync(events);
+
+            var result = await _service.SearchEventsAsync(disabilityTags: tags);
+
+            Assert.Single((List<Event>)result);
+        }
+
+        [Fact]
+        public async Task SearchEventsAsync_WithCities_ShouldReturnFilteredResults()
+        {
+            var events = new List<Event> { CreateSampleEvent(), CreateSampleEvent(2) };
+            var cities = new List<string> { "Toronto", "Ottawa" };
+            _mockRepo.Setup(r => r.SearchEventsAsync(null, null, null, null, null, null, cities, null))
+                     .ReturnsAsync(events);
+
+            var result = await _service.SearchEventsAsync(cities: cities);
+
+            Assert.Equal(2, ((List<Event>)result).Count);
+        }
+
+        [Fact]
+        public async Task SearchEventsAsync_WithAge_ShouldReturnFilteredResults()
+        {
+            var events = new List<Event> { CreateSampleEvent() };
+            var age = 25;
+            _mockRepo.Setup(r => r.SearchEventsAsync(null, null, null, null, null, null, null, age))
+                     .ReturnsAsync(events);
+
+            var result = await _service.SearchEventsAsync(age: age);
+
+            Assert.Single((List<Event>)result);
+        }
+
+        [Fact]
+        public async Task SearchEventsAsync_WithAllFilters_ShouldReturnFilteredResults()
+        {
+            var events = new List<Event> { CreateSampleEvent() };
+            var query = "Sample";
+            var from = DateTime.UtcNow;
+            var to = DateTime.UtcNow.AddDays(7);
+            var minPrice = 10m;
+            var maxPrice = 100m;
+            var tags = new List<string> { "Wheelchair Accessible" };
+            var cities = new List<string> { "Toronto" };
+            var age = 25;
+
+            _mockRepo.Setup(r => r.SearchEventsAsync(query, from, to, minPrice, maxPrice, tags, cities, age))
+                     .ReturnsAsync(events);
+
+            var result = await _service.SearchEventsAsync(query, from, to, minPrice, maxPrice, tags, cities, age);
+
+            Assert.Single((List<Event>)result);
         }
     }
 }

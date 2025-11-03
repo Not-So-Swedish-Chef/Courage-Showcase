@@ -1,65 +1,190 @@
 <div class="event-form">
   <h2>{{ isEditMode ? "Update Event" : "Create Event" }}</h2>
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
     <!-- Title -->
     <label>
-      Title:
-      <input type="text" name="title" [(ngModel)]="event.title" required />
+      <span>Title *</span>
+      <input
+        type="text"
+        name="title"
+        [(ngModel)]="event.title"
+        required
+        maxlength="200"
+        placeholder="Enter event title"
+      />
+      <small class="error" *ngIf="f.submitted && !event.title">
+        ⚠️ Title is required (max 200 chars).
+      </small>
     </label>
 
     <!-- Location -->
     <label>
-      Location:
+      <span>Location *</span>
       <input
         type="text"
         name="location"
         [(ngModel)]="event.location"
         required
+        maxlength="300"
+        placeholder="Enter event location"
       />
+      <small class="error" *ngIf="f.submitted && !event.location">
+        ⚠️ Location is required (max 300 chars).
+      </small>
     </label>
 
-    <!-- Image -->
+    <!-- City -->
     <label>
-      Image:
-      <input type="file" (change)="onFileSelected($event)" />
-      <small *ngIf="selectedFile">Selected: {{ selectedFile.name }}</small>
+      <span>City *</span>
+      <select name="city" [(ngModel)]="event.city" required>
+        <option value="">Select a city</option>
+        <option *ngFor="let city of ontarioCities" [value]="city">
+          {{ city }}
+        </option>
+      </select>
+      <small class="error" *ngIf="f.submitted && !event.city">
+        ⚠️ City selection is required.
+      </small>
+    </label>
+
+    <!-- Image Upload -->
+    <label>
+      <span>Event Image</span>
+      <input
+        type="file"
+        name="image"
+        (change)="onFileSelected($event)"
+        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+      />
+      <small *ngIf="selectedFile" class="hint">
+        📷 Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }} KB)
+      </small>
+      <small *ngIf="!selectedFile && !event.imageUrl" class="hint">
+        💡 No image selected. A default image will be used.
+      </small>
+      <small *ngIf="!selectedFile && event.imageUrl" class="hint">
+        🖼️ Current image: {{ event.imageUrl }}
+      </small>
+      <small class="error" *ngIf="imageError">{{ imageError }}</small>
     </label>
 
     <!-- Start Date -->
     <label>
-      Start Date & Time:
+      <span>Start Date & Time *</span>
       <input
         type="datetime-local"
         name="startDateTime"
         [(ngModel)]="event.startDateTime"
+        (change)="validateDateRange()"
         required
       />
     </label>
 
     <!-- End Date -->
     <label>
-      End Date & Time:
+      <span>End Date & Time *</span>
       <input
         type="datetime-local"
         name="endDateTime"
         [(ngModel)]="event.endDateTime"
+        (change)="validateDateRange()"
         required
       />
+      <small class="error" *ngIf="dateError">{{ dateError }}</small>
     </label>
 
     <!-- Price -->
     <label>
-      Price:
-      <input type="number" name="price" [(ngModel)]="event.price" />
+      <span>Price ($)</span>
+      <input
+        type="number"
+        name="price"
+        [(ngModel)]="event.price"
+        min="0"
+        step="0.01"
+        placeholder="Enter price"
+      />
+      <small class="error" *ngIf="event.price! < 0">
+        ⚠️ Price cannot be negative.
+      </small>
+      <small class="hint">💡 Leave empty or set 0 for free events.</small>
     </label>
 
     <!-- URL -->
     <label>
-      URL:
-      <input type="url" name="url" [(ngModel)]="event.url" />
+      <span>Website / URL</span>
+      <input
+        type="url"
+        name="url"
+        [(ngModel)]="event.url"
+        (blur)="validateUrl()"
+        placeholder="https://example.com"
+      />
+      <small class="error" *ngIf="urlError">{{ urlError }}</small>
+      <small class="hint">Must start with http:// or https://</small>
     </label>
 
+    <!-- Minimum Age -->
+    <label>
+      <span>Minimum Age</span>
+      <input
+        type="number"
+        name="minAge"
+        [(ngModel)]="event.minAge"
+        (change)="validateAgeRange()"
+        min="0"
+        max="150"
+        placeholder="e.g. 5"
+      />
+      <small class="error" *ngIf="event.minAge! < 0">
+        ⚠️ Age cannot be negative.
+      </small>
+    </label>
+
+    <!-- Maximum Age -->
+    <label>
+      <span>Maximum Age</span>
+      <input
+        type="number"
+        name="maxAge"
+        [(ngModel)]="event.maxAge"
+        (change)="validateAgeRange()"
+        min="0"
+        max="150"
+        placeholder="e.g. 99"
+      />
+      <small class="error" *ngIf="event.maxAge! < 0">
+        ⚠️ Age cannot be negative.
+      </small>
+      <small class="error" *ngIf="ageError">{{ ageError }}</small>
+    </label>
+
+    <!-- Disability Tags -->
+    <label>
+      <span>Disability Tags</span>
+      <input
+        type="text"
+        name="disabilityTags"
+        [(ngModel)]="disabilityTagsInput"
+        placeholder="e.g. Wheelchair Accessible, Sign Language"
+      />
+      <small class="hint">
+        💡 Separate tags by commas (e.g., "Braille, Wheelchair Accessible")
+      </small>
+    </label>
+
+    <!-- Status -->
+    <label>
+      <span>Status</span>
+      <select name="status" [(ngModel)]="event.status">
+        <option [value]="0">Active</option>
+        <option [value]="1">Expired</option>
+        <option [value]="2">Canceled</option>
+      </select>
+    </label>
+
+    <!-- Submit Button -->
     <button type="submit" [disabled]="isSubmitting">
       {{
         isSubmitting

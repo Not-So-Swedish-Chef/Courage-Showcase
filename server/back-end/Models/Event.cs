@@ -1,17 +1,23 @@
-﻿using back_end.Models;
+using back_end.Enums;
+using back_end.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Event
+public class Event : IValidatableObject
 {
     [Key]
     public int Id { get; set; }
 
     [Required]
+    [MaxLength(200)]
     public string Title { get; set; } = "";
 
     [Required]
+    [MaxLength(300)]
     public string Location { get; set; } = "";
+
+    [Required]
+    public OntarioCity City { get; set; } = OntarioCity.Toronto;
 
     public string ImageUrl { get; set; } = "";
 
@@ -28,26 +34,31 @@ public class Event
     [Url]
     public string Url { get; set; } = "";
 
-    // Foreign Key for Host
     [Required]
     public int HostId { get; set; }
 
-    // Navigation Property
-    [ForeignKey("HostId")]
-    public virtual back_end.Models.Host? Host { get; set; }  // No default initialization
+    [ForeignKey(nameof(HostId))]
+    public virtual back_end.Models.Host? Host { get; set; }
 
-    // Many-to-Many relationship with UsersWhoSaved
     public ICollection<User> UsersWhoSaved { get; set; } = new List<User>();
 
-    // Constructor to initialize default date values
+    [Range(0, 150)]
+    public int? MinAge { get; set; }
+
+    [Range(0, 150)]
+    public int? MaxAge { get; set; }
+
+    public ICollection<DisabilityTag> DisabilityTags { get; set; } = new List<DisabilityTag>();
+
+    [Required]
+    public EventStatus Status { get; set; } = EventStatus.Active;
+
     public Event()
     {
         StartDateTime = DateTime.UtcNow;
         EndDateTime = DateTime.UtcNow.AddHours(1);
     }
 
-    // Validation Method
-    //TODO: Move validation to appropriate class (EventValidator)
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         var results = new List<ValidationResult>();
@@ -55,8 +66,16 @@ public class Event
         if (StartDateTime >= EndDateTime)
         {
             results.Add(new ValidationResult(
-                "Start date and time must be before end date and time.",
+                "Start date/time must be before end date/time.",
                 new[] { nameof(StartDateTime), nameof(EndDateTime) }
+            ));
+        }
+
+        if (MinAge.HasValue && MaxAge.HasValue && MinAge.Value > MaxAge.Value)
+        {
+            results.Add(new ValidationResult(
+                "MinAge cannot be greater than MaxAge.",
+                new[] { nameof(MinAge), nameof(MaxAge) }
             ));
         }
 

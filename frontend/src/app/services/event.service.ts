@@ -1,110 +1,109 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Event } from '../models/event';
 import { Observable } from 'rxjs';
 import { EventDetails } from '../models/EventDetails';
 import { CreateEventDto } from '../models/CreateEventDto';
 import { UpdateEventDto } from '../models/UpdateEventDto';
+import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class EventService {
   constructor(private http: HttpClient) {}
+  private readonly BASE_URL = 'http://localhost:5000/api/event';
 
   /** create */
-  createEvent(dto: CreateEventDto, file?: File): Observable<Event> {
-    const formData = new FormData();
-    formData.append('title', dto.title);
-    formData.append('location', dto.location);
-    formData.append('startDateTime', dto.startDateTime);
-    formData.append('endDateTime', dto.endDateTime);
-    formData.append('price', dto.price.toString());
+  createEvent(dto: CreateEventDto): Observable<EventDetails> {
+    const payload = {
+      title: dto.title,
+      location: dto.location,
+      city: dto.city,
+      imageUrl: dto.imageUrl,
+      startDateTime: dto.startDateTime,
+      endDateTime: dto.endDateTime,
+      price: dto.price,
+      url: dto.url,
+      hostId: dto.hostId,
+      minAge: dto.minAge,
+      maxAge: dto.maxAge,
+      disabilityTags: dto.disabilityTags,
+      status: dto.status,
+    };
 
-    if (dto.url) {
-      formData.append('url', dto.url);
-    }
-    if (file) {
-      formData.append('image', file);
-    }
-
-    return this.http.post<Event>('http://localhost:5000/api/event', formData);
+    return this.http.post<EventDetails>(this.BASE_URL, payload, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   /** update */
-  updateEvent(dto: UpdateEventDto, file?: File | null): Observable<Event> {
-    const formData = new FormData();
-
-    //MUST HAVEid
-    formData.append('id', dto.id.toString());
-
-    if (dto.title !== undefined) formData.append('title', dto.title);
-    if (dto.location !== undefined) formData.append('location', dto.location);
-    if (dto.startDateTime !== undefined)
-      formData.append('startDateTime', dto.startDateTime);
-    if (dto.endDateTime !== undefined)
-      formData.append('endDateTime', dto.endDateTime);
-    if (dto.price !== undefined) formData.append('price', dto.price.toString());
-    if (dto.url !== undefined) formData.append('url', dto.url);
-
-    // image file
-    if (file !== undefined) {
-      if (file) {
-        formData.append('image', file);
-      } else {
-        formData.append('image', '');
+  updateEvent(dto: UpdateEventDto): Observable<EventDetails> {
+    return this.http.put<EventDetails>(
+      `${environment.apiBaseUrl}/event/${dto.id}`,
+      {
+        id: dto.id,
+        title: dto.title,
+        location: dto.location,
+        city: dto.city,
+        startDateTime: dto.startDateTime,
+        endDateTime: dto.endDateTime,
+        price: dto.price,
+        url: dto.url,
+        imageUrl: dto.imageUrl,
+        hostId: dto.hostId,
+        minAge: dto.minAge,
+        maxAge: dto.maxAge,
+        disabilityTags: dto.disabilityTags,
+        status: dto.status,
+      },
+      {
+        headers: { 'Content-Type': 'application/json' },
       }
-    }
-
-    return this.http.put<Event>(
-      `http://localhost:5000/api/event/${dto.id}`,
-      formData
     );
   }
   /** get all events */
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>('http://localhost:5000/api/event');
+  getEvents(): Observable<EventDetails[]> {
+    return this.http.get<EventDetails[]>(`${environment.apiBaseUrl}/event`);
   }
 
   /** filtered events */
   getFilteredEvents(filters?: {
     minPrice?: number | null;
     maxPrice?: number | null;
-    startFrom?: string | null;
-    endTo?: string | null;
-  }): Observable<Event[]> {
+    from?: string | null;
+    to?: string | null;
+    age?: number | null;
+    disabilityTags?: string[]; // backend expects a list
+    cities?: string[]; // backend expects a list
+  }): Observable<EventDetails[]> {
     let params = new HttpParams();
 
     if (filters) {
-      if (filters.minPrice !== null && filters.minPrice !== undefined) {
-        params = params.set('minPrice', filters.minPrice.toString());
-      }
-      if (filters.maxPrice !== null && filters.maxPrice !== undefined) {
-        params = params.set('maxPrice', filters.maxPrice.toString());
-      }
-      if (filters.startFrom) {
-        params = params.set('from', filters.startFrom); //
-      }
-      if (filters.endTo) {
-        const end = new Date(filters.endTo);
-        end.setDate(end.getDate() + 1);
-        params = params.set('to', end.toISOString()); // + 1 day
-      }
+      Object.entries(filters).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => (params = params.append(key, v)));
+        } else if (value !== null && value !== undefined && value !== '') {
+          params = params.set(key, value.toString());
+        }
+      });
     }
 
-    return this.http.get<Event[]>('http://localhost:5000/api/event/search', {
-      params,
-    });
+    return this.http.get<EventDetails[]>(
+      `${environment.apiBaseUrl}/event/search`,
+      { params }
+    );
   }
 
   /** get detail */
   getEventById(id: number): Observable<EventDetails> {
-    return this.http.get<EventDetails>(`http://localhost:5000/api/event/${id}`);
+    return this.http.get<EventDetails>(`${environment.apiBaseUrl}/event/${id}`);
   }
 
   /** delete */
   deleteEvent(id: number): Observable<void> {
-    return this.http.delete<void>(`http://localhost:5000/api/event/${id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/event/${id}`);
   }
 
-  getMyEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>('http://localhost:5000/api/host/events');
+  getMyEvents(): Observable<EventDetails[]> {
+    return this.http.get<EventDetails[]>(
+      `${environment.apiBaseUrl}/host/events`
+    );
   }
 }
