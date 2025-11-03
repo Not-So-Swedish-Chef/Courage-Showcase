@@ -1,5 +1,6 @@
-﻿using back_end.Models;
+using back_end.Models;
 using back_end.Models.Api;
+using back_end.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,13 +15,15 @@ namespace back_end.Services
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly SignInManager<User> _signInManager;
+        private readonly ApplicationDbContext _context;
         private ILogger<JwtService> _logger;
 
-        public JwtService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, ILogger<JwtService> logger)
+        public JwtService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, ApplicationDbContext context, ILogger<JwtService> logger)
         {
             _userManager = userManager;
             _configuration = configuration;
             _signInManager = signInManager;
+            _context = context;
             _logger = logger;
         }
 
@@ -46,6 +49,30 @@ namespace back_end.Services
                 {
                     _logger.LogWarning($"Authentication failed: Invalid credentials for email {request.Email}");
                     return null;
+                }
+
+                // Check user status and handle suspensions
+                if (userAccount.Status == UserStatus.Banned)
+                {
+                    _logger.LogWarning($"Authentication failed: User {request.Email} is permanently banned");
+                    return null;
+                }
+
+                if (userAccount.Status == UserStatus.Suspended)
+                {
+                    if (userAccount.SuspensionEndDate.HasValue && userAccount.SuspensionEndDate.Value > DateTime.UtcNow)
+                    {
+                        _logger.LogWarning($"Authentication failed: User {request.Email} is suspended until {userAccount.SuspensionEndDate.Value}");
+                        return null;
+                    }
+                    else
+                    {
+                        // Suspension has expired, reactivate the user
+                        userAccount.Status = UserStatus.Active;
+                        userAccount.SuspensionEndDate = null;
+                        await _context.SaveChangesAsync();
+                        _logger.LogInformation($"User {request.Email} suspension expired, account reactivated");
+                    }
                 }
 
                 var issuer = _configuration["Jwt:Issuer"];

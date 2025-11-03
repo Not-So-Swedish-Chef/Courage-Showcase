@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using back_end.Models;
+using back_end.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace back_end.Services
@@ -85,6 +86,81 @@ namespace back_end.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error removing event {eventId} for user {userId}");
+                return false;
+            }
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving all users");
+                return new List<User>();
+            }
+        }
+
+        public async Task<bool> SuspendUserAsync(int userId, int days)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                    return false;
+
+                user.Status = UserStatus.Suspended;
+                user.SuspensionEndDate = DateTime.UtcNow.AddDays(days);
+                
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"User {userId} suspended for {days} days until {user.SuspensionEndDate}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error suspending user {userId}");
+                return false;
+            }
+        }
+
+        public async Task<bool> BanUserAsync(int userId)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                    return false;
+
+                user.Status = UserStatus.Banned;
+                user.SuspensionEndDate = null;
+
+                // If user is a host, cancel all their active events
+                if (user.UserType == UserType.Host)
+                {
+                    var host = await _context.Hosts
+                        .Include(h => h.Events)
+                        .FirstOrDefaultAsync(h => h.Id == userId);
+                    
+                    if (host != null)
+                    {
+                        var activeEvents = host.Events.Where(e => e.Status == EventStatus.Active).ToList();
+                        foreach (var eventItem in activeEvents)
+                        {
+                            eventItem.Status = EventStatus.Canceled;
+                        }
+                        _logger.LogInformation($"Canceled {activeEvents.Count} active events for banned host {userId}");
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"User {userId} has been permanently banned");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error banning user {userId}");
                 return false;
             }
         }

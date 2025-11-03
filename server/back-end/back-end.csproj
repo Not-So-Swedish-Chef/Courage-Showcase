@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Updated package versions to avoid conflicts -->
     <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="CloudinaryDotNet" Version="1.27.8" />

@@ -30,6 +30,9 @@ namespace back_end.DTOs
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
                 .ForMember(dest => dest.Events, opt => opt.MapFrom(src => src.Events));
+
+            // User to UserDTO
+            CreateMap<User, UserDTO>();
         }
     }
 }
