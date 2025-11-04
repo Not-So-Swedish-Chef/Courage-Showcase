@@ -12,5 +12,7 @@ namespace back_end.Services
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<bool> SuspendUserAsync(int userId, int days);
         Task<bool> BanUserAsync(int userId);
+        Task<bool> UnsuspendUserAsync(int userId);
+        Task<bool> UnbanUserAsync(int userId);
     }
 }

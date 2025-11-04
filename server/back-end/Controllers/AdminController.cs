@@ -93,6 +93,54 @@ namespace back_end.Controllers
                 return StatusCode(500, "An error occurred while banning the user.");
             }
         }
+
+        [HttpPost("unsuspend")]
+        public async Task<IActionResult> UnsuspendUser([FromBody] UnsuspendUserRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _userService.UnsuspendUserAsync(request.UserId);
+                if (!result)
+                {
+                    _logger.LogWarning("Unable to unsuspend user with ID {UserId}.", request.UserId);
+                    return BadRequest("Unable to unsuspend user. User may not exist or is not suspended.");
+                }
+
+                return Ok($"User {request.UserId} has been unsuspended.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while unsuspending user {UserId}.", request.UserId);
+                return StatusCode(500, "An error occurred while unsuspending the user.");
+            }
+        }
+
+        [HttpPost("unban")]
+        public async Task<IActionResult> UnbanUser([FromBody] UnbanUserRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var result = await _userService.UnbanUserAsync(request.UserId);
+                if (!result)
+                {
+                    _logger.LogWarning("Unable to unban user with ID {UserId}.", request.UserId);
+                    return BadRequest("Unable to unban user. User may not exist or is not banned.");
+                }
+
+                return Ok($"User {request.UserId} has been unbanned.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while unbanning user {UserId}.", request.UserId);
+                return StatusCode(500, "An error occurred while unbanning the user.");
+            }
+        }
     }
 
     public class SuspendUserRequest
@@ -106,6 +154,18 @@ namespace back_end.Controllers
     }
 
     public class BanUserRequest
+    {
+        [Required]
+        public int UserId { get; set; }
+    }
+
+    public class UnsuspendUserRequest
+    {
+        [Required]
+        public int UserId { get; set; }
+    }
+
+    public class UnbanUserRequest
     {
         [Required]
         public int UserId { get; set; }

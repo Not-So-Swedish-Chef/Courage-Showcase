@@ -164,5 +164,49 @@ namespace back_end.Services
                 return false;
             }
         }
+
+        public async Task<bool> UnsuspendUserAsync(int userId)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null || user.Status != UserStatus.Suspended)
+                    return false;
+
+                user.Status = UserStatus.Active;
+                user.SuspensionEndDate = null;
+                
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"User {userId} has been unsuspended");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error unsuspending user {userId}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UnbanUserAsync(int userId)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null || user.Status != UserStatus.Banned)
+                    return false;
+
+                user.Status = UserStatus.Active;
+                user.SuspensionEndDate = null;
+                
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"User {userId} has been unbanned");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error unbanning user {userId}");
+                return false;
+            }
+        }
     }
 }
