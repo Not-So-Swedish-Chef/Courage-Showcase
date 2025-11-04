@@ -30,6 +30,9 @@ services:
       - Jwt__Audience=courage-showcase
       - Jwt__Secret=my_super_long_and_secure_secret_key_12345678
       - Jwt__TokenValidityMins=30
+      - Cloudinary__CloudName=${CLOUDINARY_CLOUD_NAME:-your_cloud_name}
+      - Cloudinary__ApiKey=${CLOUDINARY_API_KEY:-your_api_key}
+      - Cloudinary__ApiSecret=${CLOUDINARY_API_SECRET:-your_api_secret}
     depends_on:
       database:
         condition: service_healthy
