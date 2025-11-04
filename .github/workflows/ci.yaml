@@ -42,6 +42,6 @@ jobs:
 
       - name: Run Frontend Tests
         run: |
-          cd front-end
+          cd frontend
           npm run test -- --watch=false --browsers=ChromeHeadless
         continue-on-error: true
