@@ -103,6 +103,19 @@ namespace back_end.Services
             }
         }
 
+        public async Task<User?> GetUserByIdAsync(int userId)
+        {
+            try
+            {
+                return await _context.Users.FindAsync(userId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error retrieving user {userId}");
+                return null;
+            }
+        }
+
         public async Task<bool> SuspendUserAsync(int userId, int days)
         {
             try

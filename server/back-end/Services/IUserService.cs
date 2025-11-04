@@ -10,6 +10,7 @@ namespace back_end.Services
         Task<bool> SaveEventAsync(int userId, int eventId);
         Task<bool> RemoveSavedEventAsync(int userId, int eventId);
         Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User?> GetUserByIdAsync(int userId);
         Task<bool> SuspendUserAsync(int userId, int days);
         Task<bool> BanUserAsync(int userId);
         Task<bool> UnsuspendUserAsync(int userId);
