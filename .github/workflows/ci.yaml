@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ "feat-api" ]
+    branches: [ "admin" ]
   pull_request:
-    branches: [ "feat-api" ]
+    branches: [ "admin" ]
   workflow_dispatch:
 
 jobs:
