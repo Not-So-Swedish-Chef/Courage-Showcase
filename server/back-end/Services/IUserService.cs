@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using back_end.Models;
 
@@ -9,5 +9,11 @@ namespace back_end.Services
         Task<IEnumerable<Event>> GetSavedEventsAsync(int userId);
         Task<bool> SaveEventAsync(int userId, int eventId);
         Task<bool> RemoveSavedEventAsync(int userId, int eventId);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<User?> GetUserByIdAsync(int userId);
+        Task<bool> SuspendUserAsync(int userId, int days);
+        Task<bool> BanUserAsync(int userId);
+        Task<bool> UnsuspendUserAsync(int userId);
+        Task<bool> UnbanUserAsync(int userId);
     }
 }

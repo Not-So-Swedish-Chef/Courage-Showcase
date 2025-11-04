@@ -63,13 +63,13 @@ builder.Services.AddIdentity<User, IdentityRole<int>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", policyBuilder =>
         policyBuilder.AllowAnyOrigin()
                      .AllowAnyMethod()
-                     .AllowAnyHeader());
+                     .AllowAnyHeader()
+                     .WithExposedHeaders("*"));
 });
 
 builder.Services.AddAuthentication(options =>

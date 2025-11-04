@@ -10,7 +10,21 @@ This guide explains how to run the Courage Showcase application using Docker.
 
 ## Quick Start
 
-### 1. Build and Start All Services
+### 1. Set Up Environment Variables (Required for Image Uploads)
+
+Create a `.env` file in the root directory with your Cloudinary credentials:
+
+```bash
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+You can get these values from your [Cloudinary dashboard](https://cloudinary.com/console).
+
+**Note**: If you don't have Cloudinary credentials yet, the application will still run, but image upload functionality will not work.
+
+### 2. Build and Start All Services
 
 From the root directory of the project, run:
 
@@ -107,6 +121,9 @@ docker-compose up -d --build backend
 - `Jwt__Audience`: JWT token audience
 - `Jwt__Secret`: JWT signing secret
 - `Jwt__TokenValidityMins`: Token validity duration
+- `Cloudinary__CloudName`: Your Cloudinary cloud name (from .env file)
+- `Cloudinary__ApiKey`: Your Cloudinary API key (from .env file)
+- `Cloudinary__ApiSecret`: Your Cloudinary API secret (from .env file)
 
 ### Frontend
 - `API_URL`: Backend API URL (for runtime configuration if needed)

@@ -25,7 +25,8 @@
             <th>Name</th>
             <th>Email</th>
             <th>User Type</th>
-            <th>Suspend Status</th>
+            <th>Status</th>
+            <th>Details</th>
             <th class="actions-col">Actions</th>
           </tr>
         </thead>
@@ -33,7 +34,7 @@
         <tbody>
           <tr
             *ngFor="let user of users"
-            [class.suspended-row]="isSuspended(user)"
+            [class]="getUserStatusClass(user)"
           >
             <td>{{ user.firstName }} {{ user.lastName }}</td>
             <td>{{ user.email }}</td>
@@ -41,27 +42,53 @@
             <td>{{ getUserTypeLabel(user.userType) }}</td>
 
             <td>
-              <span *ngIf="isSuspended(user)" class="suspended-badge">
-                Suspended until {{ user.suspendUntil | date : "shortDate" }}
+              <span [class]="'status-badge ' + getUserStatusClass(user)">
+                {{ getUserStatusText(user) }}
               </span>
-              <span *ngIf="!isSuspended(user)">Active</span>
+            </td>
+
+            <td class="status-details">
+              {{ getStatusDetails(user) }}
             </td>
 
             <td>
               <div class="actions">
-                <button class="suspend-btn" (click)="openSuspend(user)">
+                <!-- Active user actions -->
+                <button 
+                  class="suspend-btn" 
+                  (click)="openSuspend(user)"
+                  *ngIf="canSuspend(user)">
                   Suspend
                 </button>
 
-                <button class="delete-btn" (click)="deleteUser(user.id)">
-                  Delete
+                <button 
+                  class="ban-btn" 
+                  (click)="banUser(user.id)"
+                  *ngIf="canBan(user)">
+                  Ban
+                </button>
+
+                <!-- Suspended user actions -->
+                <button 
+                  class="unsuspend-btn" 
+                  (click)="unsuspendUser(user.id)"
+                  *ngIf="canUnsuspend(user)">
+                  Unsuspend
+                </button>
+
+                <!-- Banned user actions -->
+                <button 
+                  class="unban-btn" 
+                  (click)="unbanUser(user.id)"
+                  *ngIf="canUnban(user)">
+                  Unban
                 </button>
               </div>
 
               <!-- Inline suspend UI -->
               <div *ngIf="suspendTarget === user" class="suspend-panel">
-                <label>Suspend Until:</label>
-                <input type="date" [(ngModel)]="suspendUntil" />
+                <label>Suspend for (days):</label>
+                <input type="number" [(ngModel)]="suspendDays" min="1" max="365" />
 
                 <button class="confirm-btn" (click)="confirmSuspend()">
                   Confirm

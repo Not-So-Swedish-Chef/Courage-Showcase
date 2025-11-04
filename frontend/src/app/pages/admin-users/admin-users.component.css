@@ -78,8 +78,34 @@
   border-radius: 6px;
 }
 
-.delete-btn {
+.ban-btn {
   background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.ban-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.suspend-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.unsuspend-btn {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.unban-btn {
+  background: #3b82f6;
   color: #fff;
   border: none;
   padding: 6px 10px;
@@ -113,15 +139,58 @@
   border-radius: 4px;
 }
 
-.suspended-badge {
-  background: #ffe8a3;
-  color: #8a6a00;
-  padding: 3px 8px;
+/* Status badges */
+.status-badge {
+  padding: 4px 12px;
   border-radius: 9999px;
   font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-/* Dim suspended rows */
-.suspended-row {
-  opacity: 0.6;
+.status-badge.active-status {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.suspended-status {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.banned-status {
+  background: #fecaca;
+  color: #991b1b;
+}
+
+/* Row styling based on status */
+.active-status {
+  background: #ffffff;
+}
+
+.suspended-status {
+  background: #fffbeb;
+  opacity: 0.8;
+}
+
+.banned-status {
+  background: #fef2f2;
+  opacity: 0.7;
+}
+
+/* Status details column */
+.status-details {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Banned label */
+.banned-label {
+  color: #991b1b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  background: #fecaca;
+  border-radius: 4px;
 }

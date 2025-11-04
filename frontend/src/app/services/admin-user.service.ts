@@ -1,51 +1,42 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { User } from '../models/user';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { User, UserStatus } from '../models/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminUserService {
-  // (replace with API later)
-  private readonly _users$ = new BehaviorSubject<User[]>([
-    {
-      id: 1,
-      firstName: 'Alice',
-      lastName: 'Smith',
-      email: 'alice@mail.com',
-      userType: 1,
-    },
-    {
-      id: 2,
-      firstName: 'Bob',
-      lastName: 'Chen',
-      email: 'bob@mail.com',
-      userType: 2,
-    },
-    {
-      id: 3,
-      firstName: 'Eve',
-      lastName: 'Brown',
-      email: 'eve@mail.com',
-      userType: 0,
-    },
-  ]);
+  private readonly _users$ = new BehaviorSubject<User[]>([]);
+  private readonly BASE_URL = `${environment.apiBaseUrl}/Admin`;
 
-  // constructor(private http: HttpClient) {}
-  // private readonly BASE_URL = `${environment.apiBaseUrl}/users`; // e.g. /users
+  constructor(private http: HttpClient) {}
 
-  /** Get all users */
+  /** Get all users from API */
   getUsers(): Observable<User[]> {
-    // Later: return this.http.get<User[]>(this.BASE_URL);
+    return this.http.get<User[]>(`${this.BASE_URL}/users`).pipe(
+      tap(users => this._users$.next(users))
+    );
+  }
+
+  /** Get users observable for reactive updates */
+  getUsersObservable(): Observable<User[]> {
     return this._users$.asObservable();
   }
 
-  /** Delete a user by id */
-  deleteUser(id: number): Observable<void> {
-    // Later: return this.http.delete<void>(`${this.BASE_URL}/${id}`);
-    const next = this._users$.value.filter((u) => u.id !== id);
-    this._users$.next(next);
-    return of(void 0);
+  /** Ban a user by id */
+  banUser(id: number): Observable<string> {
+    return this.http.post(`${this.BASE_URL}/ban`, { userId: id }, { responseType: 'text' }).pipe(
+      tap(() => {
+        const updated = this._users$.value.map(user =>
+          user.id === id 
+            ? { ...user, status: 2 as UserStatus, suspensionEndDate: null }
+            : user
+        );
+        this._users$.next(updated);
+      })
+    );
   }
 
   /** (Optional) Upsert/replace entire list — handy for seeding/testing */
@@ -53,10 +44,44 @@ export class AdminUserService {
     this._users$.next(users);
   }
 
-  suspendUser(id: number, suspendUntil: Date): void {
-    const updated = this._users$.value.map((user) =>
-      user.id === id ? { ...user, suspendUntil } : user
+  suspendUser(id: number, days: number): Observable<string> {
+    return this.http.post(`${this.BASE_URL}/suspend`, { userId: id, days }, { responseType: 'text' }).pipe(
+      tap(() => {
+        const suspensionEndDate = new Date();
+        suspensionEndDate.setDate(suspensionEndDate.getDate() + days);
+        const updated = this._users$.value.map((user) =>
+          user.id === id ? { ...user, status: 1 as UserStatus, suspensionEndDate } : user
+        );
+        this._users$.next(updated);
+      })
     );
-    this._users$.next(updated);
+  }
+
+  /** Unsuspend a user by id */
+  unsuspendUser(id: number): Observable<string> {
+    return this.http.post(`${this.BASE_URL}/unsuspend`, { userId: id }, { responseType: 'text' }).pipe(
+      tap(() => {
+        const updated = this._users$.value.map(user =>
+          user.id === id 
+            ? { ...user, status: 0 as UserStatus, suspensionEndDate: null }
+            : user
+        );
+        this._users$.next(updated);
+      })
+    );
+  }
+
+  /** Unban a user by id */
+  unbanUser(id: number): Observable<string> {
+    return this.http.post(`${this.BASE_URL}/unban`, { userId: id }, { responseType: 'text' }).pipe(
+      tap(() => {
+        const updated = this._users$.value.map(user =>
+          user.id === id 
+            ? { ...user, status: 0 as UserStatus, suspensionEndDate: null }
+            : user
+        );
+        this._users$.next(updated);
+      })
+    );
   }
 }

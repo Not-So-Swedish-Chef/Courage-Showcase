@@ -9,10 +9,12 @@ namespace back_end.Services
     public class EventService : IEventService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IUserService _userService;
         private readonly ILogger<EventService> _logger;
-        public EventService(IEventRepository eventRepository, ILogger<EventService> logger)
+        public EventService(IEventRepository eventRepository, IUserService userService, ILogger<EventService> logger)
         {
             _eventRepository = eventRepository;
+            _userService = userService;
             _logger = logger;
         }
 
@@ -63,7 +65,16 @@ namespace back_end.Services
                     throw new DataException("Event not found.");
                 }
 
-                if (existingEvent.HostId.ToString() != currentUserId)
+                // Check if current user is the host or an admin
+                bool isAuthorized = existingEvent.HostId.ToString() == currentUserId;
+                
+                if (!isAuthorized && int.TryParse(currentUserId, out int userId))
+                {
+                    var currentUser = await _userService.GetUserByIdAsync(userId);
+                    isAuthorized = currentUser?.UserType == UserType.Admin;
+                }
+
+                if (!isAuthorized)
                 {
                     throw new UnauthorizedAccessException("You are not authorized to update this event.");
                 }
@@ -86,7 +97,16 @@ namespace back_end.Services
                     throw new DataException("Event not found.");
                 }
 
-                if (existingEvent.HostId.ToString() != currentUserId)
+                // Check if current user is the host or an admin
+                bool isAuthorized = existingEvent.HostId.ToString() == currentUserId;
+                
+                if (!isAuthorized && int.TryParse(currentUserId, out int userId))
+                {
+                    var currentUser = await _userService.GetUserByIdAsync(userId);
+                    isAuthorized = currentUser?.UserType == UserType.Admin;
+                }
+
+                if (!isAuthorized)
                 {
                     throw new UnauthorizedAccessException("You are not authorized to delete this event.");
                 }

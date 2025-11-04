@@ -9,10 +9,10 @@ COPY angular.json ./
 COPY tsconfig*.json ./
 RUN npm ci
 
-# Copy source and build
+# Copy source and build with production configuration
 COPY src ./src
 COPY server.ts ./
-RUN npm run build
+RUN npm run build -- --configuration production
 
 # Production stage
 FROM nginx:alpine AS prod
