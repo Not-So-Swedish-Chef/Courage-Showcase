@@ -11,6 +11,7 @@ using back_end.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -19,7 +20,7 @@ using Xunit;
 
 namespace back_end_tests.Controllers
 {
-    public class UserControllerTests
+    public class UserControllerTests : IDisposable
     {
         private readonly Mock<UserManager<User>> _mockUserManager;
         private readonly Mock<SignInManager<User>> _mockSignInManager;
@@ -30,6 +31,7 @@ namespace back_end_tests.Controllers
         private readonly Mock<IUserService> _mockUserService;
         private readonly ILogger<UserController> _logger;
         private readonly UserController _controller;
+        private readonly ApplicationDbContext _context;
 
         public UserControllerTests()
         {
@@ -37,10 +39,15 @@ namespace back_end_tests.Controllers
             _mockConfiguration = new Mock<IConfiguration>();
             _mockUserManager = MockUserManager<User>();
             _mockSignInManager = MockSignInManager(_mockUserManager);
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            _context = new ApplicationDbContext(options);
             _mockJwtService = new Mock<JwtService>(
                 _mockUserManager.Object,
                 _mockSignInManager.Object,
                 _mockConfiguration.Object,
+                _context,
                 new NullLogger<JwtService>());
 
             _mockMapper = new Mock<IMapper>();
@@ -99,6 +106,22 @@ namespace back_end_tests.Controllers
             {
                 HttpContext = new DefaultHttpContext { User = user }
             };
+        }
+
+        private void SetupEmptyUserIdentity()
+        {
+            _controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = new ClaimsPrincipal(new ClaimsIdentity())
+                }
+            };
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         #region Register Tests
@@ -281,17 +304,17 @@ namespace back_end_tests.Controllers
         }
 
         [Fact]
-        public async Task GetSavedEvents_WhenUserIdNotFound_ReturnsInternalServerError()
+        public async Task GetSavedEvents_WhenUserIdNotFound_ReturnsUnauthorized()
         {
-            // Arrange - no user identity set up
+            // Arrange
+            SetupEmptyUserIdentity();
 
             // Act
             var result = await _controller.GetSavedEvents();
 
             // Assert
-            var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
-            Assert.Equal(500, statusCodeResult.StatusCode);
-            Assert.Equal("An error occurred while retrieving saved events.", statusCodeResult.Value);
+            var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result.Result);
+            Assert.Equal("User not found.", unauthorizedResult.Value);
         }
 
         [Fact]
@@ -339,18 +362,18 @@ namespace back_end_tests.Controllers
         }
 
         [Fact]
-        public async Task SaveEvent_WhenUserIdNotFound_ReturnsInternalServerError()
+        public async Task SaveEvent_WhenUserIdNotFound_ReturnsUnauthorized()
         {
             // Arrange - no user identity set up
             var eventId = 5;
+            SetupEmptyUserIdentity();
 
             // Act
             var result = await _controller.SaveEvent(eventId);
 
             // Assert
-            var statusCodeResult = Assert.IsType<ObjectResult>(result);
-            Assert.Equal(500, statusCodeResult.StatusCode);
-            Assert.Equal("An error occurred while saving the event.", statusCodeResult.Value);
+            var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result);
+            Assert.Equal("User not found.", unauthorizedResult.Value);
         }
 
         [Fact]
@@ -419,18 +442,18 @@ namespace back_end_tests.Controllers
         }
 
         [Fact]
-        public async Task RemoveSavedEvent_WhenUserIdNotFound_ReturnsInternalServerError()
+        public async Task RemoveSavedEvent_WhenUserIdNotFound_ReturnsUnauthorized()
         {
             // Arrange - no user identity set up
             var eventId = 5;
+            SetupEmptyUserIdentity();
 
             // Act
             var result = await _controller.RemoveSavedEvent(eventId);
 
             // Assert
-            var statusCodeResult = Assert.IsType<ObjectResult>(result);
-            Assert.Equal(500, statusCodeResult.StatusCode);
-            Assert.Equal("An error occurred while removing the event.", statusCodeResult.Value);
+            var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result);
+            Assert.Equal("User not found.", unauthorizedResult.Value);
         }
 
         [Fact]

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using back_end.Enums;
 using back_end.Models;
 using back_end.Services;
 using System;
@@ -165,6 +166,101 @@ namespace back_end_tests.Services
             var result = await _service.RemoveSavedEventAsync(1, 999);
 
             Assert.False(result);
+        }
+
+        [Fact]
+        public async Task GetAllUsersAsync_ShouldReturnAllUsers()
+        {
+            var result = await _service.GetAllUsersAsync();
+
+            Assert.Equal(2, result.Count());
+        }
+
+        [Fact]
+        public async Task SuspendUserAsync_ShouldUpdateStatusAndSuspensionEndDate()
+        {
+            var before = DateTime.UtcNow;
+
+            var success = await _service.SuspendUserAsync(1, 7);
+            var after = DateTime.UtcNow;
+
+            Assert.True(success);
+
+            var user = await _context.Users.FindAsync(1);
+            Assert.Equal(UserStatus.Suspended, user.Status);
+            Assert.NotNull(user.SuspensionEndDate);
+            Assert.InRange(user.SuspensionEndDate.Value, before.AddDays(7), after.AddDays(7));
+        }
+
+        [Fact]
+        public async Task SuspendUserAsync_NonExistentUser_ShouldReturnFalse()
+        {
+            var result = await _service.SuspendUserAsync(999, 3);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task BanUserAsync_ShouldSetStatusToBannedAndClearSuspension()
+        {
+            var user = new User
+            {
+                Id = 3,
+                FirstName = "Charlie",
+                LastName = "Doe",
+                Email = "charlie@example.com",
+                UserName = "charlie@example.com",
+                Status = UserStatus.Suspended,
+                SuspensionEndDate = DateTime.UtcNow.AddDays(2)
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var success = await _service.BanUserAsync(3);
+
+            Assert.True(success);
+
+            var updatedUser = await _context.Users.FindAsync(3);
+            Assert.Equal(UserStatus.Banned, updatedUser.Status);
+            Assert.Null(updatedUser.SuspensionEndDate);
+        }
+
+        [Fact]
+        public async Task BanUserAsync_ForHost_ShouldCancelActiveEvents()
+        {
+            var hostUser = new User
+            {
+                Id = 4,
+                FirstName = "Host",
+                LastName = "User",
+                Email = "host@example.com",
+                UserName = "host@example.com",
+                UserType = UserType.Host
+            };
+
+            var host = new Host
+            {
+                Id = 4,
+                User = hostUser,
+                Events = new List<Event>
+                {
+                    new Event { Id = 10, Title = "Active Event", Location = "NYC", Price = 150, HostId = 4, Status = EventStatus.Active },
+                    new Event { Id = 11, Title = "Canceled Event", Location = "NYC", Price = 90, HostId = 4, Status = EventStatus.Canceled }
+                }
+            };
+
+            _context.Users.Add(hostUser);
+            _context.Events.AddRange(host.Events);
+            _context.Hosts.Add(host);
+            await _context.SaveChangesAsync();
+
+            var success = await _service.BanUserAsync(4);
+
+            Assert.True(success);
+
+            var events = await _context.Events.Where(e => e.HostId == 4).ToListAsync();
+            Assert.All(events, e => Assert.Equal(EventStatus.Canceled, e.Status));
         }
 
         public void Dispose()
