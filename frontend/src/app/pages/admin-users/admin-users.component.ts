@@ -39,7 +39,6 @@ export class AdminUsersComponent implements OnInit {
     this.adminUserService.banUser(id).subscribe({
       next: (message) => {
         console.log(message);
-        // Refresh the user list
         this.loadUsers();
       },
       error: (error) => {
@@ -60,7 +59,6 @@ export class AdminUsersComponent implements OnInit {
       next: (message) => {
         console.log(message);
         this.suspendTarget = null;
-        // Refresh the user list
         this.loadUsers();
       },
       error: (error) => {
@@ -74,7 +72,6 @@ export class AdminUsersComponent implements OnInit {
     this.adminUserService.unsuspendUser(id).subscribe({
       next: (message) => {
         console.log(message);
-        // Refresh the user list
         this.loadUsers();
       },
       error: (error) => {
@@ -88,7 +85,6 @@ export class AdminUsersComponent implements OnInit {
     this.adminUserService.unbanUser(id).subscribe({
       next: (message) => {
         console.log(message);
-        // Refresh the user list
         this.loadUsers();
       },
       error: (error) => {

@@ -13,19 +13,19 @@ export class AdminUserService {
 
   constructor(private http: HttpClient) {}
 
-  /** Get all users from API */
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.BASE_URL}/users`).pipe(
       tap(users => this._users$.next(users))
     );
   }
 
-  /** Get users observable for reactive updates */
+
   getUsersObservable(): Observable<User[]> {
     return this._users$.asObservable();
   }
 
-  /** Ban a user by id */
+
   banUser(id: number): Observable<string> {
     return this.http.post(`${this.BASE_URL}/ban`, { userId: id }, { responseType: 'text' }).pipe(
       tap(() => {
@@ -39,7 +39,6 @@ export class AdminUserService {
     );
   }
 
-  /** (Optional) Upsert/replace entire list — handy for seeding/testing */
   setUsers(users: User[]): void {
     this._users$.next(users);
   }
@@ -57,7 +56,6 @@ export class AdminUserService {
     );
   }
 
-  /** Unsuspend a user by id */
   unsuspendUser(id: number): Observable<string> {
     return this.http.post(`${this.BASE_URL}/unsuspend`, { userId: id }, { responseType: 'text' }).pipe(
       tap(() => {
@@ -71,7 +69,6 @@ export class AdminUserService {
     );
   }
 
-  /** Unban a user by id */
   unbanUser(id: number): Observable<string> {
     return this.http.post(`${this.BASE_URL}/unban`, { userId: id }, { responseType: 'text' }).pipe(
       tap(() => {
