@@ -32,17 +32,52 @@ export class EventFormComponent implements OnInit {
     'Barrie',
     'Belleville',
     'Brampton',
+    'Brant',
     'Brantford',
+    'Brockville',
     'Burlington',
+    'Caledon',
+    'Cambridge',
+    'Clarington',
+    'Cornwall',
+    'EastGwillimbury',
+    'FortErie',
+    'Georgina',
+    'Grimsby',
+    'Guelph',
+    'HaltonHills',
     'Hamilton',
+    'KawarthaLakes',
     'Kingston',
     'Kitchener',
+    'LaSalle',
     'London',
+    'Markham',
+    'Milton',
     'Mississauga',
+    'Newmarket',
     'NiagaraFalls',
+    'NorfolkCounty',
+    'NorthBay',
+    'Oakville',
+    'Oshawa',
     'Ottawa',
+    'Peterborough',
+    'Pickering',
+    'RichmondHill',
+    'Sarnia',
+    'SaultSteMarie',
+    'StCatharines',
+    'StThomas',
+    'Stratford',
+    'Sudbury',
+    'ThunderBay',
+    'Timmins',
     'Toronto',
+    'Vaughan',
     'Waterloo',
+    'Welland',
+    'Whitby',
     'Windsor',
   ];
 
@@ -86,7 +121,6 @@ export class EventFormComponent implements OnInit {
       this.isEditMode = true;
       this.eventService.getEventById(Number(id)).subscribe({
         next: (data) => {
-          // ✅ copy only matching fields (防止额外host嵌套字段报错)
           this.event = {
             id: data.id,
             title: data.title,
@@ -120,9 +154,16 @@ export class EventFormComponent implements OnInit {
     }
 
     // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedTypes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ];
     if (!allowedTypes.includes(file.type)) {
-      this.imageError = '⚠️ Invalid file type. Please upload JPG, PNG, GIF, or WebP.';
+      this.imageError =
+        '⚠️ Invalid file type. Please upload JPG, PNG, GIF, or WebP.';
       this.selectedFile = undefined;
       return;
     }
@@ -130,7 +171,8 @@ export class EventFormComponent implements OnInit {
     // Validate file size (max 10MB)
     const maxSize = 10 * 1024 * 1024; // 10MB
     if (file.size > maxSize) {
-      this.imageError = '⚠️ File size exceeds 10MB. Please choose a smaller image.';
+      this.imageError =
+        '⚠️ File size exceeds 10MB. Please choose a smaller image.';
       this.selectedFile = undefined;
       return;
     }
@@ -182,7 +224,13 @@ export class EventFormComponent implements OnInit {
     this.validateDateRange();
     this.validateAgeRange();
 
-    if (form.invalid || this.urlError || this.dateError || this.ageError || this.imageError) {
+    if (
+      form.invalid ||
+      this.urlError ||
+      this.dateError ||
+      this.ageError ||
+      this.imageError
+    ) {
       alert('⚠️ Please fix validation errors before submitting.');
       return;
     }
