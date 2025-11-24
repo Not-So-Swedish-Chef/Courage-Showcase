@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'my-events', component: MyEventsComponent },
   { path: 'events/:id', component: EventDetailComponent },
   { path: 'saved-events', component: SavedEventsComponent },
-  { path: 'admin', component: AdminHomeComponent, canActivate: [AdminGuard] },
+  { path: 'admin', redirectTo: 'admin/events', pathMatch: 'full' },
   {
     path: 'admin/users',
     component: AdminUsersComponent,
