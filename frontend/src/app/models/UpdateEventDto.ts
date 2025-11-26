@@ -14,4 +14,5 @@ export interface UpdateEventDto {
   disabilityTags?: string[];
   status?: number;
   hostId: number;
+  description?: string;
 }

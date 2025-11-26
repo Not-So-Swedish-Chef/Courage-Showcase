@@ -58,7 +58,10 @@
         accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
       />
       <small *ngIf="selectedFile" class="hint">
-        📷 Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }} KB)
+        📷 Selected: {{ selectedFile.name }} ({{
+          (selectedFile.size / 1024).toFixed(2)
+        }}
+        KB)
       </small>
       <small *ngIf="!selectedFile && !event.imageUrl" class="hint">
         💡 No image selected. A default image will be used.
@@ -123,6 +126,16 @@
       />
       <small class="error" *ngIf="urlError">{{ urlError }}</small>
       <small class="hint">Must start with http:// or https://</small>
+    </label>
+
+    <label>
+      <span>Description</span>
+      <textarea
+        name="description"
+        [(ngModel)]="event.description"
+        rows="4"
+        placeholder="Enter event description"
+      ></textarea>
     </label>
 
     <!-- Minimum Age -->

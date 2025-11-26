@@ -3,12 +3,12 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventDetails } from '../../../models/EventDetails';
 import { CreateEventDto } from '../../../models/CreateEventDto';
-import { UpdateEventDto } from '../../../models/UpdateEventDto';
 import { EventService } from '../../../services/event.service';
 import { AuthService } from '../../../services/auth.service';
 import { CloudinaryService } from '../../../services/cloudinary.service';
 import { forkJoin, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { UpdateEventDto } from '../../../models/UpdateEventDto';
 
 @Component({
   selector: 'app-event-form',
@@ -97,6 +97,7 @@ export class EventFormComponent implements OnInit {
     disabilityTags: [],
     status: 0,
     hostId: 0,
+    description: '',
   };
 
   disabilityTagsInput = '';
@@ -136,6 +137,7 @@ export class EventFormComponent implements OnInit {
             maxAge: data.maxAge,
             disabilityTags: data.disabilityTags ?? [],
             status: data.status,
+            description: data.description ?? '',
           };
           this.disabilityTagsInput = (data.disabilityTags || []).join(', ');
         },

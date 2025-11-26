@@ -26,6 +26,7 @@ export class EventService {
       maxAge: dto.maxAge,
       disabilityTags: dto.disabilityTags,
       status: dto.status,
+      description: dto.description,
     };
 
     return this.http.post<EventDetails>(this.BASE_URL, payload, {
@@ -52,6 +53,7 @@ export class EventService {
         maxAge: dto.maxAge,
         disabilityTags: dto.disabilityTags,
         status: dto.status,
+        description: dto.description,
       },
       {
         headers: { 'Content-Type': 'application/json' },

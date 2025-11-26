@@ -23,11 +23,12 @@
     <p><strong>City:</strong> {{ event.city || "N/A" }}</p>
     <p><strong>Location:</strong> {{ event.location }}</p>
 
-    <p>
-      <strong>Start:</strong> {{ event.startDateTime | date : "medium" }}
-    </p>
+    <p><strong>Start:</strong> {{ event.startDateTime | date : "medium" }}</p>
     <p><strong>End:</strong> {{ event.endDateTime | date : "medium" }}</p>
-
+    <div class="description-clean">
+      <h3>Description</h3>
+      <p>{{ event.description }}</p>
+    </div>
     <p>
       <strong>Price:</strong>
       <span class="price-badge">
@@ -44,6 +45,10 @@
       <strong>Website:</strong>
       <a [href]="event.url" target="_blank">{{ event.url }}</a>
     </p>
+    <div *ngIf="event.description" class="description-section">
+      <h3>Description</h3>
+      <p>{{ event.description }}</p>
+    </div>
 
     <p class="host-link">
       <strong>Host:</strong>
