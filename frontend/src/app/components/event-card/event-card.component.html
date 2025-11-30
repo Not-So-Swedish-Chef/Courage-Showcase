@@ -1,43 +1,125 @@
-<div class="card" (click)="goToDetail()">
-  <div class="fav-icon" (click)="toggleFav($event)">
-    <i [ngClass]="isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
+<div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer h-full flex flex-col relative overflow-hidden border border-gray-100" (click)="goToDetail()">
+  <!-- Fav Icon -->
+  <button 
+    class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-md flex items-center justify-center hover:scale-110 transition-all duration-200" 
+    (click)="toggleFav($event)"
+  >
+    <svg 
+      class="w-5 h-5 transition-colors" 
+      [class.text-red-500]="isFav" 
+      [class.fill-red-500]="isFav"
+      [class.text-gray-400]="!isFav"
+      [class.hover:text-red-400]="!isFav"
+      fill="none" 
+      [attr.fill]="isFav ? 'currentColor' : 'none'"
+      stroke="currentColor" 
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+    </svg>
+  </button>
+
+  <!-- Image Container -->
+  <div class="relative h-52 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+    <img 
+      [src]="event.imageUrl" 
+      alt="event image" 
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+    
+    <!-- Price Badge -->
+    <div class="absolute bottom-4 left-4">
+      <span 
+        class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold shadow-lg"
+        [class.bg-emerald-500]="event.price === 0"
+        [class.text-white]="event.price === 0"
+        [class.bg-white]="event.price !== 0"
+        [class.text-gray-900]="event.price !== 0"
+      >
+        {{ event.price === 0 ? "FREE" : (event.price | currency) }}
+      </span>
+    </div>
   </div>
 
-  <img [src]="event.imageUrl" alt="event image" class="card-img" />
+  <!-- Content -->
+  <div class="p-5 flex-1 flex flex-col">
+    <!-- Title -->
+    <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors" title="{{ event.title }}">
+      {{ event.title }}
+    </h3>
 
-  <div class="card-body">
-    <h3>{{ event.title }}</h3>
+    <!-- Location -->
+    <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+      <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      </svg>
+      <span class="line-clamp-1">{{ event.city || event.location }}</span>
+    </div>
 
-    <div class="meta">
-      <p class="city">📍 {{ event.city || event.location }}</p>
-      <p class="age">
-        🎂 Age:
-        <span *ngIf="event.minAge && event.maxAge; else anyAge">
-          {{ event.minAge }} - {{ event.maxAge }}
+    <!-- Date & Time -->
+    <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+      <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+      </svg>
+      <span>{{ event.startDateTime | date : "MMM d, y" }} · {{ event.startDateTime | date : "shortTime" }}</span>
+    </div>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-1.5 mb-4" *ngIf="event.disabilityTags?.length">
+      <span 
+        *ngFor="let tag of event.disabilityTags | slice:0:3" 
+        class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100"
+      >
+        {{ tag }}
+      </span>
+      <span *ngIf="event.disabilityTags && event.disabilityTags.length > 3" class="text-xs text-gray-400">
+        +{{ event.disabilityTags.length - 3 }} more
+      </span>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+      <div class="flex items-center gap-1.5 text-sm">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span class="text-gray-600">
+          <span *ngIf="event.minAge && event.maxAge; else anyAge">
+            Ages {{ event.minAge }}-{{ event.maxAge }}
+          </span>
+          <ng-template #anyAge>All Ages</ng-template>
         </span>
-        <ng-template #anyAge>All</ng-template>
-      </p>
+      </div>
+      <div class="flex items-center text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+        View Details
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </div>
     </div>
 
-    <p class="date">
-      {{ event.startDateTime | date : "mediumDate" }} ·
-      {{ event.startDateTime | date : "shortTime" }} -
-      {{ event.endDateTime | date : "shortTime" }}
-    </p>
-
-    <div class="tags" *ngIf="event.disabilityTags?.length">
-      <span class="tag" *ngFor="let tag of event.disabilityTags">{{
-        tag
-      }}</span>
-    </div>
-
-    <span class="price">
-      {{ event.price === 0 ? "FREE" : "$" + event.price }}
-    </span>
-
-    <div class="actions" *ngIf="showActions">
-      <button class="update-btn" (click)="onUpdate($event)">✏️ Update</button>
-      <button class="delete-btn" (click)="onDelete($event)">🗑 Delete</button>
+    <!-- Admin Actions -->
+    <div class="mt-4 flex gap-2" *ngIf="showActions">
+      <button 
+        class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-sm font-medium transition border border-amber-200" 
+        (click)="onUpdate($event)"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        </svg>
+        Edit
+      </button>
+      <button 
+        class="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg text-sm font-medium transition border border-red-200" 
+        (click)="onDelete($event)"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+        Delete
+      </button>
     </div>
   </div>
 </div>

@@ -1,66 +1,64 @@
-<div class="admin-layout">
+<div class="flex flex-col md:flex-row min-h-screen bg-gray-100">
   <!-- Sidebar -->
-  <nav class="admin-sidebar">
-    <h3 class="sidebar-title">Admin Menu</h3>
+  <nav class="md:w-64 bg-gray-800 text-white flex-shrink-0">
+    <div class="p-4 border-b border-gray-700">
+      <h3 class="text-xl font-bold">Admin Panel</h3>
+    </div>
+    <div class="p-4 space-y-2">
+      <a routerLink="/admin/events" routerLinkActive="bg-indigo-600 text-white" class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition">
+        Manage Events
+      </a>
 
-    <a routerLink="/admin/events" routerLinkActive="active-link">
-      Manage Events
-    </a>
-
-    <a routerLink="/admin/users" routerLinkActive="active-link">
-      Manage Users
-    </a>
+      <a routerLink="/admin/users" routerLinkActive="bg-indigo-600 text-white" class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition">
+        Manage Users
+      </a>
+    </div>
   </nav>
 
   <!-- Right Panel -->
-  <div class="admin-content">
-    <h2 class="page-title">Manage Events</h2>
+  <div class="flex-1 p-8 overflow-auto">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Manage Events</h2>
 
-    <div *ngIf="loading" class="loading">Loading events...</div>
+    <div *ngIf="loading" class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+    </div>
 
     <!-- Card Container -->
-    <div class="admin-card" *ngIf="!loading">
-      <table *ngIf="events.length > 0" class="admin-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>City</th>
-            <th>Start</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th class="actions-col">Actions</th>
-          </tr>
-        </thead>
+    <div class="bg-white shadow rounded-lg overflow-hidden" *ngIf="!loading">
+      <div class="overflow-x-auto">
+        <table *ngIf="events.length > 0" class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let event of events">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ event.title }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.city }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.startDateTime | date : "short" }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ event.price === 0 ? "Free" : (event.price | currency) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" *ngIf="event.status === 0">Active</span>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800" *ngIf="event.status === 1">Expired</span>
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800" *ngIf="event.status === 2">Canceled</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button class="text-red-600 hover:text-red-900 transition" (click)="deleteEvent(event.id)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
 
-        <tbody>
-          <tr *ngFor="let event of events">
-            <td>{{ event.title }}</td>
-            <td>{{ event.city }}</td>
-            <td>{{ event.startDateTime | date : "short" }}</td>
-            <td>{{ event.price === 0 ? "Free" : "$" + event.price }}</td>
-
-            <td>
-              <span class="status draft" *ngIf="event.status === 0"
-                >Active</span
-              >
-              <span class="status published" *ngIf="event.status === 1"
-                >Expired</span
-              >
-              <span class="status cancelled" *ngIf="event.status === 2"
-                >Canceled</span
-              >
-            </td>
-
-            <td>
-              <button class="delete-btn" (click)="deleteEvent(event.id)">
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p *ngIf="events.length === 0" class="no-data">No events found.</p>
+      <div *ngIf="events.length === 0" class="p-6 text-center text-gray-500">
+        No events found.
+      </div>
     </div>
   </div>
 </div>

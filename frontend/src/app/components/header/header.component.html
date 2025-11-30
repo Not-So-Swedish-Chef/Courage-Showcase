@@ -1,40 +1,89 @@
-<header class="header">
-  <div class="header-inner">
-    <a routerLink="/" class="brand">
-      <img src="assets/images/logosvg2.svg" alt="logo" width="70" height="20" />
-      <span class="brand-title">Events Hub</span>
-    </a>
+<header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-3 group">
+        <div class="relative">
+          <img src="assets/images/logosvg2.svg" alt="logo" class="h-10 w-auto transition-transform group-hover:scale-105" />
+        </div>
+        <span class="hidden sm:block text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Events Hub
+        </span>
+      </a>
 
-    <ng-container *ngIf="user$ | async as user">
-      <nav class="nav" *ngIf="user">
-        <a
-          *ngFor="let item of navFor(user.userType)"
-          [routerLink]="item.link"
-          class="nav-link"
-        >
-          {{ item.label }}
-        </a>
-      </nav>
+      <!-- Navigation - Logged In -->
+      <ng-container *ngIf="user$ | async as user">
+        <div class="flex items-center gap-2">
+          <!-- Main Nav -->
+          <nav class="hidden md:flex items-center" *ngIf="user">
+            <a
+              *ngFor="let item of navFor(user.userType)"
+              [routerLink]="item.link"
+              routerLinkActive="text-indigo-600 bg-indigo-50"
+              [routerLinkActiveOptions]="{exact: true}"
+              class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all duration-200"
+            >
+              {{ item.label }}
+            </a>
+          </nav>
 
-      <div class="actions" *ngIf="user">
-        <span class="hi" *ngIf="user.firstName">Hi, {{ user.firstName }}!</span>
-        <button
-          *ngIf="user.userType === 0"
-          class="btn btn-warning"
-          routerLink="/admin"
-        >
-          Admin Panel
-        </button>
-        <button class="btn btn-danger" (click)="logout()">Logout</button>
-      </div>
-    </ng-container>
+          <!-- Divider -->
+          <div class="hidden md:block w-px h-6 bg-gray-200 mx-2"></div>
 
-    <!-- Login / Signup -->
-    <ng-container *ngIf="!(user$ | async)">
-      <div class="actions">
-        <a class="btn btn-primary" routerLink="/login">Login</a>
-        <a class="btn btn-secondary" routerLink="/signup">Sign up</a>
-      </div>
-    </ng-container>
+          <!-- User Actions -->
+          <div class="flex items-center gap-3" *ngIf="user">
+            <!-- User Greeting -->
+            <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-full">
+              <div class="w-7 h-7 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                {{ user.firstName?.charAt(0) || 'U' }}
+              </div>
+              <span class="text-sm font-medium text-gray-700" *ngIf="user.firstName">{{ user.firstName }}</span>
+            </div>
+
+            <!-- Admin Button -->
+            <a
+              *ngIf="user.userType === 0"
+              routerLink="/admin"
+              class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors border border-amber-200"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              Admin
+            </a>
+
+            <!-- Logout Button -->
+            <button 
+              (click)="logout()"
+              class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              <span class="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Login / Signup - Not Logged In -->
+      <ng-container *ngIf="!(user$ | async)">
+        <div class="flex items-center gap-3">
+          <a 
+            routerLink="/login" 
+            class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors"
+          >
+            Sign in
+          </a>
+          <a 
+            routerLink="/signup" 
+            class="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-lg shadow-md hover:shadow-lg transition-all"
+          >
+            Get Started
+          </a>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </header>

@@ -1,17 +1,66 @@
-<div class="my-events">
-  <h2>My Events</h2>
-
-  <div *ngIf="isLoading">Loading your events...</div>
-
-  <div *ngIf="!isLoading && events.length === 0">
-    <p>You have not created any events yet.</p>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">My Events</h1>
+          <p class="mt-2 text-indigo-100">Manage events you've created</p>
+        </div>
+        <a 
+          routerLink="/events/create" 
+          class="inline-flex items-center gap-2 px-5 py-3 bg-white text-indigo-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Create Event
+        </a>
+      </div>
+    </div>
   </div>
 
-  <div class="card-grid" *ngIf="!isLoading && events.length > 0">
-    <app-event-card
-      *ngFor="let ev of events"
-      [event]="ev"
-      [showActions]="true"
-    ></app-event-card>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-20">
+      <div class="relative">
+        <div class="w-16 h-16 border-4 border-indigo-200 rounded-full animate-spin border-t-indigo-600"></div>
+      </div>
+      <p class="mt-4 text-gray-500 font-medium">Loading your events...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && events.length === 0" class="text-center py-20">
+      <div class="w-24 h-24 mx-auto mb-6 bg-indigo-100 rounded-full flex items-center justify-center">
+        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">No events yet</h3>
+      <p class="text-gray-500 max-w-md mx-auto mb-8">You haven't created any events yet. Start by creating your first event!</p>
+      <a 
+        routerLink="/events/create" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+        Create Your First Event
+      </a>
+    </div>
+
+    <!-- Events Grid -->
+    <div *ngIf="!isLoading && events.length > 0">
+      <div class="flex items-center justify-between mb-6">
+        <p class="text-gray-600"><span class="font-semibold text-gray-900">{{ events.length }}</span> event{{ events.length === 1 ? '' : 's' }}</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <app-event-card
+          *ngFor="let ev of events"
+          [event]="ev"
+          [showActions]="true"
+        ></app-event-card>
+      </div>
+    </div>
   </div>
 </div>

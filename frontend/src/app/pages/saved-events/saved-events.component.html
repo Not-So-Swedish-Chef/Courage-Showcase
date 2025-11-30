@@ -1,16 +1,61 @@
-<div class="saved-events">
-  <h2>❤️ Saved Events</h2>
-
-  <div *ngIf="loading" class="loading">Loading...</div>
-
-  <div *ngIf="!loading && savedEvents.length === 0" class="empty">
-    You haven’t saved any events yet.
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-pink-50">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex items-center gap-3">
+        <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Saved Events</h1>
+          <p class="mt-1 text-pink-100">Events you've bookmarked for later</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="event-list" *ngIf="savedEvents.length > 0">
-    <app-event-card
-      *ngFor="let event of savedEvents"
-      [event]="event"
-    ></app-event-card>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="flex flex-col items-center justify-center py-20">
+      <div class="relative">
+        <div class="w-16 h-16 border-4 border-pink-200 rounded-full animate-spin border-t-pink-500"></div>
+      </div>
+      <p class="mt-4 text-gray-500 font-medium">Loading saved events...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && savedEvents.length === 0" class="text-center py-20">
+      <div class="w-24 h-24 mx-auto mb-6 bg-pink-100 rounded-full flex items-center justify-center">
+        <svg class="w-12 h-12 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">No saved events</h3>
+      <p class="text-gray-500 max-w-md mx-auto mb-8">You haven't saved any events yet. Browse events and click the heart icon to save them!</p>
+      <a 
+        routerLink="/events" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        Browse Events
+      </a>
+    </div>
+
+    <!-- Events Grid -->
+    <div *ngIf="!loading && savedEvents.length > 0">
+      <div class="flex items-center justify-between mb-6">
+        <p class="text-gray-600"><span class="font-semibold text-gray-900">{{ savedEvents.length }}</span> saved event{{ savedEvents.length === 1 ? '' : 's' }}</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <app-event-card
+          *ngFor="let event of savedEvents"
+          [event]="event"
+        ></app-event-card>
+      </div>
+    </div>
   </div>
 </div>
