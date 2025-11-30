@@ -44,5 +44,8 @@ namespace back_end.DTOs
         public List<string>? DisabilityTags { get; set; }
 
         public int Status { get; set; } = 0;
+
+        [MaxLength(2000)]
+        public string? Description { get; set; }
     }
 }

@@ -53,6 +53,9 @@ public class Event : IValidatableObject
     [Required]
     public EventStatus Status { get; set; } = EventStatus.Active;
 
+    [MaxLength(2000)]
+    public string? Description { get; set; }
+
     public Event()
     {
         StartDateTime = DateTime.UtcNow;

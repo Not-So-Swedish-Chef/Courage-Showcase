@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile-edit',
@@ -14,10 +15,17 @@ export class ProfileEditComponent implements OnInit {
   isSubmitting = false;
   isLoading = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.http.get<any>('http://localhost:5000/api/host/profile').subscribe({
+    const userId = this.authService.user?.id;
+    if (!userId) {
+      console.error('User not logged in');
+      this.isLoading = false;
+      return;
+    }
+
+    this.http.get<any>(`${environment.apiBaseUrl}/Host/${userId}`).subscribe({
       next: (data) => {
         this.agencyName = data.agencyName || '';
         this.bio = data.bio || '';
@@ -40,7 +48,7 @@ export class ProfileEditComponent implements OnInit {
     };
 
 
-    this.http.put('http://localhost:5000/api/host', update).subscribe({
+    this.http.put(`${environment.apiBaseUrl}/Host`, update).subscribe({
       next: () => {
         alert('Profile updated successfully!');
       },
