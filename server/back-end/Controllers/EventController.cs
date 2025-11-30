@@ -104,6 +104,7 @@ namespace back_end.Controllers
                     MinAge = eventDto.MinAge,
                     MaxAge = eventDto.MaxAge,
                     Status = (EventStatus)eventDto.Status,
+                    Description = eventDto.Description,
                     DisabilityTags = new List<DisabilityTag>()
                 };
 
@@ -197,6 +198,7 @@ namespace back_end.Controllers
                     MinAge = eventDto.MinAge,
                     MaxAge = eventDto.MaxAge,
                     Status = (EventStatus)eventDto.Status,
+                    Description = eventDto.Description,
                     DisabilityTags = new List<DisabilityTag>()
                 };
 
