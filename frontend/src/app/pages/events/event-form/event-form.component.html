@@ -1,198 +1,166 @@
-<div class="event-form">
-  <h2>{{ isEditMode ? "Update Event" : "Create Event" }}</h2>
+<div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <h2 class="text-2xl font-bold text-gray-800">{{ isEditMode ? "Update Event" : "Create Event" }}</h2>
+    </div>
+    
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="p-6 space-y-8">
+      
+      <!-- Basic Information Section -->
+      <div>
+        <h3 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Basic Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Title -->
+            <div class="col-span-1 md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Title *</label>
+                <div class="mt-1">
+                   <input type="text" name="title" [(ngModel)]="event.title" required maxlength="200" placeholder="Enter event title" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                </div>
+                <p class="mt-1 text-sm text-red-600" *ngIf="f.submitted && !event.title">⚠️ Title is required (max 200 chars).</p>
+            </div>
 
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <!-- Title -->
-    <label>
-      <span>Title *</span>
-      <input
-        type="text"
-        name="title"
-        [(ngModel)]="event.title"
-        required
-        maxlength="200"
-        placeholder="Enter event title"
-      />
-      <small class="error" *ngIf="f.submitted && !event.title">
-        ⚠️ Title is required (max 200 chars).
-      </small>
-    </label>
+            <!-- Location -->
+            <div class="col-span-1 md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Location *</label>
+                <div class="mt-1">
+                   <input type="text" name="location" [(ngModel)]="event.location" required maxlength="300" placeholder="Enter event location" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                </div>
+                <p class="mt-1 text-sm text-red-600" *ngIf="f.submitted && !event.location">⚠️ Location is required (max 300 chars).</p>
+            </div>
 
-    <!-- Location -->
-    <label>
-      <span>Location *</span>
-      <input
-        type="text"
-        name="location"
-        [(ngModel)]="event.location"
-        required
-        maxlength="300"
-        placeholder="Enter event location"
-      />
-      <small class="error" *ngIf="f.submitted && !event.location">
-        ⚠️ Location is required (max 300 chars).
-      </small>
-    </label>
+            <!-- City -->
+            <div class="col-span-1">
+                 <label class="block text-sm font-medium text-gray-700">City *</label>
+                 <div class="mt-1">
+                    <select name="city" [(ngModel)]="event.city" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                        <option value="">Select a city</option>
+                        <option *ngFor="let city of ontarioCities" [value]="city">{{ city }}</option>
+                    </select>
+                 </div>
+                 <p class="mt-1 text-sm text-red-600" *ngIf="f.submitted && !event.city">⚠️ City selection is required.</p>
+            </div>
+            
+             <!-- Status -->
+             <div class="col-span-1">
+                 <label class="block text-sm font-medium text-gray-700">Status</label>
+                 <div class="mt-1">
+                    <select name="status" [(ngModel)]="event.status" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                        <option [value]="0">Active</option>
+                        <option [value]="1">Expired</option>
+                        <option [value]="2">Canceled</option>
+                    </select>
+                 </div>
+            </div>
+        </div>
+      </div>
 
-    <!-- City -->
-    <label>
-      <span>City *</span>
-      <select name="city" [(ngModel)]="event.city" required>
-        <option value="">Select a city</option>
-        <option *ngFor="let city of ontarioCities" [value]="city">
-          {{ city }}
-        </option>
-      </select>
-      <small class="error" *ngIf="f.submitted && !event.city">
-        ⚠️ City selection is required.
-      </small>
-    </label>
+      <!-- Date & Time Section -->
+      <div>
+         <h3 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Date & Time</h3>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+               <label class="block text-sm font-medium text-gray-700">Start Date & Time *</label>
+               <input type="datetime-local" name="startDateTime" [(ngModel)]="event.startDateTime" (change)="validateDateRange()" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+            </div>
+            <div>
+               <label class="block text-sm font-medium text-gray-700">End Date & Time *</label>
+               <input type="datetime-local" name="endDateTime" [(ngModel)]="event.endDateTime" (change)="validateDateRange()" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+               <p class="mt-1 text-sm text-red-600" *ngIf="dateError">{{ dateError }}</p>
+            </div>
+         </div>
+      </div>
 
-    <!-- Image Upload -->
-    <label>
-      <span>Event Image</span>
-      <input
-        type="file"
-        name="image"
-        (change)="onFileSelected($event)"
-        accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
-      />
-      <small *ngIf="selectedFile" class="hint">
-        📷 Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }} KB)
-      </small>
-      <small *ngIf="!selectedFile && !event.imageUrl" class="hint">
-        💡 No image selected. A default image will be used.
-      </small>
-      <small *ngIf="!selectedFile && event.imageUrl" class="hint">
-        🖼️ Current image: {{ event.imageUrl }}
-      </small>
-      <small class="error" *ngIf="imageError">{{ imageError }}</small>
-    </label>
+      <!-- Details Section -->
+      <div>
+        <h3 class="text-lg font-medium text-gray-900 border-b pb-2 mb-4">Event Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Price -->
+             <div>
+                <label class="block text-sm font-medium text-gray-700">Price ($)</label>
+                <div class="mt-1 flex rounded-md shadow-sm">
+                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">$</span>
+                    <input type="number" name="price" [(ngModel)]="event.price" min="0" step="0.01" placeholder="0.00" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 p-2 border">
+                </div>
+                 <p class="mt-1 text-sm text-red-600" *ngIf="event.price! < 0">⚠️ Price cannot be negative.</p>
+                 <p class="mt-1 text-xs text-gray-500">Leave empty or set 0 for free events.</p>
+             </div>
 
-    <!-- Start Date -->
-    <label>
-      <span>Start Date & Time *</span>
-      <input
-        type="datetime-local"
-        name="startDateTime"
-        [(ngModel)]="event.startDateTime"
-        (change)="validateDateRange()"
-        required
-      />
-    </label>
+             <!-- URL -->
+             <div>
+                 <label class="block text-sm font-medium text-gray-700">Website / URL</label>
+                 <input type="url" name="url" [(ngModel)]="event.url" (blur)="validateUrl()" placeholder="https://example.com" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                 <p class="mt-1 text-sm text-red-600" *ngIf="urlError">{{ urlError }}</p>
+             </div>
 
-    <!-- End Date -->
-    <label>
-      <span>End Date & Time *</span>
-      <input
-        type="datetime-local"
-        name="endDateTime"
-        [(ngModel)]="event.endDateTime"
-        (change)="validateDateRange()"
-        required
-      />
-      <small class="error" *ngIf="dateError">{{ dateError }}</small>
-    </label>
+             <!-- Description -->
+             <div class="col-span-1 md:col-span-2">
+                 <label class="block text-sm font-medium text-gray-700">Description</label>
+                 <textarea name="description" [(ngModel)]="event.description" rows="4" placeholder="Enter event description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border"></textarea>
+             </div>
 
-    <!-- Price -->
-    <label>
-      <span>Price ($)</span>
-      <input
-        type="number"
-        name="price"
-        [(ngModel)]="event.price"
-        min="0"
-        step="0.01"
-        placeholder="Enter price"
-      />
-      <small class="error" *ngIf="event.price! < 0">
-        ⚠️ Price cannot be negative.
-      </small>
-      <small class="hint">💡 Leave empty or set 0 for free events.</small>
-    </label>
+             <!-- Min/Max Age -->
+             <div class="grid grid-cols-2 gap-4 col-span-1 md:col-span-2">
+                 <div>
+                    <label class="block text-sm font-medium text-gray-700">Minimum Age</label>
+                    <input type="number" name="minAge" [(ngModel)]="event.minAge" (change)="validateAgeRange()" min="0" max="150" placeholder="e.g. 5" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                 </div>
+                 <div>
+                    <label class="block text-sm font-medium text-gray-700">Maximum Age</label>
+                    <input type="number" name="maxAge" [(ngModel)]="event.maxAge" (change)="validateAgeRange()" min="0" max="150" placeholder="e.g. 99" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                 </div>
+             </div>
+             <div class="col-span-1 md:col-span-2" *ngIf="event.minAge! < 0 || event.maxAge! < 0 || ageError">
+                 <p class="text-sm text-red-600" *ngIf="event.minAge! < 0 || event.maxAge! < 0">⚠️ Age cannot be negative.</p>
+                 <p class="text-sm text-red-600" *ngIf="ageError">{{ ageError }}</p>
+             </div>
 
-    <!-- URL -->
-    <label>
-      <span>Website / URL</span>
-      <input
-        type="url"
-        name="url"
-        [(ngModel)]="event.url"
-        (blur)="validateUrl()"
-        placeholder="https://example.com"
-      />
-      <small class="error" *ngIf="urlError">{{ urlError }}</small>
-      <small class="hint">Must start with http:// or https://</small>
-    </label>
+             <!-- Disability Tags -->
+             <div class="col-span-1 md:col-span-2">
+                 <label class="block text-sm font-medium text-gray-700">Disability Tags</label>
+                 <input type="text" name="disabilityTags" [(ngModel)]="disabilityTagsInput" placeholder="e.g. Wheelchair Accessible, Sign Language" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+                 <p class="mt-1 text-xs text-gray-500">Separate tags by commas (e.g., "Braille, Wheelchair Accessible")</p>
+             </div>
 
-    <!-- Minimum Age -->
-    <label>
-      <span>Minimum Age</span>
-      <input
-        type="number"
-        name="minAge"
-        [(ngModel)]="event.minAge"
-        (change)="validateAgeRange()"
-        min="0"
-        max="150"
-        placeholder="e.g. 5"
-      />
-      <small class="error" *ngIf="event.minAge! < 0">
-        ⚠️ Age cannot be negative.
-      </small>
-    </label>
+             <!-- Image Upload -->
+             <div class="col-span-1 md:col-span-2">
+                 <label class="block text-sm font-medium text-gray-700">Event Image</label>
+                 <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:bg-gray-50 transition cursor-pointer relative">
+                    <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600 justify-center">
+                            <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                <span>Upload a file</span>
+                                <input id="file-upload" name="image" type="file" class="sr-only" (change)="onFileSelected($event)" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                            </label>
+                            <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                 </div>
+                 
+                 <div *ngIf="selectedFile" class="mt-2 text-sm text-green-600">
+                    📷 Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024).toFixed(2) }} KB)
+                 </div>
+                 <div *ngIf="!selectedFile && !event.imageUrl" class="mt-2 text-sm text-gray-500">
+                    💡 No image selected. A default image will be used.
+                 </div>
+                 <div *ngIf="!selectedFile && event.imageUrl" class="mt-2 text-sm text-blue-600 truncate">
+                    🖼️ Current image: {{ event.imageUrl }}
+                 </div>
+                 <div class="mt-2 text-sm text-red-600" *ngIf="imageError">{{ imageError }}</div>
+             </div>
+        </div>
+      </div>
 
-    <!-- Maximum Age -->
-    <label>
-      <span>Maximum Age</span>
-      <input
-        type="number"
-        name="maxAge"
-        [(ngModel)]="event.maxAge"
-        (change)="validateAgeRange()"
-        min="0"
-        max="150"
-        placeholder="e.g. 99"
-      />
-      <small class="error" *ngIf="event.maxAge! < 0">
-        ⚠️ Age cannot be negative.
-      </small>
-      <small class="error" *ngIf="ageError">{{ ageError }}</small>
-    </label>
+      <!-- Submit Button -->
+      <div class="pt-5 border-t border-gray-200">
+         <button type="submit" [disabled]="isSubmitting" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition text-lg">
+            {{ isSubmitting ? "Submitting..." : (isEditMode ? "Update Event" : "Create Event") }}
+         </button>
+      </div>
 
-    <!-- Disability Tags -->
-    <label>
-      <span>Disability Tags</span>
-      <input
-        type="text"
-        name="disabilityTags"
-        [(ngModel)]="disabilityTagsInput"
-        placeholder="e.g. Wheelchair Accessible, Sign Language"
-      />
-      <small class="hint">
-        💡 Separate tags by commas (e.g., "Braille, Wheelchair Accessible")
-      </small>
-    </label>
-
-    <!-- Status -->
-    <label>
-      <span>Status</span>
-      <select name="status" [(ngModel)]="event.status">
-        <option [value]="0">Active</option>
-        <option [value]="1">Expired</option>
-        <option [value]="2">Canceled</option>
-      </select>
-    </label>
-
-    <!-- Submit Button -->
-    <button type="submit" [disabled]="isSubmitting">
-      {{
-        isSubmitting
-          ? "Submitting..."
-          : isEditMode
-          ? "Update Event"
-          : "Create Event"
-      }}
-    </button>
-  </form>
+    </form>
+  </div>
 </div>

@@ -13,4 +13,5 @@ export interface EventDetails {
   maxAge: number;
   disabilityTags: string[];
   status: number;
+  description?: string;
 }

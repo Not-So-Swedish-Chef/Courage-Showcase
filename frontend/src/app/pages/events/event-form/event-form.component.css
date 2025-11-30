@@ -60,3 +60,11 @@ button:disabled {
   color: #888;
   font-size: 0.8rem;
 }
+textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+  resize: vertical;
+}

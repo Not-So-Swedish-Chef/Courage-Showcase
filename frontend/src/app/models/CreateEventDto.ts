@@ -13,4 +13,5 @@ export interface CreateEventDto {
   status: number; //Active = 0, Expired = 1, Canceled = 2
   hostId: number;
   imageUrl?: string;
+  description?: string;
 }

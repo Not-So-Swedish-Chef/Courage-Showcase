@@ -11,6 +11,8 @@ export class EventListComponent implements OnInit {
   events: EventDetails[] = [];
   isLoading = true;
   errorMessages: string[] = [];
+  showFilters = false;
+  showCityPicker = false;
 
   filters = {
     minPrice: null as number | null,

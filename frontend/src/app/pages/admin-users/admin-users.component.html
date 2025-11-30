@@ -1,108 +1,82 @@
-<div class="admin-layout">
+<div class="flex flex-col md:flex-row min-h-screen bg-gray-100">
   <!-- Sidebar -->
-  <nav class="admin-sidebar">
-    <h3 class="sidebar-title">Admin Menu</h3>
+  <nav class="md:w-64 bg-gray-800 text-white flex-shrink-0">
+    <div class="p-4 border-b border-gray-700">
+      <h3 class="text-xl font-bold">Admin Panel</h3>
+    </div>
+    <div class="p-4 space-y-2">
+      <a routerLink="/admin/events" routerLinkActive="bg-indigo-600 text-white" class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition">
+        Manage Events
+      </a>
 
-    <a routerLink="/admin/events" routerLinkActive="active-link">
-      Manage Events
-    </a>
-
-    <a routerLink="/admin/users" routerLinkActive="active-link">
-      Manage Users
-    </a>
+      <a routerLink="/admin/users" routerLinkActive="bg-indigo-600 text-white" class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition">
+        Manage Users
+      </a>
+    </div>
   </nav>
 
   <!-- Main Content -->
-  <div class="admin-content">
-    <h2 class="page-title">Manage Users</h2>
+  <div class="flex-1 p-8 overflow-auto">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">Manage Users</h2>
 
-    <div *ngIf="loading" class="loading">Loading users...</div>
+    <div *ngIf="loading" class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
+    </div>
 
-    <div class="admin-card" *ngIf="!loading">
-      <table *ngIf="users.length > 0" class="admin-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>User Type</th>
-            <th>Status</th>
-            <th>Details</th>
-            <th class="actions-col">Actions</th>
-          </tr>
-        </thead>
+    <div class="bg-white shadow rounded-lg overflow-hidden" *ngIf="!loading">
+      <div class="overflow-x-auto">
+        <table *ngIf="users.length > 0" class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Type</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let user of users" [class.bg-red-50]="getUserStatusClass(user) === 'banned'" [class.bg-yellow-50]="getUserStatusClass(user) === 'suspended'">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.firstName }} {{ user.lastName }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ getUserTypeLabel(user.userType) }}</td>
+                
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + (getUserStatusClass(user) === 'active' ? 'bg-green-100 text-green-800' : getUserStatusClass(user) === 'suspended' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800')">
+                       {{ getUserStatusText(user) }}
+                    </span>
+                </td>
 
-        <tbody>
-          <tr
-            *ngFor="let user of users"
-            [class]="getUserStatusClass(user)"
-          >
-            <td>{{ user.firstName }} {{ user.lastName }}</td>
-            <td>{{ user.email }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {{ getStatusDetails(user) }}
+                </td>
 
-            <td>{{ getUserTypeLabel(user.userType) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                   <div class="flex flex-wrap gap-2">
+                        <button class="text-yellow-600 hover:text-yellow-900 transition" (click)="openSuspend(user)" *ngIf="canSuspend(user)">Suspend</button>
+                        <button class="text-red-600 hover:text-red-900 transition" (click)="banUser(user.id)" *ngIf="canBan(user)">Ban</button>
+                        <button class="text-green-600 hover:text-green-900 transition" (click)="unsuspendUser(user.id)" *ngIf="canUnsuspend(user)">Unsuspend</button>
+                        <button class="text-blue-600 hover:text-blue-900 transition" (click)="unbanUser(user.id)" *ngIf="canUnban(user)">Unban</button>
+                   </div>
 
-            <td>
-              <span [class]="'status-badge ' + getUserStatusClass(user)">
-                {{ getUserStatusText(user) }}
-              </span>
-            </td>
+                   <div *ngIf="suspendTarget === user" class="mt-2 p-2 bg-gray-50 border rounded shadow-sm">
+                      <div class="flex items-center gap-2">
+                        <label class="text-xs">Days:</label>
+                        <input type="number" [(ngModel)]="suspendDays" min="1" max="365" class="w-16 border rounded px-1 py-0.5 text-sm"/>
+                        <button class="bg-indigo-600 text-white px-2 py-0.5 rounded text-xs hover:bg-indigo-700" (click)="confirmSuspend()">Confirm</button>
+                        <button class="text-gray-500 text-xs hover:text-gray-700" (click)="cancelSuspend()">Cancel</button>
+                      </div>
+                   </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
 
-            <td class="status-details">
-              {{ getStatusDetails(user) }}
-            </td>
-
-            <td>
-              <div class="actions">
-                <!-- Active user actions -->
-                <button 
-                  class="suspend-btn" 
-                  (click)="openSuspend(user)"
-                  *ngIf="canSuspend(user)">
-                  Suspend
-                </button>
-
-                <button 
-                  class="ban-btn" 
-                  (click)="banUser(user.id)"
-                  *ngIf="canBan(user)">
-                  Ban
-                </button>
-
-                <!-- Suspended user actions -->
-                <button 
-                  class="unsuspend-btn" 
-                  (click)="unsuspendUser(user.id)"
-                  *ngIf="canUnsuspend(user)">
-                  Unsuspend
-                </button>
-
-                <!-- Banned user actions -->
-                <button 
-                  class="unban-btn" 
-                  (click)="unbanUser(user.id)"
-                  *ngIf="canUnban(user)">
-                  Unban
-                </button>
-              </div>
-
-              <!-- Inline suspend UI -->
-              <div *ngIf="suspendTarget === user" class="suspend-panel">
-                <label>Suspend for (days):</label>
-                <input type="number" [(ngModel)]="suspendDays" min="1" max="365" />
-
-                <button class="confirm-btn" (click)="confirmSuspend()">
-                  Confirm
-                </button>
-                <button class="cancel-btn" (click)="cancelSuspend()">
-                  Cancel
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p *ngIf="users.length === 0" class="no-data">No users found.</p>
+      <div *ngIf="users.length === 0" class="p-6 text-center text-gray-500">
+        No users found.
+      </div>
     </div>
   </div>
 </div>

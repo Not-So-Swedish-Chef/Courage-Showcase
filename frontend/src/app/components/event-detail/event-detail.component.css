@@ -206,3 +206,22 @@ h2 {
 .calendar-btn:hover {
   background: #3730a3;
 }
+
+.description-clean {
+  margin: 1.2rem 0;
+}
+
+.description-clean h3 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.description-clean p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.55;
+  white-space: pre-line;
+}
