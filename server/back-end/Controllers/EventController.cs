@@ -104,6 +104,7 @@ namespace back_end.Controllers
                     MinAge = eventDto.MinAge,
                     MaxAge = eventDto.MaxAge,
                     Status = (EventStatus)eventDto.Status,
+                    Description = eventDto.Description,
                     DisabilityTags = new List<DisabilityTag>()
                 };
 
@@ -197,6 +198,7 @@ namespace back_end.Controllers
                     MinAge = eventDto.MinAge,
                     MaxAge = eventDto.MaxAge,
                     Status = (EventStatus)eventDto.Status,
+                    Description = eventDto.Description,
                     DisabilityTags = new List<DisabilityTag>()
                 };
 
@@ -249,18 +251,11 @@ namespace back_end.Controllers
         {
             try
             {
-                var eventItem = await _eventService.GetEventByIdAsync(id);
-                if (eventItem == null)
-                {
-                    return NotFound();
-                }
-
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (userId != eventItem.HostId.ToString())
+                if (string.IsNullOrEmpty(userId))
                 {
-                    return Unauthorized("You are not authorized to delete this event.");
+                    return Unauthorized("User not found.");
                 }
-
                 await _eventService.DeleteEventAsync(id, userId);
                 return NoContent();
             }

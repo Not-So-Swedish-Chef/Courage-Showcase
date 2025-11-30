@@ -29,7 +29,7 @@
             </div>
 
             <!-- City -->
-            <div class="col-span-1">
+            <div class="col-span-1 md:col-span-2">
                  <label class="block text-sm font-medium text-gray-700">City *</label>
                  <div class="mt-1">
                     <select name="city" [(ngModel)]="event.city" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
@@ -38,18 +38,6 @@
                     </select>
                  </div>
                  <p class="mt-1 text-sm text-red-600" *ngIf="f.submitted && !event.city">⚠️ City selection is required.</p>
-            </div>
-            
-             <!-- Status -->
-             <div class="col-span-1">
-                 <label class="block text-sm font-medium text-gray-700">Status</label>
-                 <div class="mt-1">
-                    <select name="status" [(ngModel)]="event.status" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
-                        <option [value]="0">Active</option>
-                        <option [value]="1">Expired</option>
-                        <option [value]="2">Canceled</option>
-                    </select>
-                 </div>
             </div>
         </div>
       </div>
@@ -60,7 +48,8 @@
          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                <label class="block text-sm font-medium text-gray-700">Start Date & Time *</label>
-               <input type="datetime-local" name="startDateTime" [(ngModel)]="event.startDateTime" (change)="validateDateRange()" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+               <input type="datetime-local" name="startDateTime" [(ngModel)]="event.startDateTime" [min]="minStartDate" (change)="validateDateRange()" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border">
+               <p class="mt-1 text-sm text-gray-500" *ngIf="!isEditMode">Must be a future date</p>
             </div>
             <div>
                <label class="block text-sm font-medium text-gray-700">End Date & Time *</label>
