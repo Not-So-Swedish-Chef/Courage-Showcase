@@ -106,6 +106,7 @@ export class EventFormComponent implements OnInit {
   ageError = '';
   imageError = '';
   isUploadingImage = false;
+  minStartDate = '';
 
   constructor(
     private eventService: EventService,
@@ -113,7 +114,11 @@ export class EventFormComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private cloudinaryService: CloudinaryService
-  ) {}
+  ) {
+    // Set minimum start date to current date/time
+    const now = new Date();
+    this.minStartDate = now.toISOString().slice(0, 16);
+  }
 
   // --- Load existing event if editing ---
   ngOnInit(): void {
@@ -196,7 +201,7 @@ export class EventFormComponent implements OnInit {
       : '⚠️ URL must start with http:// or https:// and be a valid link.';
   }
 
-  // --- Validate Start < End ---
+  // --- Validate Start < End and Start > Now ---
   validateDateRange() {
     if (!this.event.startDateTime || !this.event.endDateTime) {
       this.dateError = '';
@@ -204,6 +209,15 @@ export class EventFormComponent implements OnInit {
     }
     const start = new Date(this.event.startDateTime);
     const end = new Date(this.event.endDateTime);
+    const now = new Date();
+    
+    // Check if start date is in the past (only for new events)
+    if (!this.isEditMode && start < now) {
+      this.dateError = '⚠️ Start date must be in the future.';
+      return;
+    }
+    
+    // Check if end date is after start date
     this.dateError =
       end > start ? '' : '⚠️ End date must be later than start date.';
   }

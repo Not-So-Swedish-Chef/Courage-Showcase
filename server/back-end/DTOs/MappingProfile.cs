@@ -14,7 +14,8 @@ namespace back_end.DTOs
                 .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (int)src.Status))
-                .ForMember(dest => dest.DisabilityTags, opt => opt.MapFrom(src => src.DisabilityTags.Select(t => t.Name).ToList()));
+                .ForMember(dest => dest.DisabilityTags, opt => opt.MapFrom(src => src.DisabilityTags.Select(t => t.Name).ToList()))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
             // EventDTO to Event (for updates, not creation)
             CreateMap<EventDTO, Event>()
@@ -23,7 +24,8 @@ namespace back_end.DTOs
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => (EventStatus)src.Status))
                 .ForMember(dest => dest.DisabilityTags, opt => opt.Ignore())
                 .ForMember(dest => dest.Host, opt => opt.Ignore())
-                .ForMember(dest => dest.UsersWhoSaved, opt => opt.Ignore());
+                .ForMember(dest => dest.UsersWhoSaved, opt => opt.Ignore())
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
             // Host to HostDTO
             CreateMap<Host, HostDTO>()

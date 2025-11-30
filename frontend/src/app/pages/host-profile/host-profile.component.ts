@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-host-profile',
@@ -17,10 +18,10 @@ export class HostProfileComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
       this.http
-        .get<any>(`http://localhost:5000/api/user/host/${id}`)
+        .get<any>(`${environment.apiBaseUrl}/Host/${id}`)
         .subscribe({
           next: (res) => {
-            this.host = res.data;
+            this.host = res;
             this.isLoading = false;
           },
           error: (err) => {
