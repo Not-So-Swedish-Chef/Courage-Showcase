@@ -40,7 +40,7 @@ namespace back_end.Controllers
                 if (host == null)
                 {
                     _logger.LogWarning($"Host not found for user ID {userId}.");
-                    return NotFound("Host not found.");
+                    return NotFound(new { message = "Host not found." });
                 }
 
                 var hostDto = _mapper.Map<HostDTO>(host);
@@ -49,7 +49,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving host for user ID {userId}.");
-                return StatusCode(500, "An error occurred while retrieving the host information.");
+                return StatusCode(500, new { message = "An error occurred while retrieving the host information." });
             }
         }
 
@@ -63,14 +63,14 @@ namespace back_end.Controllers
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("User not found in claims.");
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
 
                 var host = await _hostService.GetHostByUserIdAsync(int.Parse(userId));
                 if (host == null)
                 {
                     _logger.LogWarning($"Host profile not found for user ID {userId}.");
-                    return NotFound("Host profile not found.");
+                    return NotFound(new { message = "Host profile not found." });
                 }
 
                 var eventDtos = _mapper.Map<List<EventDTO>>(host.Events);
@@ -79,7 +79,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while getting events for the host.");
-                return StatusCode(500, "An error occurred while retrieving the events.");
+                return StatusCode(500, new { message = "An error occurred while retrieving the events." });
             }
         }
 
@@ -100,7 +100,7 @@ namespace back_end.Controllers
                 if (!result)
                 {
                     _logger.LogWarning($"Unable to update host info for user ID {userId}.");
-                    return BadRequest("Unable to update host info.");
+                    return BadRequest(new { message = "Unable to update host info." });
                 }
 
                 return NoContent();
@@ -108,7 +108,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while updating host profile.");
-                return StatusCode(500, "An error occurred while updating the host information.");
+                return StatusCode(500, new { message = "An error occurred while updating the host information." });
             }
         }
     }
