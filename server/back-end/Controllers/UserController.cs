@@ -84,7 +84,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred during user registration.");
-                return StatusCode(500, "An error occurred while registering the user.");
+                return StatusCode(500, new { message = "An error occurred while registering the user." });
             }
         }
 
@@ -106,7 +106,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred during user login.");
-                return StatusCode(500, "An error occurred while logging in.");
+                return StatusCode(500, new { message = "An error occurred while logging in." });
             }
         }
 
@@ -121,7 +121,7 @@ namespace back_end.Controllers
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("User not found in claims.");
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
 
                 var savedEvents = await _userService.GetSavedEventsAsync(int.Parse(userId));
@@ -131,7 +131,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while fetching saved events.");
-                return StatusCode(500, "An error occurred while retrieving saved events.");
+                return StatusCode(500, new { message = "An error occurred while retrieving saved events." });
             }
         }
 
@@ -145,22 +145,22 @@ namespace back_end.Controllers
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("User not found in claims.");
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
 
                 var result = await _userService.SaveEventAsync(int.Parse(userId), eventId);
                 if (!result)
                 {
                     _logger.LogWarning("Unable to save event for user {UserId} with event ID {EventId}.", userId, eventId);
-                    return BadRequest("Unable to save event.");
+                    return BadRequest(new { message = "Unable to save event." });
                 }
 
-                return Ok("Event saved successfully.");
+                return Ok(new { message = "Event saved successfully." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while saving the event.");
-                return StatusCode(500, "An error occurred while saving the event.");
+                return StatusCode(500, new { message = "An error occurred while saving the event." });
             }
         }
 
@@ -174,22 +174,22 @@ namespace back_end.Controllers
                 if (string.IsNullOrEmpty(userId))
                 {
                     _logger.LogWarning("User not found in claims.");
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
 
                 var result = await _userService.RemoveSavedEventAsync(int.Parse(userId), eventId);
                 if (!result)
                 {
                     _logger.LogWarning("Unable to remove saved event for user {UserId} with event ID {EventId}.", userId, eventId);
-                    return BadRequest("Unable to remove event.");
+                    return BadRequest(new { message = "Unable to remove event." });
                 }
 
-                return Ok("Event removed successfully.");
+                return Ok(new { message = "Event removed successfully." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while removing the saved event.");
-                return StatusCode(500, "An error occurred while removing the event.");
+                return StatusCode(500, new { message = "An error occurred while removing the event." });
             }
         }
     }

@@ -41,7 +41,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving disability tags.");
-                return StatusCode(500, "An error occurred while retrieving disability tags.");
+                return StatusCode(500, new { message = "An error occurred while retrieving disability tags." });
             }
         }
 
@@ -62,7 +62,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving disability tag with ID: {id}");
-                return StatusCode(500, "An error occurred while retrieving the disability tag.");
+                return StatusCode(500, new { message = "An error occurred while retrieving the disability tag." });
             }
         }
 
@@ -75,7 +75,7 @@ namespace back_end.Controllers
             {
                 if (string.IsNullOrWhiteSpace(dto.Name))
                 {
-                    return BadRequest("Tag name is required.");
+                    return BadRequest(new { message = "Tag name is required." });
                 }
 
                 var normalizedName = TagNormalizer.Normalize(dto.Name);
@@ -86,7 +86,7 @@ namespace back_end.Controllers
 
                 if (existingTag != null)
                 {
-                    return Conflict($"A tag with the name '{dto.Name}' already exists.");
+                    return Conflict(new { message = $"A tag with the name '{dto.Name}' already exists." });
                 }
 
                 var tag = new DisabilityTag
@@ -103,7 +103,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while creating disability tag.");
-                return StatusCode(500, "An error occurred while creating the disability tag.");
+                return StatusCode(500, new { message = "An error occurred while creating the disability tag." });
             }
         }
 
@@ -122,7 +122,7 @@ namespace back_end.Controllers
 
                 if (string.IsNullOrWhiteSpace(dto.Name))
                 {
-                    return BadRequest("Tag name is required.");
+                    return BadRequest(new { message = "Tag name is required." });
                 }
 
                 var normalizedName = TagNormalizer.Normalize(dto.Name);
@@ -133,7 +133,7 @@ namespace back_end.Controllers
 
                 if (existingTag != null)
                 {
-                    return Conflict($"A tag with the name '{dto.Name}' already exists.");
+                    return Conflict(new { message = $"A tag with the name '{dto.Name}' already exists." });
                 }
 
                 tag.Name = dto.Name.Trim();
@@ -146,7 +146,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while updating disability tag with ID: {id}");
-                return StatusCode(500, "An error occurred while updating the disability tag.");
+                return StatusCode(500, new { message = "An error occurred while updating the disability tag." });
             }
         }
 
@@ -170,7 +170,7 @@ namespace back_end.Controllers
                 var activeEvents = tag.Events.Where(e => e.Status != back_end.Enums.EventStatus.Canceled).ToList();
                 if (activeEvents.Any())
                 {
-                    return BadRequest($"Cannot delete tag '{tag.Name}' because it is being used by {activeEvents.Count} active event(s).");
+                    return BadRequest(new { message = $"Cannot delete tag '{tag.Name}' because it is being used by {activeEvents.Count} active event(s)." });
                 }
 
                 _context.DisabilityTags.Remove(tag);
@@ -181,7 +181,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while deleting disability tag with ID: {id}");
-                return StatusCode(500, "An error occurred while deleting the disability tag.");
+                return StatusCode(500, new { message = "An error occurred while deleting the disability tag." });
             }
         }
     }
