@@ -42,7 +42,7 @@ namespace back_end.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving all users.");
-                return StatusCode(500, "An error occurred while retrieving users.");
+                return StatusCode(500, new { message = "An error occurred while retrieving users." });
             }
         }
 
@@ -58,15 +58,15 @@ namespace back_end.Controllers
                 if (!result)
                 {
                     _logger.LogWarning("Unable to suspend user with ID {UserId}.", request.UserId);
-                    return BadRequest("Unable to suspend user. User may not exist.");
+                    return BadRequest(new { message = "Unable to suspend user. User may not exist." });
                 }
 
-                return Ok($"User {request.UserId} has been suspended for {request.Days} days.");
+                return Ok(new { message = $"User {request.UserId} has been suspended for {request.Days} days." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while suspending user {UserId}.", request.UserId);
-                return StatusCode(500, "An error occurred while suspending the user.");
+                return StatusCode(500, new { message = "An error occurred while suspending the user." });
             }
         }
 
@@ -82,15 +82,15 @@ namespace back_end.Controllers
                 if (!result)
                 {
                     _logger.LogWarning("Unable to ban user with ID {UserId}.", request.UserId);
-                    return BadRequest("Unable to ban user. User may not exist.");
+                    return BadRequest(new { message = "Unable to ban user. User may not exist." });
                 }
 
-                return Ok($"User {request.UserId} has been permanently banned.");
+                return Ok(new { message = $"User {request.UserId} has been permanently banned." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while banning user {UserId}.", request.UserId);
-                return StatusCode(500, "An error occurred while banning the user.");
+                return StatusCode(500, new { message = "An error occurred while banning the user." });
             }
         }
 
@@ -106,15 +106,15 @@ namespace back_end.Controllers
                 if (!result)
                 {
                     _logger.LogWarning("Unable to unsuspend user with ID {UserId}.", request.UserId);
-                    return BadRequest("Unable to unsuspend user. User may not exist or is not suspended.");
+                    return BadRequest(new { message = "Unable to unsuspend user. User may not exist or is not suspended." });
                 }
 
-                return Ok($"User {request.UserId} has been unsuspended.");
+                return Ok(new { message = $"User {request.UserId} has been unsuspended." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while unsuspending user {UserId}.", request.UserId);
-                return StatusCode(500, "An error occurred while unsuspending the user.");
+                return StatusCode(500, new { message = "An error occurred while unsuspending the user." });
             }
         }
 
@@ -130,15 +130,15 @@ namespace back_end.Controllers
                 if (!result)
                 {
                     _logger.LogWarning("Unable to unban user with ID {UserId}.", request.UserId);
-                    return BadRequest("Unable to unban user. User may not exist or is not banned.");
+                    return BadRequest(new { message = "Unable to unban user. User may not exist or is not banned." });
                 }
 
-                return Ok($"User {request.UserId} has been unbanned.");
+                return Ok(new { message = $"User {request.UserId} has been unbanned." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while unbanning user {UserId}.", request.UserId);
-                return StatusCode(500, "An error occurred while unbanning the user.");
+                return StatusCode(500, new { message = "An error occurred while unbanning the user." });
             }
         }
     }

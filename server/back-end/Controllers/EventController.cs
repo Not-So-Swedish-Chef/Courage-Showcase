@@ -46,7 +46,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving events.");
-                return StatusCode(500, "An error occurred while retrieving events.");
+                return StatusCode(500, new { message = "An error occurred while retrieving events." });
             }
         }
 
@@ -64,7 +64,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving event with ID: {id}");
-                return StatusCode(500, "An error occurred while retrieving the event.");
+                return StatusCode(500, new { message = "An error occurred while retrieving the event." });
             }
         }
 
@@ -73,20 +73,20 @@ namespace back_end.Controllers
         {
             try
             {
-                if (eventDto == null) return BadRequest("Event data is missing.");
+                if (eventDto == null) return BadRequest(new { message = "Event data is missing." });
 
                 var email = User.FindFirst(ClaimTypes.Email)?.Value;
                 var userType = User.FindFirst(ClaimTypes.Role)?.Value;
 
                 if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(userType))
                 {
-                    return Unauthorized("User claims missing.");
+                    return Unauthorized(new { message = "User claims missing." });
                 }
 
                 // Parse city string to OntarioCity enum
                 if (!Enum.TryParse<OntarioCity>(eventDto.City, true, out var cityEnum))
                 {
-                    return BadRequest($"Invalid city. Must be a valid Ontario city name (e.g., Toronto, Ottawa, Hamilton).");
+                    return BadRequest(new { message = $"Invalid city. Must be a valid Ontario city name (e.g., Toronto, Ottawa, Hamilton)." });
                 }
 
                 // Map DTO to Event entity
@@ -154,7 +154,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, "Error occurred while creating event.");
-                return StatusCode(500, "An error occurred while creating the event.");
+                return StatusCode(500, new { message = "An error occurred while creating the event." });
             }
         }
 
@@ -163,23 +163,23 @@ namespace back_end.Controllers
         {
             try
             {
-                if (eventDto == null || id == 0) return BadRequest("Invalid event data.");
+                if (eventDto == null || id == 0) return BadRequest(new { message = "Invalid event data." });
 
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
 
                 if (userId != eventDto.HostId.ToString())
                 {
-                    return Unauthorized("You are not authorized to update this event.");
+                    return Unauthorized(new { message = "You are not authorized to update this event." });
                 }
 
                 // Parse city string to OntarioCity enum
                 if (!Enum.TryParse<OntarioCity>(eventDto.City, true, out var cityEnum))
                 {
-                    return BadRequest($"Invalid city. Must be a valid Ontario city name.");
+                    return BadRequest(new { message = "Invalid city. Must be a valid Ontario city name." });
                 }
 
                 // Map DTO to Event entity
@@ -242,7 +242,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, $"Error occurred while updating event with ID: {id}");
-                return StatusCode(500, "An error occurred while updating the event.");
+                return StatusCode(500, new { message = "An error occurred while updating the event." });
             }
         }
 
@@ -254,7 +254,7 @@ namespace back_end.Controllers
                 var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(userId))
                 {
-                    return Unauthorized("User not found.");
+                    return Unauthorized(new { message = "User not found." });
                 }
                 await _eventService.DeleteEventAsync(id, userId);
                 return NoContent();
@@ -262,7 +262,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, $"Error occurred while deleting event with ID: {id}");
-                return StatusCode(500, "An error occurred while deleting the event.");
+                return StatusCode(500, new { message = "An error occurred while deleting the event." });
             }
         }
 
@@ -315,7 +315,7 @@ namespace back_end.Controllers
             catch (DataException ex)
             {
                 _logger.LogError(ex, "Error occurred while searching events.");
-                return StatusCode(500, "An error occurred while searching events.");
+                return StatusCode(500, new { message = "An error occurred while searching events." });
             }
         }
     }
