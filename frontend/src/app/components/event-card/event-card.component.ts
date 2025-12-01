@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { EventService } from '../../services/event.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-event-card',
@@ -14,7 +15,7 @@ export class EventCardComponent implements OnInit {
   @Input() event!: EventDetails;
   @Input() showActions: boolean = false;
   isFav = false;
-  private apiUrl = 'http://localhost:5000/api/User';
+  private apiUrl = `${environment.apiBaseUrl}/User`;
   isProcessing = false;
   constructor(
     private router: Router,

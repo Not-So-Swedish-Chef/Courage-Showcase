@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EventDetails } from '../../models/EventDetails';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-saved-events',
@@ -11,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class SavedEventsComponent implements OnInit {
   savedEvents: EventDetails[] = [];
   loading = true;
-  apiUrl = 'http://localhost:5000/api/User/saved';
+  apiUrl = `${environment.apiBaseUrl}/User/saved`;
 
   constructor(private http: HttpClient, private auth: AuthService) {}
 
